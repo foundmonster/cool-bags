@@ -8,9 +8,6 @@ A searchable database of backpacks, duffels, slings, and accessories from top ba
 - Sort by price, size, or name
 - Pin favorites to compare
 
-## Brands
-EVERGOODS, Wexley, Aer, Pakt, Black Mile, DSPTCH, Able Carry, Tortuga, Hyperlite Mountain Gear
-
 ---
 
 Built with vanilla HTML, CSS, and JavaScript.
