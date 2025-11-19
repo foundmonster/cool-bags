@@ -1,0 +1,1648 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cool Bags</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', sans-serif;
+            background: #ffffff;
+            font-weight: 400;
+            color: #1d1d1f;
+            overflow: hidden;
+            height: 100vh;
+        }
+
+        /* Main Layout: Sidebar + Grid */
+        .app-container {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            height: 100vh;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            background: #fafafa;
+            border-right: 1px solid rgba(0, 0, 0, 0.06);
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            overflow-y: auto;
+        }
+
+        .sidebar-header {
+            padding: 32px 24px 24px;
+        }
+
+        .sidebar-header h1 {
+            font-size: 20px;
+            font-weight: 400;
+            color: #1d1d1f;
+            margin-bottom: 4px;
+        }
+
+        .sidebar-header .subtitle {
+            font-size: 12px;
+            color: #86868b;
+        }
+
+        /* Controls Section */
+        .controls-section {
+            padding: 24px;
+            flex: 1;
+            overflow-y: auto;
+        }
+
+        .control-group {
+            padding: 16px 0;
+        }
+
+        .control-group label {
+            display: block;
+            font-size: 12px;
+            font-weight: 400;
+            color: #86868b;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .control-group select {
+            width: 100%;
+            padding: 8px 10px;
+            font-size: 13px;
+            font-weight: 400;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            border-radius: 4px;
+            background: white;
+            color: #1d1d1f;
+            font-family: inherit;
+            cursor: pointer;
+        }
+
+        .control-group select:focus {
+            outline: none;
+            border-color: rgba(0, 0, 0, 0.3);
+        }
+
+        .control-group input[type="range"] {
+            width: 100%;
+            height: 4px;
+            background: rgba(0, 0, 0, 0.1);
+            border-radius: 2px;
+            outline: none;
+            -webkit-appearance: none;
+            appearance: none;
+            cursor: pointer;
+        }
+
+        .control-group input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 16px;
+            height: 16px;
+            background: #1d1d1f;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        .control-group input[type="range"]::-moz-range-thumb {
+            width: 16px;
+            height: 16px;
+            background: #1d1d1f;
+            border-radius: 50%;
+            cursor: pointer;
+            border: none;
+        }
+
+        /* Checkbox Controls */
+        .checkbox-control {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 0;
+            cursor: pointer;
+        }
+
+        .checkbox-control input[type="checkbox"] {
+            width: 16px;
+            height: 16px;
+            cursor: pointer;
+        }
+
+        .checkbox-control span {
+            font-size: 13px;
+            color: #1d1d1f;
+            font-weight: 400;
+        }
+
+        /* Radio Controls for Info Scale */
+        .radio-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .checkbox-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .radio-option {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            padding: 4px 0;
+        }
+
+        .checkbox-option {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            padding: 4px 0;
+        }
+
+        .radio-option input[type="radio"],
+        .checkbox-option input[type="checkbox"] {
+            width: 16px;
+            height: 16px;
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+
+        .radio-option span,
+        .checkbox-option label {
+            font-size: 12px;
+            color: #1d1d1f;
+            font-weight: 400;
+            line-height: 1.4;
+            cursor: pointer;
+        }
+
+        /* Divider */
+        .divider {
+            height: 1px;
+            background: rgba(0, 0, 0, 0.06);
+            margin: 24px 0;
+        }
+
+        /* Drawer/Accordion Controls */
+        .drawer {
+            margin-bottom: 0;
+        }
+
+        .drawer-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 0;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .drawer-header:hover {
+            opacity: 0.7;
+        }
+
+        .drawer-title {
+            font-size: 12px;
+            font-weight: 400;
+            color: #86868b;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .drawer-arrow {
+            font-size: 10px;
+            color: #86868b;
+            transition: transform 0.2s;
+            display: none;
+        }
+
+        .drawer.open .drawer-arrow {
+            transform: rotate(180deg);
+        }
+
+        .drawer-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.15s ease-out;
+        }
+
+        .drawer.open .drawer-content {
+            max-height: 2000px;
+        }
+
+        .drawer-inner {
+            padding: 12px 0;
+        }
+
+        /* Sidebar Footer */
+        .sidebar-footer {
+            padding: 24px;
+        }
+
+        .sidebar-footer button {
+            width: 100%;
+            padding: 10px 16px;
+            font-size: 13px;
+            font-weight: 400;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            border-radius: 4px;
+            background: white;
+            color: #1d1d1f;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: inherit;
+            margin-bottom: 8px;
+        }
+
+        .sidebar-footer button:hover {
+            background: rgba(0, 0, 0, 0.02);
+            border-color: rgba(0, 0, 0, 0.2);
+        }
+
+        .sidebar-footer button:active {
+            background: rgba(0, 0, 0, 0.04);
+        }
+
+        .sidebar-footer button.primary {
+            background: #1d1d1f;
+            color: white;
+            border-color: #1d1d1f;
+        }
+
+        .sidebar-footer button.primary:hover {
+            background: #3a3a3c;
+            border-color: #3a3a3c;
+        }
+
+        .sidebar-footer button.primary:active {
+            background: #000000;
+            border-color: #000000;
+        }
+
+        .button-wrapper {
+            position: relative;
+            margin-bottom: 8px;
+        }
+
+        .button-wrapper::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: white;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+            z-index: 5;
+            border-radius: 4px;
+        }
+
+        .button-wrapper:hover::before {
+            opacity: 0.7;
+        }
+
+        .coming-soon-label {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) translateX(var(--random-offset, 0px)) rotate(var(--random-angle, 0deg));
+            font-size: 11px;
+            font-weight: 400;
+            color: #f56300;
+            opacity: 0;
+            transition: opacity 0.6s ease;
+            pointer-events: none;
+            z-index: 10;
+        }
+
+        .button-wrapper:hover .coming-soon-label {
+            opacity: 1;
+            transition: opacity 0.3s ease;
+        }
+
+        .notifications-button {
+            width: 100%;
+            padding: 10px 16px;
+            font-size: 13px;
+            font-weight: 400;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            border-radius: 4px;
+            background: white;
+            color: #1d1d1f;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: inherit;
+            margin-bottom: 0;
+            position: relative;
+            z-index: 1;
+        }
+
+        .notifications-button:hover {
+            background: rgba(0, 0, 0, 0.02);
+            border-color: rgba(0, 0, 0, 0.2);
+            opacity: 0.15;
+        }
+
+        .notifications-button:active {
+            background: rgba(0, 0, 0, 0.04);
+            opacity: 0.15;
+        }
+
+        .feedback-button {
+            width: 100%;
+            padding: 10px 16px;
+            font-size: 13px;
+            font-weight: 400;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            border-radius: 4px;
+            background: white;
+            color: #1d1d1f;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: inherit;
+            margin-bottom: 8px;
+        }
+
+        .feedback-button:hover {
+            background: rgba(0, 0, 0, 0.02);
+            border-color: rgba(0, 0, 0, 0.2);
+        }
+
+        .feedback-button:active {
+            background: rgba(0, 0, 0, 0.04);
+        }
+
+        .footer-info {
+            font-size: 12px;
+            color: #86868b;
+            text-align: left;
+            margin-top: 8px;
+            line-height: 1.5;
+        }
+
+        /* Coffee Steam Animation */
+        .coffee-with-steam {
+            position: relative;
+            display: inline-block;
+        }
+
+        .steam-wave {
+            position: absolute;
+            bottom: calc(100% + 3px);
+            transform: translateX(-50%) rotate(90deg);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            font-size: 10px;
+            line-height: 0;
+        }
+
+        .steam-1 {
+            left: 55%;
+        }
+
+        .steam-2 {
+            left: 75%;
+        }
+
+        .steam-3 {
+            left: 95%;
+        }
+
+        .coffee-button:hover .steam-wave {
+            opacity: 0.6;
+            animation: flip-wave 1s step-end infinite;
+        }
+
+        @keyframes flip-wave {
+            0%, 49% {
+                transform: translateX(-50%) rotate(90deg) scaleX(1);
+            }
+            50%, 100% {
+                transform: translateX(-50%) rotate(90deg) scaleX(-1);
+            }
+        }
+
+        /* Floating About Button */
+        .floating-about {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 100;
+            padding: 8px 16px;
+            font-size: 12px;
+            font-weight: 400;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            border-radius: 4px;
+            background: white;
+            color: #1d1d1f;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+
+        .floating-about:hover {
+            color: #86868b;
+        }
+
+        /* Pin Button on Hover */
+        .pin-button {
+            position: absolute;
+            top: 18px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            opacity: 0;
+            transition: opacity 0.2s;
+            z-index: 4;
+            cursor: pointer;
+        }
+
+        .backpack-item:hover .pin-button {
+            opacity: 1;
+        }
+
+        .pin-dot {
+            width: 8px;
+            height: 8px;
+            background: #1d1d1f;
+            border-radius: 50%;
+        }
+
+        .pin-label {
+            display: none;
+            font-size: 10px;
+            color: #1d1d1f;
+            font-weight: 400;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 4px 8px;
+            border-radius: 2px;
+            white-space: nowrap;
+        }
+
+        .pin-button:hover .pin-label {
+            display: block;
+        }
+
+        .pin-button.pinned {
+            opacity: 1;
+        }
+
+        .pin-button.pinned .pin-dot {
+            background: white;
+            box-shadow: 0 0 0 2px #1d1d1f;
+        }
+
+        .pin-button.pinned .pin-label {
+            color: white;
+            background: #1d1d1f;
+        }
+
+        /* Pinned Counter */
+        .pinned-counter {
+            position: fixed;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            background: white;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            border-right: none;
+            border-radius: 4px 0 0 4px;
+            padding: 12px 16px;
+            cursor: pointer;
+            transition: all 0.2s;
+            z-index: 99;
+            font-size: 12px;
+            color: #1d1d1f;
+            display: none;
+        }
+
+        .pinned-counter.visible {
+            display: block;
+        }
+
+        .pinned-counter:hover {
+            color: #86868b;
+        }
+
+        .pinned-counter-number {
+            font-weight: 500;
+            margin-right: 4px;
+        }
+
+        /* Pinned Modal */
+        .pinned-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 40px;
+        }
+
+        .pinned-modal.visible {
+            display: flex;
+        }
+
+        .pinned-modal-content {
+            background: white;
+            border-radius: 4px;
+            max-width: 500px;
+            width: 100%;
+            max-height: 80vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .pinned-modal-header {
+            padding: 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .pinned-modal-title {
+            font-size: 20px;
+            font-weight: 400;
+            color: #1d1d1f;
+            flex: 1;
+        }
+
+        .pinned-modal-close {
+            padding: 8px 16px;
+            font-size: 13px;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            border-radius: 4px;
+            background: white;
+            color: #1d1d1f;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+
+        .pinned-modal-close:hover {
+            background: rgba(0, 0, 0, 0.02);
+        }
+
+        .pinned-modal-body {
+            padding: 24px;
+            overflow-y: auto;
+            flex: 1;
+            min-height: 400px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .pinned-modal-body p {
+            margin-bottom: 24px;
+            font-size: 14px;
+            font-weight: 400;
+            line-height: 1.6;
+            color: #86868b;
+        }
+
+        .pinned-modal-footer {
+            padding: 24px;
+            display: flex;
+            gap: 8px;
+            justify-content: flex-end;
+            align-items: center;
+        }
+
+        .pinned-modal-action {
+            padding: 8px 16px;
+            font-size: 13px;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            border-radius: 4px;
+            background: white;
+            color: #1d1d1f;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: inherit;
+            white-space: nowrap;
+        }
+
+        .pinned-modal-action:hover {
+            background: rgba(0, 0, 0, 0.02);
+        }
+
+        .share-container {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        #share-button {
+            transition: opacity 0.4s ease;
+        }
+
+        #share-button.hiding {
+            opacity: 0;
+        }
+
+        .share-expanded {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            opacity: 0;
+            transform: translateX(-10px);
+            transition: opacity 0.4s ease, transform 0.4s ease;
+        }
+
+        .share-expanded.showing {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .share-expanded input {
+            min-width: 300px;
+            padding: 8px 12px;
+            font-size: 13px;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            border-radius: 4px;
+            background: white;
+            color: #1d1d1f;
+            font-family: inherit;
+        }
+
+        .share-copy-btn,
+        .share-close-btn {
+            padding: 8px 16px;
+            font-size: 13px;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            border-radius: 4px;
+            background: white;
+            color: #1d1d1f;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: inherit;
+            height: 33px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .share-close-btn {
+            width: 33px;
+            padding: 0;
+            font-size: 18px;
+            line-height: 1;
+        }
+
+        .share-copy-btn:hover,
+        .share-close-btn:hover {
+            background: rgba(0, 0, 0, 0.02);
+        }
+
+        .pinned-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 16px;
+        }
+
+        .pinned-item {
+            border: 1px solid rgba(0, 0, 0, 0.06);
+            border-radius: 4px;
+            padding: 16px;
+            position: relative;
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+
+        .pinned-item:hover {
+            opacity: 0.7;
+        }
+
+        .pinned-item-remove {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 14px;
+            color: #86868b;
+            line-height: 0;
+            padding: 0;
+            background: transparent;
+            border: none;
+        }
+
+        .pinned-item-remove:hover {
+            background: rgba(0, 0, 0, 0.02);
+            color: #1d1d1f;
+        }
+
+        .pinned-item-brand {
+            font-size: 10px;
+            color: #86868b;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 4px;
+        }
+
+        .pinned-item-name {
+            font-size: 13px;
+            font-weight: 400;
+            color: #1d1d1f;
+            margin-bottom: 8px;
+        }
+
+        .pinned-item-details {
+            font-size: 11px;
+            color: #86868b;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        /* Main Grid Area */
+        .grid-container {
+            height: 100vh;
+            overflow-y: auto;
+        }
+
+        .backpack-grid {
+            display: grid;
+            grid-template-columns: repeat(var(--grid-columns, 4), 1fr);
+        }
+
+        /* Grid Item - Always Square */
+        .backpack-item {
+            border-right: 1px solid rgba(0, 0, 0, 0.06);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            cursor: pointer;
+            transition: opacity 0.2s;
+            position: relative;
+            overflow: hidden;
+            aspect-ratio: 1 / 1;
+        }
+
+        .backpack-item:hover {
+            opacity: 0.7;
+        }
+
+        /* Image Container - Full Background */
+        .backpack-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #f5f5f7;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .backpack-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            object-position: center;
+        }
+
+        .backpack-image .placeholder {
+            font-size: 64px;
+            opacity: 0.2;
+        }
+
+        /* Backpack Info - Always Visible (Default) */
+        .backpack-info {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 2;
+            padding: 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+        }
+
+        .backpack-info-left {
+            display: flex;
+            align-items: baseline;
+            gap: 6px;
+        }
+
+        .backpack-info-right {
+            display: flex;
+            align-items: baseline;
+            gap: 6px;
+        }
+
+        .backpack-brand {
+            position: absolute;
+            top: 16px;
+            left: 16px;
+            font-size: 11px;
+            font-weight: 400;
+            color: #1d1d1f;
+            line-height: 1.2;
+            z-index: 2;
+        }
+
+        .backpack-name {
+            font-size: 11px;
+            font-weight: 400;
+            color: #1d1d1f;
+            line-height: 1.2;
+        }
+
+        .backpack-stats {
+            font-size: 11px;
+            color: #86868b;
+        }
+
+        .backpack-volume {
+            color: #86868b;
+        }
+
+        .backpack-material {
+            font-size: 11px;
+            color: #86868b;
+        }
+
+        .backpack-price {
+            font-size: 11px;
+            font-weight: 400;
+            color: #1d1d1f;
+        }
+
+        /* Empty State */
+        .empty-state {
+            grid-column: 1 / -1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 60px 20px;
+            color: #86868b;
+            min-height: 400px;
+        }
+
+        .empty-state-icon {
+            font-size: 48px;
+            margin-bottom: 16px;
+            opacity: 0.5;
+        }
+
+        .empty-state-text {
+            font-size: 15px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <!-- Floating About Button -->
+    <button class="floating-about" onclick="openAboutModal()">About</button>
+
+    <!-- Pinned Counter -->
+    <div class="pinned-counter" id="pinned-counter" onclick="openPinnedModal()">
+        <span class="pinned-counter-number" id="pinned-count">0</span> pinned
+    </div>
+
+    <!-- About Modal -->
+    <div class="pinned-modal" id="about-modal" onclick="closeAboutModal(event)">
+        <div class="pinned-modal-content" onclick="event.stopPropagation()">
+            <div class="pinned-modal-header">
+                <h2 class="pinned-modal-title">About Cool Bags</h2>
+                <button class="pinned-modal-close" onclick="closeAboutModal()">Close</button>
+            </div>
+            <div class="pinned-modal-body">
+                <p style="margin-bottom: 16px;">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                <p style="margin-bottom: 16px;">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pinned Modal -->
+    <div class="pinned-modal" id="pinned-modal" onclick="closePinnedModal(event)">
+        <div class="pinned-modal-content" onclick="event.stopPropagation()">
+            <div class="pinned-modal-header">
+                <h2 class="pinned-modal-title">Pinned Bags (<span id="pinned-modal-count">0</span>)</h2>
+                <button class="pinned-modal-close" onclick="closePinnedModal()">Close</button>
+            </div>
+            <div class="pinned-modal-body">
+                <div class="pinned-grid" id="pinned-grid">
+                    <!-- Pinned items will be populated here -->
+                </div>
+            </div>
+            <div class="pinned-modal-footer">
+                <button class="pinned-modal-action" onclick="openAllPinnedLinks()">Open All in New Tabs</button>
+                <div class="share-container" id="share-container">
+                    <button class="pinned-modal-action" id="share-button" onclick="toggleShareList()">Share List</button>
+                    <div class="share-expanded" id="share-expanded" style="display: none;">
+                        <input type="text" id="share-url-input" readonly>
+                        <button class="share-copy-btn" onclick="copyShareUrl()">Copy</button>
+                        <button class="share-close-btn" onclick="closeShareExpanded()">×</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h1>Cool Bags</h1>
+                <p class="footer-info">Currently displaying <span id="filtered-count">0</span> of <span id="total-count">0</span> bags by&nbsp;<span id="brand-count">0</span>&nbsp;<span id="brand-label">brands</span>.</p>
+            </div>
+
+            <div class="controls-section">
+                <!-- Sort Drawer -->
+                <div class="drawer">
+                    <div class="drawer-header" onclick="toggleDrawer(this)">
+                        <span class="drawer-title">Sort By</span>
+                        <span class="drawer-arrow">▼</span>
+                    </div>
+                    <div class="drawer-content">
+                        <div class="drawer-inner">
+                            <div class="radio-group">
+                                <div class="radio-option">
+                                    <input type="radio" name="sort" id="sort-newest" value="newest" checked>
+                                    <span>Newest First</span>
+                                </div>
+                                <div class="radio-option">
+                                    <input type="radio" name="sort" id="sort-oldest" value="oldest">
+                                    <span>Oldest First</span>
+                                </div>
+                                <div class="radio-option">
+                                    <input type="radio" name="sort" id="sort-price-low" value="price-low">
+                                    <span>Price: Low to High</span>
+                                </div>
+                                <div class="radio-option">
+                                    <input type="radio" name="sort" id="sort-price-high" value="price-high">
+                                    <span>Price: High to Low</span>
+                                </div>
+                                <div class="radio-option">
+                                    <input type="radio" name="sort" id="sort-size-small" value="size-small">
+                                    <span>Size: Small to Large</span>
+                                </div>
+                                <div class="radio-option">
+                                    <input type="radio" name="sort" id="sort-size-large" value="size-large">
+                                    <span>Size: Large to Small</span>
+                                </div>
+                                <div class="radio-option">
+                                    <input type="radio" name="sort" id="sort-name" value="name">
+                                    <span>Name: A-Z</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Filter: Brand -->
+                <div class="drawer">
+                    <div class="drawer-header" onclick="toggleDrawer(this)">
+                        <span class="drawer-title">Filter: Brand</span>
+                        <span class="drawer-arrow">▼</span>
+                    </div>
+                    <div class="drawer-content">
+                        <div class="drawer-inner">
+                            <div class="checkbox-group" id="brand-filter-group">
+                                <!-- Will be populated dynamically -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Filter: Material -->
+                <div class="drawer">
+                    <div class="drawer-header" onclick="toggleDrawer(this)">
+                        <span class="drawer-title">Filter: Material</span>
+                        <span class="drawer-arrow">▼</span>
+                    </div>
+                    <div class="drawer-content">
+                        <div class="drawer-inner">
+                            <div class="checkbox-group" id="material-filter-group">
+                                <!-- Will be populated dynamically -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Filter: Type -->
+                <div class="drawer">
+                    <div class="drawer-header" onclick="toggleDrawer(this)">
+                        <span class="drawer-title">Filter: Type</span>
+                        <span class="drawer-arrow">▼</span>
+                    </div>
+                    <div class="drawer-content">
+                        <div class="drawer-inner">
+                            <div class="checkbox-group" id="type-filter-group">
+                                <!-- Will be populated dynamically -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Zoom Control -->
+                <div class="control-group">
+                    <label>Bags Per Row</label>
+                    <input type="range" id="zoom-select" min="2" max="8" value="4" step="1">
+                </div>
+            </div>
+
+            <div class="sidebar-footer">
+                <button class="feedback-button">Send Feedback</button>
+                <div class="button-wrapper">
+                    <span class="coming-soon-label">Coming Soon</span>
+                    <button class="notifications-button">Sign Up for Notifications</button>
+                </div>
+                <button class="primary coffee-button" onclick="window.open('https://buymeacoffee.com/found', '_blank')">
+                    <span class="coffee-with-steam">
+                        <span class="steam-wave steam-1">∿</span>
+                        <span class="steam-wave steam-2">∿</span>
+                        <span class="steam-wave steam-3">∿</span>
+                        <span class="cup">c[_]</span>
+                    </span>
+                    Buy Me a Coffee
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Grid -->
+        <main class="grid-container">
+            <div class="backpack-grid" id="backpack-grid">
+                <!-- Items will be generated by JavaScript -->
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Backpack Database - 55 bags across 12 brands
+        const backpacksData = [
+            // EVERGOODS
+            { id: 26, brand: 'EVERGOODS', name: 'CIVIC Travel Bag', price: 270, volume: 35, weight: 2.4, material: 'Nylon', type: 'Backpack', description: 'Versatile travel bag with crossover design.', link: 'https://evergoods.us/collections/packs/products/civic-travel-bag-35l', image: 'images/evergoods-civic-travel-bag-35l.png' },
+            { id: 27, brand: 'EVERGOODS', name: 'CIVIC Half Zip', price: 215, volume: 22, weight: 1.8, material: 'Nylon', type: 'Backpack', description: 'Half-zip opening for quick access to gear.', link: 'https://evergoods.us/collections/packs/products/civic-half-zip-22l', image: 'images/evergoods-civic-half-zip-22l.png' },
+            { id: 28, brand: 'EVERGOODS', name: 'MOUNTAIN Panel Loader', price: 220, volume: 22, weight: 1.9, material: 'Nylon', type: 'Backpack', description: 'Technical mountain pack with panel loading.', link: 'https://evergoods.us/collections/packs/products/mountain-panel-loader-22l', image: 'images/evergoods-mountain-panel-loader-22l.png' },
+            { id: 29, brand: 'EVERGOODS', name: 'CIVIC Bookbag', price: 190, volume: 22, weight: 1.7, material: 'Nylon', type: 'Backpack', description: 'Simple bookbag design for everyday carry.', link: 'https://evergoods.us/collections/packs/products/civic-bookbag-22l', image: 'images/evergoods-civic-bookbag-22l.png' },
+            { id: 30, brand: 'EVERGOODS', name: 'ELEMENT Weathershed', price: 300, volume: 22, weight: 2.1, material: 'Nylon', type: 'Backpack', description: 'Weather-resistant pack for all conditions.', link: 'https://evergoods.us/collections/packs/products/element-weathershed-22l', image: 'images/evergoods-element-weathershed-22l.png' },
+            { id: 31, brand: 'Wexley', name: 'CLASSIC Daypack', price: 210, volume: 22, weight: 1.8, material: 'Cordura', type: 'Backpack', description: 'Classic daypack with Cordura construction.', link: 'https://wexley.jp/collections/backpacks/products/classic-22l-daypack', image: 'images/wexley-classic-22l-daypack.png' },
+            { id: 32, brand: 'Wexley', name: 'STEM Daypack', price: 160, volume: 20, weight: 1.6, material: 'Cordura', type: 'Backpack', description: 'Lightweight daypack with technical materials.', link: 'https://wexley.jp/collections/backpacks/products/stem-20l-daypack', image: 'images/wexley-stem-20l-daypack.png' },
+            { id: 33, brand: 'Wexley', name: 'ACTIVE Pro Pack', price: 210, volume: 25, weight: 2.0, material: 'Cordura', type: 'Backpack', description: 'Professional pack for business and travel.', link: 'https://wexley.jp/collections/backpacks/products/active-25l-pro-pack', image: 'images/wexley-active-25l-pro-pack.png' },
+            { id: 34, brand: 'Wexley', name: 'ACE V2 Travel Pack', price: 280, volume: 32, weight: 2.2, material: 'Cordura', type: 'Backpack', description: 'Modular travel pack for extended trips.', link: 'https://wexley.jp/collections/backpacks/products/ace-v2-32l', image: 'images/wexley-ace-32l-travel-pack.png' },
+            { id: 35, brand: 'Wexley', name: 'VERNON Travel Pack', price: 300, volume: 30, weight: 2.3, material: 'Ballistic Nylon', type: 'Backpack', description: 'Premium travel pack with ballistic nylon.', link: 'https://wexley.jp/collections/backpacks/products/vernon-30l', image: 'images/wexley-vernon-30l-travel-pack.png' },
+            { id: 36, brand: 'Aer', name: 'Travel Pack 3', price: 249, volume: 35, weight: 2.8, material: 'Nylon', type: 'Backpack', description: 'Versatile travel backpack for carry-on travel.', link: 'https://www.aersf.com/collections/backpacks/products/travel-pack-3', image: 'images/aer-travel-pack-3.png' },
+            { id: 37, brand: 'Aer', name: 'City Pack Pro 2', price: 209, volume: 24, weight: 2.2, material: 'Nylon', type: 'Backpack', description: 'Premium urban commuter pack.', link: 'https://www.aersf.com/collections/backpacks/products/city-pack-pro-2', image: 'images/aer-city-pack-pro-2.png' },
+            { id: 38, brand: 'Aer', name: 'Go Pack 2', price: 99, volume: 18, weight: 1.5, material: 'Nylon', type: 'Backpack', description: 'Compact everyday carry pack.', link: 'https://www.aersf.com/collections/backpacks/products/go-pack-2', image: 'images/aer-go-pack-2.png' },
+            { id: 39, brand: 'Aer', name: 'Pro Pack', price: 179, volume: 20, weight: 2.0, material: 'Nylon', type: 'Backpack', description: 'Professional gym and work pack.', link: 'https://www.aersf.com/collections/backpacks/products/pro-pack-20l', image: 'images/aer-pro-pack-20l.png' },
+            { id: 40, brand: 'Aer', name: 'Day Pack 3', price: 159, volume: 22, weight: 1.9, material: 'Nylon', type: 'Backpack', description: 'Streamlined daypack for daily use.', link: 'https://www.aersf.com/collections/backpacks/products/day-pack-3', image: 'images/aer-day-pack-3.png' },
+
+            // New bag types - Pouches, Slings, Duffels, Totes, Packing Cubes
+            { id: 41, brand: 'EVERGOODS', name: 'CIVIC Access Pouch', price: 75, volume: 1, weight: 0.3, material: 'Nylon', type: 'Pouch', description: 'Versatile organization pouch for essentials.', link: 'https://evergoods.us/products/civic-access-pouch-1l', image: 'images/evergoods-civic-access-pouch-1l.png' },
+            { id: 42, brand: 'EVERGOODS', name: 'CIVIC Access Sling', price: 99, volume: 2, weight: 0.5, material: 'Nylon', type: 'Sling', description: 'Compact sling pack for quick access carry.', link: 'https://evergoods.us/products/civic-access-sling-2l', image: 'images/evergoods-civic-access-sling-2l.png' },
+            { id: 43, brand: 'EVERGOODS', name: 'Transit Duffel', price: 225, volume: 35, weight: 2.2, material: 'Nylon', type: 'Duffel', description: 'Versatile duffel for travel and gym.', link: 'https://evergoods.us/products/transit-duffel-35l', image: 'images/evergoods-transit-duffel-35l.png' },
+            { id: 44, brand: 'EVERGOODS', name: 'CIVIC Daily Tote', price: 199, volume: 24, weight: 1.8, material: 'Nylon', type: 'Tote', description: 'Structured tote for daily carry.', link: 'https://evergoods.us/products/civic-daily-tote-24l', image: 'images/evergoods-civic-daily-tote-24l.png' },
+            { id: 45, brand: 'EVERGOODS', name: 'Transit Packing Cube', price: 45, volume: 8, weight: 0.2, material: 'Nylon', type: 'Packing Cube', description: 'Travel organization cube for efficient packing.', link: 'https://evergoods.us/products/transit-packing-cube-8l', image: 'images/evergoods-transit-packing-cube-8l.png' },
+            { id: 46, brand: 'Aer', name: 'City Sling 3', price: 89, volume: 3, weight: 0.4, material: 'Nylon', type: 'Sling', description: 'Modern sling bag for urban carry.', link: 'https://www.aersf.com/collections/all/products/city-sling-3', image: 'images/aer-city-sling-3.png' },
+            { id: 47, brand: 'Aer', name: 'Duffel Pack 3', price: 179, volume: 28, weight: 2.1, material: 'Nylon', type: 'Duffel', description: 'Convertible duffel backpack for gym and travel.', link: 'https://www.aersf.com/collections/all/products/duffel-pack-3', image: 'images/aer-duffel-pack-3.png' },
+            { id: 48, brand: 'Wexley', name: 'STEM Daypack', price: 176, volume: 20, weight: 1.7, material: 'Cordura', type: 'Backpack', description: 'Ultralight daypack for urban carry.', link: 'https://wexley.jp/collections/backpacks/products/stem-daypack-cordura-series', image: 'images/wexley-stem-20l-daypack.png' },
+            { id: 49, brand: 'Wexley', name: 'ACE V2 Travel Pack', price: 308, volume: 32, weight: 2.5, material: 'Cordura', type: 'Backpack', description: 'Full-featured travel backpack.', link: 'https://wexley.jp/collections/backpacks/products/ace-32l-travel-pack', image: 'images/wexley-ace-32l-travel-pack.png' },
+            { id: 50, brand: 'Wexley', name: 'ACTIVE Pro Pack', price: 231, volume: 25, weight: 2.0, material: 'Cordura', type: 'Backpack', description: 'Professional laptop backpack for daily commute.', link: 'https://wexley.jp/collections/backpacks/products/active-25l-pro-pack-cordura', image: 'images/wexley-active-25l-pro-pack.png' },
+
+            // Additional Aer bags - Pouches, Totes, Organizers, Slings
+            { id: 51, brand: 'Aer', name: 'Slim Pouch 2', price: 49, volume: 1, weight: 0.2, material: 'Nylon', type: 'Pouch', description: 'Compact organization pouch for everyday items.', link: 'https://www.aersf.com/collections/all/products/slim-pouch-2', image: 'images/aer-slim-pouch-2.png' },
+            { id: 52, brand: 'Aer', name: 'Gym Tote 2', price: 129, volume: 28, weight: 1.6, material: 'Nylon', type: 'Tote', description: 'Versatile gym and work tote bag.', link: 'https://www.aersf.com/collections/all/products/gym-tote-2', image: 'images/aer-gym-tote-2.png' },
+            { id: 53, brand: 'Aer', name: 'Go Tote 2', price: 89, volume: 18, weight: 1.2, material: 'Nylon', type: 'Tote', description: 'Lightweight everyday tote.', link: 'https://www.aersf.com/collections/all/products/go-tote-2', image: 'images/aer-go-tote-2.png' },
+            { id: 54, brand: 'Aer', name: 'Packing Cube', price: 35, volume: 6, weight: 0.15, material: 'Nylon', type: 'Packing Cube', description: 'Travel organization cube with compression.', link: 'https://www.aersf.com/collections/all/products/packing-cube', image: 'images/aer-packing-cube.png' },
+            { id: 55, brand: 'Aer', name: 'Tech Sling 3', price: 119, volume: 4, weight: 0.6, material: 'Nylon', type: 'Sling', description: 'Tech-focused sling with organization.', link: 'https://www.aersf.com/collections/all/products/tech-sling-3', image: 'images/aer-tech-sling-3.png' },
+            { id: 56, brand: 'Aer', name: 'Sling Bag 3', price: 89, volume: 5, weight: 0.5, material: 'Nylon', type: 'Sling', description: 'Versatile crossbody sling bag.', link: 'https://www.aersf.com/collections/all/products/sling-bag-3', image: 'images/aer-sling-bag-3.png' },
+            { id: 57, brand: 'Aer', name: 'Travel Kit 2', price: 49, volume: 4, weight: 0.3, material: 'Nylon', type: 'Pouch', description: 'Hanging toiletry organizer for travel.', link: 'https://www.aersf.com/collections/all/products/travel-kit-2', image: 'images/aer-travel-kit-2.png' },
+            { id: 58, brand: 'Aer', name: 'Tech Folio 13"', price: 75, volume: 2, weight: 0.4, material: 'Nylon', type: 'Laptop Sleeve', description: 'Padded laptop sleeve with organization.', link: 'https://www.aersf.com/collections/all/products/tech-folio-13', image: 'images/aer-tech-folio-13.png' },
+
+            // Pakt bags - Travel-focused bags
+            { id: 59, brand: 'Pakt', name: 'Aero Travel Backpack', price: 259, volume: 35, weight: 2.3, material: 'Nylon', type: 'Backpack', description: 'Premium travel backpack with modular organization.', link: 'https://paktbags.com/products/aero-travel-backpack', image: 'images/pakt-aero-travel-backpack-35l.png' },
+            { id: 60, brand: 'Pakt', name: 'Everyday 22L Backpack', price: 147, volume: 22, weight: 1.8, material: 'Nylon', type: 'Backpack', description: 'Versatile everyday carry backpack.', link: 'https://paktbags.com/products/everyday-22l-backpack', image: 'images/pakt-everyday-22l-backpack.png' },
+            { id: 61, brand: 'Pakt', name: 'Everyday 15L Bag', price: 111, volume: 15, weight: 1.2, material: 'Nylon', type: 'Sling', description: 'Crossbody sling bag for daily carry.', link: 'https://paktbags.com/products/everyday-15l-bag', image: 'images/pakt-everyday-15l-bag.png' },
+            { id: 62, brand: 'Pakt', name: 'Everyday 3L Sling', price: 57, volume: 3, weight: 0.4, material: 'Nylon', type: 'Sling', description: 'Compact sling for essentials.', link: 'https://paktbags.com/products/everyday-3l-sling', image: 'images/pakt-everyday-3l-sling.png' },
+            { id: 63, brand: 'Pakt', name: '25L Travel Duffel', price: 135, volume: 25, weight: 1.6, material: 'Nylon', type: 'Duffel', description: 'Convertible travel duffel with backpack straps.', link: 'https://paktbags.com/products/25l-travel-duffel', image: 'images/pakt-25l-travel-duffel.png' },
+            { id: 64, brand: 'Pakt', name: 'Everyday 25L Tote', price: 111, volume: 25, weight: 1.4, material: 'Nylon', type: 'Tote', description: 'Structured tote for work and travel.', link: 'https://paktbags.com/products/everyday-25l-tote', image: 'images/pakt-everyday-25l-tote.png' },
+            { id: 65, brand: 'Pakt', name: '6-Piece Packing Cube Set', price: 99, volume: 20, weight: 0.8, material: 'Nylon', type: 'Packing Cube', description: 'Complete packing cube set for organized travel.', link: 'https://paktbags.com/products/6-piece-packing-cube-set', image: 'images/pakt-packing-cube-set.png' },
+            { id: 66, brand: 'Pakt', name: 'Clip-in Pouches', price: 24, volume: 2, weight: 0.2, material: 'Nylon', type: 'Pouch', description: 'Modular pouches that clip into Pakt bags.', link: 'https://paktbags.com/products/clip-in-pouches', image: 'images/pakt-clip-in-pouches.png' },
+
+            // Black Mile
+            { id: 67, brand: 'Black Mile', name: 'The Mile Two', price: 375, volume: 50, weight: 2.4, material: 'Dyneema', type: 'Backpack', description: 'Convertible rolltop travel pack with expandable capacity (23-50L). Opens like a suitcase.', link: 'https://blackmile.co/products/the-mile-two', image: 'images/blackmile-mile-two.png' },
+            { id: 68, brand: 'Black Mile', name: 'Sovereign Day Pack', price: 245, volume: 28, weight: 2.2, material: 'Dyneema', type: 'Backpack', description: 'Weatherproof daypack with minimalist design. Fits 16" MacBook Pro.', link: 'https://blackmile.co/products/sovereign-day-pack', image: 'images/blackmile-sovereign-day-pack.png' },
+            { id: 69, brand: 'Black Mile', name: 'Covert Laptop Case', price: 118, volume: 5, weight: 0.5, material: 'Dyneema', type: 'Laptop Sleeve', description: 'Protective laptop sleeve with Dyneema construction.', link: 'https://blackmile.co/products/covert-laptop-case', image: 'images/blackmile-covert-laptop-case.png' },
+            { id: 70, brand: 'Black Mile', name: 'Roll Top Toiletry Bag', price: 95, volume: 3, weight: 0.4, material: 'Dyneema', type: 'Toiletry Bag', description: 'Waterproof rolltop toiletry bag for travel.', link: 'https://blackmile.co/products/roll-top-toiletry-bag', image: 'images/blackmile-toiletry-bag.png' },
+            { id: 71, brand: 'Black Mile', name: 'Packing Cubes', price: 33, volume: 4, weight: 0.3, material: 'Nylon', type: 'Packing Cube', description: 'Organizational packing cubes in small and large sizes.', link: 'https://blackmile.co/products/packing-cubes', image: 'images/blackmile-packing-cubes.png' },
+
+            // DSPTCH
+            { id: 72, brand: 'DSPTCH', name: 'Daypack', price: 348, volume: 22, weight: 2.8, material: 'Dyneema', type: 'Backpack', description: 'Premium 22L daypack made with 5.0oz Dyneema Composite Fabric. Fits 16" laptop.', link: 'https://www.dsptch.com/products/daypack-rnd-edition-black-dyneema', image: 'images/dsptch-daypack-22l.png' },
+            { id: 73, brand: 'DSPTCH', name: 'Unit Sling Bag', price: 246, volume: 8, weight: 1.2, material: 'X-Pac', type: 'Sling', description: 'Versatile sling bag with X-PAC X50 construction.', link: 'https://www.dsptch.com/products/unit-sling-bag-rnd-edition', image: 'images/dsptch-unit-sling.png' },
+            { id: 74, brand: 'DSPTCH', name: 'Sling Pouch Large', price: 158, volume: 5, weight: 0.6, material: 'Nylon', type: 'Pouch', description: 'Large organization pouch with sling capability.', link: 'https://www.dsptch.com/products/sling-pouch-large', image: 'images/dsptch-sling-pouch-large.png' },
+            { id: 75, brand: 'DSPTCH', name: 'Cinch Tote', price: 302, volume: 18, weight: 1.5, material: 'Dyneema', type: 'Tote', description: 'Premium tote with Dyneema construction and cinch closure.', link: 'https://www.dsptch.com/products/cinch-tote-dyneema-black', image: 'images/dsptch-cinch-tote.png' },
+
+            // Able Carry
+            { id: 76, brand: 'Able Carry', name: 'Daily Backpack', price: 139, volume: 20, weight: 1.8, material: 'Cordura', type: 'Backpack', description: 'Minimalist 20L daypack made for the essentials. Fits 16" laptop.', link: 'https://ablecarry.com/products/daily-backpack', image: 'images/ablecarry-daily-20l.png' },
+
+            // Tortuga
+            { id: 77, brand: 'Tortuga', name: 'Travel Backpack Pro', price: 325, volume: 40, weight: 3.5, material: 'Nylon', type: 'Backpack', description: 'Max carry-on size travel backpack with premium comfort and water-resistance.', link: 'https://www.tortugabackpacks.com/products/travel-backpack-pro-40l', image: 'images/tortuga-pro-40l.png' },
+            { id: 78, brand: 'Tortuga', name: 'Travel Backpack Lite', price: 225, volume: 40, weight: 2.8, material: 'Nylon', type: 'Backpack', description: 'Streamlined 40L travel pack for lightweight travelers.', link: 'https://www.tortugabackpacks.com/products/travel-backpack-lite-40l', image: 'images/tortuga-lite-40l.png' },
+            { id: 79, brand: 'Tortuga', name: 'Expandable Backpack', price: 225, volume: 27, weight: 2.5, material: 'Nylon', type: 'Backpack', description: 'Mid-sized carry-on that expands from 27L to 32.5L for flexible packing.', link: 'https://www.tortugabackpacks.com/products/expandable-backpack', image: 'images/tortuga-expandable-27l.png' },
+
+            // Hyperlite Mountain Gear
+            { id: 80, brand: 'Hyperlite Mountain Gear', name: 'Southwest', price: 379, volume: 40, weight: 1.9, material: 'Dyneema', type: 'Backpack', description: 'Ultralight 40L backpacking pack with 100% waterproof Dyneema construction.', link: 'https://www.hyperlitemountaingear.com/products/2400-southwest', image: 'images/hyperlite-southwest-40l.png' },
+
+            // DSPTCH (additional products)
+            { id: 81, brand: 'DSPTCH', name: 'Sling Pouch Medium', price: 138, volume: 3, weight: 0.3, material: 'Nylon', type: 'Pouch', description: 'Medium-sized sling pouch for everyday carry.', link: 'https://www.dsptch.com/products/sling-pouch-medium-black', image: 'images/dsptch-sling-pouch-medium.png' },
+            { id: 82, brand: 'DSPTCH', name: 'Sling Pouch Slim', price: 98, volume: 2, weight: 0.2, material: 'Nylon', type: 'Pouch', description: 'Slim profile sling pouch for minimal carry.', link: 'https://www.dsptch.com/products/sling-pouch-slim-black', image: 'images/dsptch-sling-pouch-slim.png' },
+            { id: 83, brand: 'DSPTCH', name: 'Unit Shoulder Bag', price: 292, volume: 12, weight: 0.9, material: 'X-Pac', type: 'Shoulder Bag', description: 'RND Edition shoulder bag in X-PAC X50 Light Army.', link: 'https://www.dsptch.com/products/unit-shoulder-bag-rnd-edition-x-pac-x50-light-army', image: 'images/dsptch-unit-shoulder-bag.png' },
+            { id: 84, brand: 'DSPTCH', name: 'Weekender', price: 368, volume: 45, weight: 2.2, material: 'X-Pac', type: 'Duffel', description: 'RND Edition weekender bag in X-PAC X50 for weekend travel.', link: 'https://www.dsptch.com/products/weekender-x-pac-x50-light-army', image: 'images/dsptch-weekender.png' },
+            { id: 85, brand: 'DSPTCH', name: 'Zero-1 Bag', price: 248, volume: 5, weight: 0.5, material: 'Dyneema', type: 'Bag', description: 'RND Edition compact bag in black Dyneema fabric.', link: 'https://www.dsptch.com/products/zero-1-bag-rnd-edition-dyneema-black', image: 'images/dsptch-zero-1-bag.png' },
+            { id: 86, brand: 'DSPTCH', name: 'Slingpack Small', price: 236, volume: 10, weight: 0.8, material: 'ECOPAK', type: 'Sling', description: 'Compact slingpack in sustainable ECOPAK material.', link: 'https://www.dsptch.com/products/slingpack-small-ecopak', image: 'images/dsptch-slingpack-small.png' },
+            { id: 87, brand: 'DSPTCH', name: 'Utility Tote Landscape', price: 258, volume: 19, weight: 1.1, material: 'ECOPAK', type: 'Tote', description: 'Landscape utility tote in sustainable ECOPAK with ballistic nylon base.', link: 'https://www.dsptch.com/collections/packs/products/utility-tote-landscape-ecopak', image: 'images/dsptch-utility-tote.png' },
+            { id: 88, brand: 'DSPTCH', name: 'Gym/Work Pack', price: 196, volume: 25, weight: 1.8, material: 'Ballistic Nylon', type: 'Backpack', description: 'Versatile gym and work backpack in durable ballistic nylon.', link: 'https://www.dsptch.com/collections/gym-work/products/gym-work-pack-black', image: 'images/dsptch-gym-work-pack.png' },
+            { id: 89, brand: 'DSPTCH', name: 'Gym/Work Bag', price: 182, volume: 22, weight: 1.5, material: 'Ballistic Nylon', type: 'Duffel', description: 'Gym and work duffel bag with ballistic nylon construction.', link: 'https://www.dsptch.com/collections/gym-work/products/gym-work-bag-ballistic-nylon', image: 'images/dsptch-gym-work-bag.png' },
+            { id: 90, brand: 'DSPTCH', name: 'Gym/Work Duffel', price: 182, volume: 30, weight: 1.6, material: 'Ballistic Nylon', type: 'Duffel', description: 'Large capacity gym and work duffel in ballistic nylon.', link: 'https://www.dsptch.com/collections/gym-work/products/gym-work-duffel-ballistic-nylon', image: 'images/dsptch-gym-work-duffel.png' },
+            { id: 91, brand: 'DSPTCH', name: 'Packing Cube', price: 21, volume: 3, weight: 0.1, material: 'Nylon', type: 'Packing Cube', description: 'Compact packing cube for organized travel.', link: 'https://www.dsptch.com/collections/gym-work/products/packing-cube', image: 'images/dsptch-packing-cube.png' },
+            { id: 92, brand: 'DSPTCH', name: 'Shoe Tote', price: 32, volume: 6, weight: 0.2, material: 'Nylon', type: 'Tote', description: 'Dedicated shoe storage tote bag.', link: 'https://www.dsptch.com/collections/gym-work/products/shoe-tote', image: 'images/dsptch-shoe-tote.png' },
+            { id: 93, brand: 'DSPTCH', name: 'Switch 2 Case', price: 94, volume: 2, weight: 0.3, material: 'Nylon', type: 'Case', description: 'Compact tech and accessory case.', link: 'https://www.dsptch.com/collections/packs/products/switch-2-case', image: 'images/dsptch-switch-2-case.png' },
+            { id: 94, brand: 'DSPTCH', name: 'Unit Holster Pouch', price: 168, volume: 1, weight: 0.2, material: 'Dyneema', type: 'Pouch', description: 'Compact Dyneema pouch for secure carry.', link: 'https://www.dsptch.com/collections/packs/products/unit-holster-pouch-dyneema', image: 'images/dsptch-unit-holster-pouch.png' },
+            { id: 95, brand: 'DSPTCH', name: 'Utility Ruck', price: 172, volume: 23, weight: 1.5, material: 'Ballistic Nylon', type: 'Backpack', description: 'Versatile utility backpack in ballistic nylon.', link: 'https://www.dsptch.com/collections/packs/products/utility-ruck-black', image: 'images/dsptch-utility-ruck.png' },
+            { id: 96, brand: 'DSPTCH', name: 'Unit Vertical Pouch', price: 168, volume: 1, weight: 0.2, material: 'Dyneema', type: 'Pouch', description: 'Vertical Dyneema pouch for organized storage.', link: 'https://www.dsptch.com/collections/packs/products/unit-vertical-pouch-dyneema-black', image: 'images/dsptch-unit-vertical-pouch.png' },
+            { id: 97, brand: 'DSPTCH', name: 'Ruckpack', price: 215, volume: 25, weight: 1.8, material: 'Ballistic Nylon', type: 'Backpack', description: 'Durable rucksack in ballistic nylon construction.', link: 'https://www.dsptch.com/collections/packs/products/ruckpack-ballistic-nylon', image: 'images/dsptch-ruckpack.png' },
+            { id: 98, brand: 'DSPTCH', name: 'Unit Sling Pouch', price: 164, volume: 1.2, weight: 0.2, material: 'Dyneema', type: 'Pouch', description: 'Compact Dyneema sling pouch for essentials.', link: 'https://www.dsptch.com/collections/packs/products/unit-slingpouch-dyneema', image: 'images/dsptch-unit-sling-pouch.png' },
+            { id: 99, brand: 'DSPTCH', name: 'Unit Sling Pouch Large', price: 197, volume: 3, weight: 0.3, material: 'Dyneema', type: 'Pouch', description: 'Large Dyneema sling pouch with expanded capacity.', link: 'https://www.dsptch.com/collections/packs/products/unit-sling-pouch-large-dyneema', image: 'images/dsptch-unit-sling-pouch-large.png' },
+            { id: 100, brand: 'DSPTCH', name: 'Laptop Sling', price: 128, volume: 10, weight: 0.8, material: 'Ballistic Nylon', type: 'Sling', description: 'Laptop sling for 14-16 inch devices in ballistic nylon.', link: 'https://www.dsptch.com/collections/packs/products/laptop-sling-ballistic-nylon', image: 'images/dsptch-laptop-sling.png' },
+            { id: 101, brand: 'DSPTCH', name: 'Camera Insert L', price: 25, volume: 8, weight: 0.3, material: 'Ballistic Nylon', type: 'Accessory', description: 'Large camera insert organizer (10x10x5 inches).', link: 'https://www.dsptch.com/collections/packs/products/camera-insert-l', image: 'images/dsptch-camera-insert.png' }
+        ];
+
+        // State
+        let selectedBrands = new Set();
+        let selectedMaterials = new Set();
+        let selectedTypes = new Set();
+        let pinnedBags = new Set();
+
+        // Load pinned bags from localStorage on page load
+        function loadPinnedFromLocalStorage() {
+            const saved = localStorage.getItem('coolbags-pinned');
+            if (saved) {
+                try {
+                    const ids = JSON.parse(saved);
+                    const validBagIds = new Set(backpacksData.map(bag => bag.id));
+                    // Only keep IDs that exist in current database
+                    const validIds = ids.filter(id => validBagIds.has(id));
+                    pinnedBags = new Set(validIds);
+                    // Save cleaned data back to localStorage
+                    if (validIds.length !== ids.length) {
+                        savePinnedToLocalStorage();
+                    }
+                } catch (e) {
+                    console.error('Failed to load pinned bags from localStorage', e);
+                }
+            }
+        }
+
+        // Load pinned bags from URL parameter
+        function loadPinnedFromURL() {
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.has('pins')) {
+                const ids = urlParams.get('pins').split(',').map(Number).filter(id => !isNaN(id));
+                const validBagIds = new Set(backpacksData.map(bag => bag.id));
+                // Only keep IDs that exist in current database
+                ids.filter(id => validBagIds.has(id)).forEach(id => pinnedBags.add(id));
+            }
+        }
+
+        // Save pinned bags to localStorage
+        function savePinnedToLocalStorage() {
+            localStorage.setItem('coolbags-pinned', JSON.stringify(Array.from(pinnedBags)));
+        }
+
+        // Get control elements
+        const zoomSelect = document.getElementById('zoom-select');
+        const backpackGrid = document.getElementById('backpack-grid');
+        const filteredCount = document.getElementById('filtered-count');
+        const totalCount = document.getElementById('total-count');
+        const brandCount = document.getElementById('brand-count');
+        const brandLabel = document.getElementById('brand-label');
+        const pinnedCounter = document.getElementById('pinned-counter');
+        const pinnedCountNum = document.getElementById('pinned-count');
+        const pinnedModal = document.getElementById('pinned-modal');
+        const pinnedModalCount = document.getElementById('pinned-modal-count');
+        const pinnedGrid = document.getElementById('pinned-grid');
+
+        // Pin functions
+        function togglePin(bagId, event) {
+            event.stopPropagation();
+
+            if (pinnedBags.has(bagId)) {
+                pinnedBags.delete(bagId);
+            } else {
+                pinnedBags.add(bagId);
+            }
+
+            savePinnedToLocalStorage();
+            updatePinnedUI();
+            applyFiltersAndSort(); // Use filtered render instead of renderBackpacks()
+        }
+
+        // Open all pinned bag links in new tabs
+        function openAllPinnedLinks() {
+            const pinnedData = backpacksData.filter(bag => pinnedBags.has(bag.id));
+
+            if (pinnedData.length === 0) {
+                alert('No bags pinned yet!');
+                return;
+            }
+
+            if (pinnedData.length > 10) {
+                const confirm = window.confirm(`This will open ${pinnedData.length} tabs. Continue?`);
+                if (!confirm) return;
+            }
+
+            pinnedData.forEach(bag => {
+                // Note: In real implementation, bags would have actual product URLs
+                // For now, this demonstrates the functionality
+                if (bag.link) {
+                    window.open(bag.link, '_blank');
+                }
+            });
+        }
+
+        // Share list - toggle expanded view
+        function toggleShareList() {
+            if (pinnedBags.size === 0) {
+                alert('No bags pinned yet!');
+                return;
+            }
+
+            const shareButton = document.getElementById('share-button');
+            const shareExpanded = document.getElementById('share-expanded');
+            const shareUrlInput = document.getElementById('share-url-input');
+
+            // Generate shareable URL
+            const ids = Array.from(pinnedBags).join(',');
+            const url = `${window.location.origin}${window.location.pathname}?pins=${ids}`;
+
+            // Fade out button
+            shareButton.classList.add('hiding');
+
+            setTimeout(() => {
+                shareButton.style.display = 'none';
+                shareExpanded.style.display = 'flex';
+                shareUrlInput.value = url;
+
+                // Trigger animation
+                setTimeout(() => {
+                    shareExpanded.classList.add('showing');
+                    shareUrlInput.select();
+                    shareUrlInput.focus();
+                }, 10);
+            }, 400);
+        }
+
+        // Copy share URL to clipboard
+        function copyShareUrl() {
+            const shareUrlInput = document.getElementById('share-url-input');
+
+            navigator.clipboard.writeText(shareUrlInput.value).then(() => {
+                // Visual feedback
+                const copyBtn = document.querySelector('.share-copy-btn');
+                const originalText = copyBtn.textContent;
+                copyBtn.textContent = 'Copied!';
+                setTimeout(() => {
+                    copyBtn.textContent = originalText;
+                }, 2000);
+            }).catch(err => {
+                alert('Failed to copy to clipboard');
+            });
+        }
+
+        // Close share expanded view
+        function closeShareExpanded() {
+            const shareButton = document.getElementById('share-button');
+            const shareExpanded = document.getElementById('share-expanded');
+
+            // Fade out expanded view
+            shareExpanded.classList.remove('showing');
+
+            setTimeout(() => {
+                shareExpanded.style.display = 'none';
+                shareButton.style.display = 'block';
+                shareButton.classList.remove('hiding');
+            }, 400);
+        }
+
+        function updatePinnedUI() {
+            const count = pinnedBags.size;
+            pinnedCountNum.textContent = count;
+            pinnedModalCount.textContent = count;
+
+            if (count > 0) {
+                pinnedCounter.classList.add('visible');
+            } else {
+                pinnedCounter.classList.remove('visible');
+            }
+
+            renderPinnedModal();
+        }
+
+        function renderPinnedModal() {
+            const pinnedData = backpacksData.filter(bag => pinnedBags.has(bag.id));
+
+            if (pinnedData.length === 0) {
+                pinnedGrid.innerHTML = '<p style="color: #86868b; text-align: center; margin: auto;">Pinned bags appear here</p>';
+                return;
+            }
+
+            pinnedGrid.innerHTML = pinnedData.map(bag => `
+                <div class="pinned-item" onclick="openBagLink(${bag.id}, event)">
+                    <div class="pinned-item-remove" onclick="togglePin(${bag.id}, event)">×</div>
+                    <div class="pinned-item-brand">${bag.brand}</div>
+                    <div class="pinned-item-name">${bag.name}</div>
+                    <div class="pinned-item-details">
+                        <span>${bag.volume}L</span>
+                        <span>$${bag.price}</span>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function openBagLink(bagId, event) {
+            // Prevent opening if clicking the remove button
+            if (event.target.classList.contains('pinned-item-remove')) {
+                return;
+            }
+
+            const bag = backpacksData.find(b => b.id === bagId);
+            if (bag && bag.link) {
+                window.open(bag.link, '_blank');
+            } else {
+                console.log('Would open link for:', bag ? bag.name : 'Unknown bag');
+            }
+        }
+
+        function openPinnedModal() {
+            pinnedModal.classList.add('visible');
+        }
+
+        function closePinnedModal(event) {
+            if (event && event.target !== pinnedModal) return;
+            pinnedModal.classList.remove('visible');
+            // Reset share expanded state
+            closeShareExpanded();
+        }
+
+        function openAboutModal() {
+            document.getElementById('about-modal').classList.add('visible');
+        }
+
+        function closeAboutModal(event) {
+            const aboutModal = document.getElementById('about-modal');
+            if (event && event.target !== aboutModal) return;
+            aboutModal.classList.remove('visible');
+        }
+
+        // Drawer toggle function
+        function toggleDrawer(header) {
+            const drawer = header.parentElement;
+            drawer.classList.toggle('open');
+        }
+
+        // Initialize filters
+        function initializeFilters() {
+            // Get unique brands, materials, and types
+            const brands = [...new Set(backpacksData.map(b => b.brand))].sort();
+            const materials = [...new Set(backpacksData.map(b => b.material))].sort();
+            const types = [...new Set(backpacksData.map(b => b.type))].sort();
+
+            // Populate brand filter
+            const brandGroup = document.getElementById('brand-filter-group');
+            brandGroup.innerHTML = brands.map(brand => `
+                <div class="checkbox-option">
+                    <input type="checkbox" id="brand-${brand.replace(/[^a-z0-9]/gi, '-')}"
+                           value="${brand}" onchange="handleBrandFilter(this)">
+                    <label for="brand-${brand.replace(/[^a-z0-9]/gi, '-')}">${brand}</label>
+                </div>
+            `).join('');
+
+            // Populate material filter
+            const materialGroup = document.getElementById('material-filter-group');
+            materialGroup.innerHTML = materials.map(material => `
+                <div class="checkbox-option">
+                    <input type="checkbox" id="material-${material.replace(/[^a-z0-9]/gi, '-')}"
+                           value="${material}" onchange="handleMaterialFilter(this)">
+                    <label for="material-${material.replace(/[^a-z0-9]/gi, '-')}">${material}</label>
+                </div>
+            `).join('');
+
+            // Populate type filter
+            const typeGroup = document.getElementById('type-filter-group');
+            typeGroup.innerHTML = types.map(type => `
+                <div class="checkbox-option">
+                    <input type="checkbox" id="type-${type.replace(/[^a-z0-9]/gi, '-')}"
+                           value="${type}" onchange="handleTypeFilter(this)">
+                    <label for="type-${type.replace(/[^a-z0-9]/gi, '-')}">${type}</label>
+                </div>
+            `).join('');
+        }
+
+        // Filter handlers
+        function handleBrandFilter(checkbox) {
+            if (checkbox.checked) {
+                selectedBrands.add(checkbox.value);
+            } else {
+                selectedBrands.delete(checkbox.value);
+            }
+            applyFiltersAndSort();
+        }
+
+        function handleMaterialFilter(checkbox) {
+            if (checkbox.checked) {
+                selectedMaterials.add(checkbox.value);
+            } else {
+                selectedMaterials.delete(checkbox.value);
+            }
+            applyFiltersAndSort();
+        }
+
+        function handleTypeFilter(checkbox) {
+            if (checkbox.checked) {
+                selectedTypes.add(checkbox.value);
+            } else {
+                selectedTypes.delete(checkbox.value);
+            }
+            applyFiltersAndSort();
+        }
+
+        // Sort handler
+        document.querySelectorAll('input[name="sort"]').forEach(radio => {
+            radio.addEventListener('change', applyFiltersAndSort);
+        });
+
+        // Event listeners
+        zoomSelect.addEventListener('input', updateZoom);
+
+        function createBagCard(bag) {
+            const isPinned = pinnedBags.has(bag.id);
+            const imageHtml = bag.image
+                ? `<img src="${bag.image}" alt="${bag.brand} ${bag.name}" />`
+                : `<span class="placeholder">🎒</span>`;
+
+            const zoomLevel = parseInt(zoomSelect.value);
+            const isCompact = zoomLevel >= 5;
+
+            return `
+                <div class="backpack-item" data-bag-id="${bag.id}">
+                    <div class="backpack-image">
+                        ${imageHtml}
+                    </div>
+                    <div class="pin-button ${isPinned ? 'pinned' : ''}" onclick="togglePin(${bag.id}, event)">
+                        <div class="pin-dot"></div>
+                        <div class="pin-label">Pin</div>
+                    </div>
+                    <div class="backpack-brand">${bag.brand}</div>
+                    <div class="backpack-info">
+                        <div class="backpack-info-left">
+                            <div class="backpack-name">${bag.name}</div>
+                            ${!isCompact ? `<div class="backpack-stats">
+                                <span class="backpack-volume">${bag.volume}L</span>
+                            </div>` : ''}
+                        </div>
+                        <div class="backpack-info-right">
+                            ${!isCompact ? `<div class="backpack-material">${bag.material}</div>` : ''}
+                            <div class="backpack-price">$${bag.price}</div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function applyFiltersAndSort() {
+            let filteredData = [...backpacksData];
+
+            // Apply brand filter
+            if (selectedBrands.size > 0) {
+                filteredData = filteredData.filter(bag => selectedBrands.has(bag.brand));
+            }
+
+            // Apply material filter
+            if (selectedMaterials.size > 0) {
+                filteredData = filteredData.filter(bag => selectedMaterials.has(bag.material));
+            }
+
+            // Apply type filter
+            if (selectedTypes.size > 0) {
+                filteredData = filteredData.filter(bag => selectedTypes.has(bag.type));
+            }
+
+            // Apply sort
+            const sortValue = document.querySelector('input[name="sort"]:checked').value;
+            switch(sortValue) {
+                case 'price-low':
+                    filteredData.sort((a, b) => a.price - b.price);
+                    break;
+                case 'price-high':
+                    filteredData.sort((a, b) => b.price - a.price);
+                    break;
+                case 'size-small':
+                    filteredData.sort((a, b) => a.volume - b.volume);
+                    break;
+                case 'size-large':
+                    filteredData.sort((a, b) => b.volume - a.volume);
+                    break;
+                case 'name':
+                    filteredData.sort((a, b) => a.name.localeCompare(b.name));
+                    break;
+                case 'newest':
+                    filteredData.sort((a, b) => b.id - a.id);
+                    break;
+                case 'oldest':
+                    filteredData.sort((a, b) => a.id - b.id);
+                    break;
+            }
+
+            renderBackpacks(filteredData);
+        }
+
+        function updateZoom() {
+            const columns = zoomSelect.value;
+            document.documentElement.style.setProperty('--grid-columns', columns);
+            applyFiltersAndSort(); // Re-render cards to update compact mode
+        }
+
+        function renderBackpacks(data = backpacksData) {
+            const html = data.map(bag => createBagCard(bag)).join('');
+            backpackGrid.innerHTML = html;
+
+            // Update counts
+            filteredCount.textContent = data.length;
+            totalCount.textContent = backpacksData.length;
+
+            // Calculate unique brands in filtered data
+            const uniqueBrands = new Set(data.map(bag => bag.brand));
+            const numBrands = uniqueBrands.size;
+            brandCount.textContent = numBrands;
+            brandLabel.textContent = numBrands === 1 ? 'brand' : 'brands';
+        }
+
+        // Randomize "Coming Soon" label position and rotation
+        function randomizeComingSoonLabel() {
+            const label = document.querySelector('.coming-soon-label');
+            if (label) {
+                const angle = Math.round((Math.random() * 30 - 15) * 10) / 10; // -15 to 15 degrees in 0.1 increments
+                const offsetX = Math.round((Math.random() * 4 - 2) * 10) / 10; // -2 to 2 px in 0.1 increments
+                label.style.setProperty('--random-angle', `${angle}deg`);
+                label.style.setProperty('--random-offset', `${offsetX}px`);
+            }
+        }
+
+        // Add hover listener to randomize on each hover
+        function initializeComingSoonHover() {
+            const buttonWrapper = document.querySelector('.button-wrapper');
+            if (buttonWrapper) {
+                buttonWrapper.addEventListener('mouseenter', randomizeComingSoonLabel);
+            }
+        }
+
+        // Initialize
+        loadPinnedFromLocalStorage();
+        loadPinnedFromURL();
+        initializeFilters();
+        updateZoom();
+        renderBackpacks();
+        updatePinnedUI();
+        initializeComingSoonHover();
+        console.log('Cool Bags initialized with', backpacksData.length, 'bags');
+    </script>
+</body>
+</html>

@@ -1,0 +1,46 @@
+BADGE SCAN COMPLETE - All 53 images checked
+
+IMAGES WITH BADGES (5 total): ✅ ALL FIXED
+
+1. tortuga-expandable-27l.png - BOTTOM-RIGHT badge ✅ FIXED (regional fill)
+2. aer-go-pack-2.png - TOP-RIGHT orange "Carry Awards Winner" badge ✅ FIXED (150px crop)
+3. aer-pro-pack-20l.png - TOP-RIGHT badge (dark) ✅ FIXED (alternate source)
+4. aer-duffel-pack-3.png - TOP-RIGHT orange "Wirecutter Our Pick 2025" badge ✅ FIXED (regional fill)
+5. aer-tech-sling-3.png - TOP-RIGHT blue "Nomads Nation 2025" badge ✅ FIXED (regional fill)
+
+ALL OTHER IMAGES (48 total): Clean ✓
+
+BRANDS AFFECTED:
+- Aer: 4 images fixed (all top-right corner badges)
+- Tortuga: 1 image fixed (bottom-right corner badge)
+
+Note: tortuga-pro-40l.png and tortuga-lite-40l.png were already fixed in previous session (badges cropped out)
+
+FINAL FIX METHODOLOGY:
+
+**Regional Fill Method (PREFERRED):**
+Used for: aer-duffel-pack-3, aer-tech-sling-3, tortuga-expandable-27l
+- Surgically removes badge by filling region with background color
+- Preserves 100% of bag image (no cropping)
+- Command: magick image.jpg -region 200x200+700+0 -blur 0x20 -fill "rgb(242,242,240)" -colorize 100% +region clean.jpg
+
+**Crop Method (FALLBACK):**
+Used for: aer-go-pack-2
+- Removes badge by cropping edge of image
+- Risk: May cut into bag if too aggressive
+- Command: magick image.jpg -crop 750x900+0+0 +repage cropped.jpg
+
+**Alternate Source (BEST):**
+Used for: aer-pro-pack-20l
+- Found product image without badge overlay
+- No processing needed beyond standard pipeline
+
+PROCESSING PIPELINE APPLIED TO ALL:
+1. Remove background (20% fuzz white transparency)
+2. Trim to bag edges (10% fuzz)
+3. Scale to target ~520px max dimension
+4. Center on 800x800 transparent canvas
+- All fixed images verified at 800x800 RGBA PNG format
+
+SESSION COMPLETE: November 18, 2025
+FINAL RESULT: 100% badge-free image library (53/53 images clean)
