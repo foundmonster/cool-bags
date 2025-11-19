@@ -728,11 +728,20 @@
         .pinned-modal-content {
             background: white;
             border-radius: 4px;
-            max-width: 500px;
             width: 100%;
             max-height: 80vh;
             display: flex;
             flex-direction: column;
+        }
+
+        /* About modal: 50% width */
+        #about-modal .pinned-modal-content {
+            max-width: 500px;
+        }
+
+        /* Pinned modal: full width */
+        #pinned-modal .pinned-modal-content {
+            max-width: 1200px;
         }
 
         .pinned-modal-header {
@@ -1546,13 +1555,11 @@
             }
 
             if (pinnedData.length > 10) {
-                const confirm = window.confirm(`This will open ${pinnedData.length} tabs. Continue?`);
-                if (!confirm) return;
+                const userConfirm = window.confirm(`This will open ${pinnedData.length} tabs. Continue?`);
+                if (!userConfirm) return;
             }
 
             pinnedData.forEach(bag => {
-                // Note: In real implementation, bags would have actual product URLs
-                // For now, this demonstrates the functionality
                 if (bag.link) {
                     window.open(bag.link, '_blank');
                 }
