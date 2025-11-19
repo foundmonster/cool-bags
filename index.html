@@ -437,7 +437,164 @@
             }
         }
 
-        /* Floating About Button */
+        /* Hamburger Menu Button (Mobile) */
+        .menu-button {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1001;
+            width: 44px;
+            height: 44px;
+            padding: 0;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            border-radius: 4px;
+            background: white;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+
+        .menu-button span {
+            width: 20px;
+            height: 2px;
+            background: #1d1d1f;
+            transition: all 0.3s;
+        }
+
+        .menu-button.open span:nth-child(1) {
+            transform: translateY(8px) rotate(45deg);
+        }
+
+        .menu-button.open span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .menu-button.open span:nth-child(3) {
+            transform: translateY(-8px) rotate(-45deg);
+        }
+
+        /* Menu Overlay */
+        .menu-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+            display: none;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .menu-overlay.visible {
+            display: block;
+            opacity: 1;
+        }
+
+        /* About Link in Sidebar */
+        .sidebar-about-link {
+            padding: 16px 24px;
+            font-size: 13px;
+            color: #1d1d1f;
+            cursor: pointer;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+            transition: background 0.2s;
+            display: none;
+        }
+
+        .sidebar-about-link:hover {
+            background: rgba(0, 0, 0, 0.02);
+        }
+
+        /* Mobile Styles */
+        @media (max-width: 768px) {
+            .app-container {
+                grid-template-columns: 1fr;
+            }
+
+            .sidebar {
+                position: fixed;
+                top: 0;
+                right: -100vw;
+                width: 100vw;
+                height: 100vh;
+                z-index: 1000;
+                transition: right 0.3s ease;
+                box-shadow: -2px 0 8px rgba(0, 0, 0, 0.1);
+            }
+
+            .sidebar.open {
+                right: 0;
+            }
+
+            .menu-button {
+                display: flex;
+            }
+
+            .floating-about {
+                display: none;
+            }
+
+            .sidebar-about-link {
+                display: block;
+            }
+
+            .version {
+                display: none;
+            }
+
+            .version-mobile {
+                display: block;
+            }
+
+            .pinned-counter {
+                right: 70px;
+            }
+
+            .grid-container {
+                width: 100%;
+            }
+
+            .backpack-grid {
+                grid-template-columns: repeat(var(--grid-columns, 2), 1fr);
+            }
+
+            .backpack-material {
+                display: none;
+            }
+        }
+
+        /* Version Indicator */
+        .version {
+            position: fixed;
+            bottom: 12px;
+            left: 24px;
+            font-size: 10px;
+            color: #86868b;
+            opacity: 0.5;
+            z-index: 10;
+            font-weight: 400;
+            letter-spacing: 0.3px;
+        }
+
+        .version-mobile {
+            display: none;
+            font-size: 10px;
+            color: #86868b;
+            opacity: 0.5;
+            font-weight: 400;
+            letter-spacing: 0.3px;
+            margin-top: 16px;
+            text-align: left;
+        }
+
+        /* Floating About Button (Desktop) */
         .floating-about {
             position: fixed;
             top: 20px;
@@ -927,8 +1084,21 @@
     </style>
 </head>
 <body>
-    <!-- Floating About Button -->
+    <!-- Version Indicator -->
+    <div class="version">Last updated Nov.18.25</div>
+
+    <!-- Floating About Button (Desktop) -->
     <button class="floating-about" onclick="openAboutModal()">About</button>
+
+    <!-- Hamburger Menu Button -->
+    <button class="menu-button" id="menu-button" onclick="toggleMenu()">
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
+
+    <!-- Menu Overlay -->
+    <div class="menu-overlay" id="menu-overlay" onclick="closeMenu()"></div>
 
     <!-- Pinned Counter -->
     <div class="pinned-counter" id="pinned-counter" onclick="openPinnedModal()">
@@ -943,9 +1113,11 @@
                 <button class="pinned-modal-close" onclick="closeAboutModal()">Close</button>
             </div>
             <div class="pinned-modal-body">
-                <p style="margin-bottom: 16px;">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-                <p style="margin-bottom: 16px;">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-                <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
+                <p style="margin-bottom: 16px;">Cool Bags is a personal database project, not a shopping site. I've always wanted a comprehensive, well-designed catalog of quality bags and backpacks—something I could browse, compare, and reference. I never found one I liked, so I built it.</p>
+                <p style="margin-bottom: 16px;">I'm using AI to help me build this site and extract product data and images from brand websites. It's a slow process—I can only add a few brands at a time, and each one requires careful image processing and data verification.</p>
+                <p style="margin-bottom: 16px;">The focus is on bags I think should be listed here.</p>
+                <p>This is a side project built for people who have also wanted this kind of website. Submit feedback via the feedback button to get in touch, call out problems, or recommend other brands to be added.</p>
+                <p>✌️</p>
             </div>
         </div>
     </div>
@@ -978,7 +1150,9 @@
 
     <div class="app-container">
         <!-- Sidebar -->
-        <aside class="sidebar">
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-about-link" onclick="openAboutModal(); closeMenu();">About</div>
+
             <div class="sidebar-header">
                 <h1>Cool Bags</h1>
                 <p class="footer-info">Currently displaying <span id="filtered-count">0</span> of <span id="total-count">0</span> bags by&nbsp;<span id="brand-count">0</span>&nbsp;<span id="brand-label">brands</span>.</p>
@@ -1094,6 +1268,7 @@
                     </span>
                     Buy Me a Coffee
                 </button>
+                <div class="version-mobile">Last updated Nov.18.25</div>
             </div>
         </aside>
 
@@ -1150,7 +1325,7 @@
             // Pakt bags - Travel-focused bags
             { id: 59, brand: 'Pakt', name: 'Aero Travel Backpack', price: 259, volume: 35, weight: 2.3, material: 'Nylon', type: 'Backpack', description: 'Premium travel backpack with modular organization.', link: 'https://paktbags.com/products/aero-travel-backpack', image: 'images/pakt-aero-travel-backpack-35l.png' },
             { id: 60, brand: 'Pakt', name: 'Everyday 22L Backpack', price: 147, volume: 22, weight: 1.8, material: 'Nylon', type: 'Backpack', description: 'Versatile everyday carry backpack.', link: 'https://paktbags.com/products/everyday-22l-backpack', image: 'images/pakt-everyday-22l-backpack.png' },
-            { id: 61, brand: 'Pakt', name: 'Everyday 15L Bag', price: 111, volume: 15, weight: 1.2, material: 'Nylon', type: 'Sling', description: 'Crossbody sling bag for daily carry.', link: 'https://paktbags.com/products/everyday-15l-bag', image: 'images/pakt-everyday-15l-bag.png' },
+            { id: 61, brand: 'Pakt', name: 'Everyday 15L Bag', price: 111, volume: 15, weight: 1.2, material: 'Nylon', type: 'Backpack', description: 'Crossbody sling bag for daily carry.', link: 'https://paktbags.com/products/everyday-15l-bag', image: 'images/pakt-everyday-15l-bag.png' },
             { id: 62, brand: 'Pakt', name: 'Everyday 3L Sling', price: 57, volume: 3, weight: 0.4, material: 'Nylon', type: 'Sling', description: 'Compact sling for essentials.', link: 'https://paktbags.com/products/everyday-3l-sling', image: 'images/pakt-everyday-3l-sling.png' },
             { id: 63, brand: 'Pakt', name: '25L Travel Duffel', price: 135, volume: 25, weight: 1.6, material: 'Nylon', type: 'Duffel', description: 'Convertible travel duffel with backpack straps.', link: 'https://paktbags.com/products/25l-travel-duffel', image: 'images/pakt-25l-travel-duffel.png' },
             { id: 64, brand: 'Pakt', name: 'Everyday 25L Tote', price: 111, volume: 25, weight: 1.4, material: 'Nylon', type: 'Tote', description: 'Structured tote for work and travel.', link: 'https://paktbags.com/products/everyday-25l-tote', image: 'images/pakt-everyday-25l-tote.png' },
@@ -1184,9 +1359,9 @@
             // DSPTCH (additional products)
             { id: 81, brand: 'DSPTCH', name: 'Sling Pouch Medium', price: 138, volume: 3, weight: 0.3, material: 'Nylon', type: 'Pouch', description: 'Medium-sized sling pouch for everyday carry.', link: 'https://www.dsptch.com/products/sling-pouch-medium-black', image: 'images/dsptch-sling-pouch-medium.png' },
             { id: 82, brand: 'DSPTCH', name: 'Sling Pouch Slim', price: 98, volume: 2, weight: 0.2, material: 'Nylon', type: 'Pouch', description: 'Slim profile sling pouch for minimal carry.', link: 'https://www.dsptch.com/products/sling-pouch-slim-black', image: 'images/dsptch-sling-pouch-slim.png' },
-            { id: 83, brand: 'DSPTCH', name: 'Unit Shoulder Bag', price: 292, volume: 12, weight: 0.9, material: 'X-Pac', type: 'Shoulder Bag', description: 'RND Edition shoulder bag in X-PAC X50 Light Army.', link: 'https://www.dsptch.com/products/unit-shoulder-bag-rnd-edition-x-pac-x50-light-army', image: 'images/dsptch-unit-shoulder-bag.png' },
+            { id: 83, brand: 'DSPTCH', name: 'Unit Shoulder Bag', price: 292, volume: 12, weight: 0.9, material: 'X-Pac', type: 'Sling', description: 'RND Edition shoulder bag in X-PAC X50 Light Army.', link: 'https://www.dsptch.com/products/unit-shoulder-bag-rnd-edition-x-pac-x50-light-army', image: 'images/dsptch-unit-shoulder-bag.png' },
             { id: 84, brand: 'DSPTCH', name: 'Weekender', price: 368, volume: 45, weight: 2.2, material: 'X-Pac', type: 'Duffel', description: 'RND Edition weekender bag in X-PAC X50 for weekend travel.', link: 'https://www.dsptch.com/products/weekender-x-pac-x50-light-army', image: 'images/dsptch-weekender.png' },
-            { id: 85, brand: 'DSPTCH', name: 'Zero-1 Bag', price: 248, volume: 5, weight: 0.5, material: 'Dyneema', type: 'Bag', description: 'RND Edition compact bag in black Dyneema fabric.', link: 'https://www.dsptch.com/products/zero-1-bag-rnd-edition-dyneema-black', image: 'images/dsptch-zero-1-bag.png' },
+            { id: 85, brand: 'DSPTCH', name: 'Zero-1 Bag', price: 248, volume: 5, weight: 0.5, material: 'Dyneema', type: 'Pouch', description: 'RND Edition compact bag in black Dyneema fabric.', link: 'https://www.dsptch.com/products/zero-1-bag-rnd-edition-dyneema-black', image: 'images/dsptch-zero-1-bag.png' },
             { id: 86, brand: 'DSPTCH', name: 'Slingpack Small', price: 236, volume: 10, weight: 0.8, material: 'ECOPAK', type: 'Sling', description: 'Compact slingpack in sustainable ECOPAK material.', link: 'https://www.dsptch.com/products/slingpack-small-ecopak', image: 'images/dsptch-slingpack-small.png' },
             { id: 87, brand: 'DSPTCH', name: 'Utility Tote Landscape', price: 258, volume: 19, weight: 1.1, material: 'ECOPAK', type: 'Tote', description: 'Landscape utility tote in sustainable ECOPAK with ballistic nylon base.', link: 'https://www.dsptch.com/collections/packs/products/utility-tote-landscape-ecopak', image: 'images/dsptch-utility-tote.png' },
             { id: 88, brand: 'DSPTCH', name: 'Gym/Work Pack', price: 196, volume: 25, weight: 1.8, material: 'Ballistic Nylon', type: 'Backpack', description: 'Versatile gym and work backpack in durable ballistic nylon.', link: 'https://www.dsptch.com/collections/gym-work/products/gym-work-pack-black', image: 'images/dsptch-gym-work-pack.png' },
@@ -1202,7 +1377,93 @@
             { id: 98, brand: 'DSPTCH', name: 'Unit Sling Pouch', price: 164, volume: 1.2, weight: 0.2, material: 'Dyneema', type: 'Pouch', description: 'Compact Dyneema sling pouch for essentials.', link: 'https://www.dsptch.com/collections/packs/products/unit-slingpouch-dyneema', image: 'images/dsptch-unit-sling-pouch.png' },
             { id: 99, brand: 'DSPTCH', name: 'Unit Sling Pouch Large', price: 197, volume: 3, weight: 0.3, material: 'Dyneema', type: 'Pouch', description: 'Large Dyneema sling pouch with expanded capacity.', link: 'https://www.dsptch.com/collections/packs/products/unit-sling-pouch-large-dyneema', image: 'images/dsptch-unit-sling-pouch-large.png' },
             { id: 100, brand: 'DSPTCH', name: 'Laptop Sling', price: 128, volume: 10, weight: 0.8, material: 'Ballistic Nylon', type: 'Sling', description: 'Laptop sling for 14-16 inch devices in ballistic nylon.', link: 'https://www.dsptch.com/collections/packs/products/laptop-sling-ballistic-nylon', image: 'images/dsptch-laptop-sling.png' },
-            { id: 101, brand: 'DSPTCH', name: 'Camera Insert L', price: 25, volume: 8, weight: 0.3, material: 'Ballistic Nylon', type: 'Accessory', description: 'Large camera insert organizer (10x10x5 inches).', link: 'https://www.dsptch.com/collections/packs/products/camera-insert-l', image: 'images/dsptch-camera-insert.png' }
+            { id: 101, brand: 'DSPTCH', name: 'Camera Insert L', price: 25, volume: 8, weight: 0.3, material: 'Ballistic Nylon', type: 'Accessory', description: 'Large camera insert organizer (10x10x5 inches).', link: 'https://www.dsptch.com/collections/packs/products/camera-insert-l', image: 'images/dsptch-camera-insert.png' },
+
+            // ILE (Inside Line Equipment)
+            { id: 102, brand: 'ILE', name: 'Default', price: 275, volume: 25, weight: 0, material: 'Cordura', type: 'Backpack', description: 'Classic 25L backpack with durable Cordura construction. Made in Berkeley, CA.', link: 'https://ilequipment.com/products/default-backpack', image: 'images/ile-default-25l.png' },
+            { id: 103, brand: 'ILE', name: 'Default Mini', price: 255, volume: 18, weight: 0, material: 'Cordura', type: 'Backpack', description: 'Compact 18L version of the classic Default backpack.', link: 'https://ilequipment.com/products/default-mini', image: 'images/ile-default-mini.png' },
+            { id: 104, brand: 'ILE', name: 'Default XL', price: 315, volume: 40, weight: 0, material: 'Cordura', type: 'Backpack', description: 'Expanded 40L capacity version of the Default backpack.', link: 'https://ilequipment.com/products/default-xl', image: 'images/ile-default-xl.png' },
+            { id: 105, brand: 'ILE', name: 'Radius', price: 220, volume: 21, weight: 0, material: 'Cordura', type: 'Backpack', description: '21L backpack with ergonomic design and weather-resistant construction.', link: 'https://ilequipment.com/products/radius', image: 'images/ile-radius.png' },
+            { id: 106, brand: 'ILE', name: 'Radius Mini', price: 175, volume: 14, weight: 0, material: 'Cordura', type: 'Backpack', description: 'Compact 14L version of the Radius with streamlined profile.', link: 'https://ilequipment.com/products/radius-mini', image: 'images/ile-radius-mini.png' },
+            { id: 107, brand: 'ILE', name: 'Radius XL', price: 300, volume: 40, weight: 0, material: 'Cordura', type: 'Backpack', description: 'Large capacity 40L Radius for extended trips and heavy loads.', link: 'https://ilequipment.com/products/radius-xl', image: 'images/ile-radius-xl.png' },
+            { id: 108, brand: 'ILE', name: 'Apex Day Pack', price: 135, volume: 15, weight: 0, material: 'Cordura', type: 'Backpack', description: 'Lightweight daypack with minimalist design for daily carry.', link: 'https://ilequipment.com/products/apex-day-pack', image: 'images/ile-apex.png' },
+            { id: 109, brand: 'ILE', name: 'Apex Mini', price: 110, volume: 10, weight: 0, material: 'Cordura', type: 'Backpack', description: 'Ultra-compact Apex pack for minimal carry and urban use.', link: 'https://ilequipment.com/products/apex-mini', image: 'images/ile-apex-mini.png' },
+            { id: 110, brand: 'ILE', name: 'Apex XL', price: 165, volume: 20, weight: 0, material: 'Cordura', type: 'Backpack', description: 'Expanded capacity Apex with additional organization and space.', link: 'https://ilequipment.com/products/apex-xl-day-pack', image: 'images/ile-apex-xl.png' },
+            { id: 111, brand: 'ILE', name: 'Transit 15L', price: 215, volume: 15, weight: 0, material: 'Cordura', type: 'Backpack', description: 'Compact 15L transit pack with organized compartments for commuting.', link: 'https://ilequipment.com/products/transit-15l', image: 'images/ile-transit-15l.png' },
+            { id: 112, brand: 'ILE', name: 'Transit 25L', price: 255, volume: 25, weight: 0, material: 'Cordura', type: 'Backpack', description: 'Full-featured 25L transit pack for work and travel.', link: 'https://ilequipment.com/products/transit-25l', image: 'images/ile-transit-25l.png' },
+            { id: 113, brand: 'ILE', name: 'Travel Pack', price: 380, volume: 40, weight: 0, material: 'XPAC', type: 'Backpack', description: 'Panel-loading travel backpack designed for airline carry-on with Cobra buckles.', link: 'https://ilequipment.com/products/travel-pack', image: 'images/ile-travel-pack.png' },
+            { id: 114, brand: 'ILE', name: 'Race Day Bag', price: 240, volume: 21, weight: 0, material: 'XPAC', type: 'Backpack', description: 'Weatherproof backpack for race day, cycling, and active use.', link: 'https://ilequipment.com/products/race-day-bag', image: 'images/ile-race-day-bag.png' },
+            { id: 115, brand: 'ILE', name: 'Flaptop', price: 320, volume: 32, weight: 0, material: 'Cordura', type: 'Backpack', description: 'Waterproof messenger-style bike courier backpack, handmade in Berkeley.', link: 'https://ilequipment.com/products/flaptop', image: 'images/ile-flaptop.png' },
+            { id: 116, brand: 'ILE', name: 'Flaptop Mini', price: 260, volume: 21, weight: 0, material: 'Cordura', type: 'Backpack', description: 'Compact messenger-style pack with waterproof construction for cycling.', link: 'https://ilequipment.com/products/flaptop-mini', image: 'images/ile-flaptop-mini.png' },
+            { id: 117, brand: 'ILE', name: 'Arid Duffle 24L', price: 210, volume: 24, weight: 0, material: 'Cordura', type: 'Duffel', description: 'Weatherproof convertible travel duffel with durable construction.', link: 'https://ilequipment.com/products/arid-duffle-24l', image: 'images/ile-arid-duffle-24l.png' },
+            { id: 118, brand: 'ILE', name: 'Arid Duffle 32L', price: 240, volume: 32, weight: 0, material: 'Cordura', type: 'Duffel', description: 'Weatherproof convertible travel gym bag for versatile packing.', link: 'https://ilequipment.com/products/arid-duffle-32l', image: 'images/ile-arid-duffle-32l.png' },
+            { id: 119, brand: 'ILE', name: 'Arid Duffle 52L', price: 280, volume: 52, weight: 0, material: 'Cordura', type: 'Duffel', description: 'Large capacity weatherproof travel duffel for extended trips.', link: 'https://ilequipment.com/products/arid-duffle-52l', image: 'images/ile-arid-duffle-52l.png' },
+            { id: 120, brand: 'ILE', name: 'Roll-Top Duffle', price: 260, volume: 40, weight: 0, material: 'Cordura', type: 'Duffel', description: 'Roll-top closure travel duffel with weatherproof construction.', link: 'https://ilequipment.com/products/roll-top-duffle-40l', image: 'images/ile-roll-top-duffle.png' },
+            { id: 121, brand: 'ILE', name: 'Utility Tote', price: 192, volume: 20, weight: 0, material: 'Cordura', type: 'Tote', description: 'Versatile utility tote for travel and everyday carry.', link: 'https://ilequipment.com/products/new-utility-tote', image: 'images/ile-utility-tote.png' },
+            { id: 122, brand: 'ILE', name: 'Minimal Tote', price: 95, volume: 15, weight: 0, material: 'Cordura', type: 'Tote', description: 'Minimalist tote with snap or zippered closure options.', link: 'https://ilequipment.com/products/minimal-tote', image: 'images/ile-minimal-tote.png' },
+            { id: 123, brand: 'ILE', name: 'Minimal Tote Small', price: 75, volume: 10, weight: 0, material: 'Cordura', type: 'Tote', description: 'Compact minimal tote for daily carry with multiple closure options.', link: 'https://ilequipment.com/products/minimal-tote-small', image: 'images/ile-minimal-tote-small.png' },
+            { id: 124, brand: 'ILE', name: 'Cooler Tote', price: 140, volume: 12, weight: 0, material: 'XPAC', type: 'Tote', description: 'Weatherproof cooler tote for carrying cold items and beverages.', link: 'https://ilequipment.com/products/ile-x-wondrous-cooler-tote', image: 'images/ile-cooler-tote.png' },
+            { id: 125, brand: 'ILE', name: 'Mesh Tote', price: 75, volume: 15, weight: 0, material: 'Mesh', type: 'Tote', description: 'Lightweight mesh tote for breathability and visibility of contents.', link: 'https://ilequipment.com/products/mesh-tote', image: 'images/ile-mesh-tote.png' },
+            { id: 126, brand: 'ILE', name: 'XXL Tote', price: 95, volume: 25, weight: 0, material: 'XPAC', type: 'Tote', description: 'Extra-large weatherproof tote for maximum carrying capacity.', link: 'https://ilequipment.com/products/xxl-tote', image: 'images/ile-xxl-tote.png' },
+            { id: 127, brand: 'ILE', name: 'Nano Tote', price: 20, volume: 5, weight: 0, material: 'XPAC', type: 'Tote', description: 'Ultra-compact weatherproof tote for minimal everyday carry.', link: 'https://ilequipment.com/products/nano-tote', image: 'images/ile-nano-tote.png' },
+            { id: 128, brand: 'ILE', name: 'Micro Messenger', price: 75, volume: 3, weight: 0, material: 'Cordura', type: 'Sling', description: 'Compact sling bag for minimal cross-body carry and essentials.', link: 'https://ilequipment.com/products/micro-messenger', image: 'images/ile-micro-messenger.png' },
+            { id: 129, brand: 'ILE', name: 'Mini Messenger', price: 110, volume: 5, weight: 0, material: 'Cordura', type: 'Sling', description: 'Versatile cross-body messenger for daily use and travel.', link: 'https://ilequipment.com/products/mini-messenger', image: 'images/ile-mini-messenger.png' },
+            { id: 130, brand: 'ILE', name: 'Camera Sling', price: 90, volume: 4, weight: 0, material: 'Cordura', type: 'Sling', description: 'Compact sling designed for mirrorless cameras and photography gear.', link: 'https://ilequipment.com/products/camera-sling', image: 'images/ile-camera-sling.png' },
+            { id: 131, brand: 'ILE', name: 'Compact Sling', price: 60, volume: 3, weight: 0, material: 'Cordura', type: 'Sling', description: 'Lightweight crossbody sling for travel and everyday carry.', link: 'https://ilequipment.com/products/compact-sling', image: 'images/ile-compact-sling.png' },
+            { id: 132, brand: 'ILE', name: 'Mesh Sling', price: 85, volume: 4, weight: 0, material: 'XPAC', type: 'Sling', description: 'Weatherproof sling with mesh panels for ventilation.', link: 'https://ilequipment.com/products/mesh-sling', image: 'images/ile-mesh-sling.png' },
+            { id: 133, brand: 'ILE', name: 'Photo Bag Prime', price: 340, volume: 21, weight: 0, material: 'XPAC', type: 'Camera Bag', description: 'Professional photographer backpack with padded adjustable dividers.', link: 'https://ilequipment.com/products/photo-bag-prime', image: 'images/ile-photo-bag-prime.png' },
+            { id: 134, brand: 'ILE', name: 'Photo Bag Mini', price: 220, volume: 12, weight: 0, material: 'Cordura', type: 'Camera Bag', description: 'Compact camera bag with padded interior for photography gear.', link: 'https://ilequipment.com/products/photo-bag-mini', image: 'images/ile-photo-bag-mini.png' },
+            { id: 135, brand: 'ILE', name: 'Ultimate Photographers Bag MKIV', price: 520, volume: 30, weight: 0, material: 'XPAC', type: 'Camera Bag', description: 'Professional weatherproof camera bag with adjustable organization.', link: 'https://ilequipment.com/products/mkiv', image: 'images/ile-photographers-bag-mkiv.png' },
+            { id: 136, brand: 'ILE', name: 'Stuff Sack', price: 48, volume: 8, weight: 0, material: 'XPAC', type: 'Pouch', description: 'Compact packing accessory for organization within larger bags.', link: 'https://ilequipment.com/products/stuff-sack', image: 'images/ile-stuff-sack.png' },
+            { id: 137, brand: 'ILE', name: 'Dopp Kit Utility', price: 80, volume: 4, weight: 0, material: 'XPAC', type: 'Toiletry Bag', description: 'Weatherproof utility organizer for travel essentials.', link: 'https://ilequipment.com/products/dopp-kit-utility', image: 'images/ile-dopp-kit-utility.png' },
+            { id: 138, brand: 'ILE', name: 'Dopp Kit Large', price: 44, volume: 3, weight: 0, material: 'Cordura', type: 'Toiletry Bag', description: 'Compact organizational pouch for travel and toiletries.', link: 'https://ilequipment.com/products/dopp-kit', image: 'images/ile-dopp-kit-large.png' },
+            { id: 139, brand: 'ILE', name: 'Dopp Kit Small', price: 32, volume: 2, weight: 0, material: 'Cordura', type: 'Toiletry Bag', description: 'Smallest dopp kit for minimal travel and everyday carry.', link: 'https://ilequipment.com/products/dopp-kit-small', image: 'images/ile-dopp-kit-small.png' },
+            { id: 140, brand: 'ILE', name: 'Lunch Bag', price: 175, volume: 8, weight: 0, material: 'Cordura', type: 'Pouch', description: 'Insulated bag for daily lunch and food transport.', link: 'https://ilequipment.com/products/lunch-bag', image: 'images/ile-lunch-bag.png' },
+            { id: 141, brand: 'ILE', name: 'Tablet Bag', price: 160, volume: 6, weight: 0, material: 'Cordura', type: 'Sling', description: 'Cross-body sling for tablets and small essentials.', link: 'https://ilequipment.com/products/tablet-bag', image: 'images/ile-tablet-bag.png' },
+            { id: 142, brand: 'ILE', name: 'Utility Organizer', price: 72, volume: 3, weight: 0, material: 'Cordura', type: 'Pouch', description: 'Compact organizational sling for travel and daily carry.', link: 'https://ilequipment.com/products/utility-org', image: 'images/ile-utility-organizer.png' },
+            { id: 143, brand: 'ILE', name: 'ORG M 04', price: 71, volume: 2, weight: 0, material: 'Cordura', type: 'Pouch', description: 'Modular organizer with optional attachments for customization.', link: 'https://ilequipment.com/products/org_m_04', image: 'images/ile-org-m-04.png' },
+            { id: 144, brand: 'ILE', name: 'Laptop Sleeve', price: 72, volume: 3, weight: 0, material: 'Cordura', type: 'Laptop Sleeve', description: 'Protective sleeve for 14-inch laptops with durable construction.', link: 'https://ilequipment.com/products/laptop-sleeve', image: 'images/ile-laptop-sleeve.png' },
+            { id: 145, brand: 'ILE', name: 'Travel Wallet', price: 48, volume: 1, weight: 0, material: 'Cordura', type: 'Pouch', description: 'Compact travel wallet for organizing essentials on the go.', link: 'https://ilequipment.com/products/travel-wallet', image: 'images/ile-travel-wallet.png' },
+            { id: 146, brand: 'ILE', name: 'Pocket Organizer', price: 40, volume: 1, weight: 0, material: 'Cordura', type: 'Pouch', description: 'Weatherproof pocket organizer for tech, cables, and accessories.', link: 'https://ilequipment.com/products/pocket-organizer', image: 'images/ile-pocket-organizer.png' },
+            { id: 147, brand: 'ILE', name: 'Load Cell Cuboid Small', price: 40, volume: 4, weight: 0, material: 'XPAC', type: 'Packing Cube', description: 'Small cuboid packing organizer for gear compression and organization.', link: 'https://ilequipment.com/products/load-cell-cuboid', image: 'images/ile-load-cell-cuboid.png' },
+            { id: 148, brand: 'ILE', name: 'Load Cell Cuboid Medium', price: 48, volume: 6, weight: 0, material: 'XPAC', type: 'Packing Cube', description: 'Medium cuboid packing organizer for travel organization.', link: 'https://ilequipment.com/products/load-cell-cuboid', image: 'images/ile-load-cell-cuboid.png' },
+            { id: 149, brand: 'ILE', name: 'Load Cell Cuboid Large', price: 56, volume: 8, weight: 0, material: 'XPAC', type: 'Packing Cube', description: 'Large cuboid packing organizer for maximum packing capacity.', link: 'https://ilequipment.com/products/load-cell-cuboid', image: 'images/ile-load-cell-cuboid.png' },
+            { id: 150, brand: 'ILE', name: 'Load Cell Flat Small', price: 16, volume: 2, weight: 0, material: 'Cordura', type: 'Packing Cube', description: 'Small flat packing organizer for efficient load distribution.', link: 'https://ilequipment.com/products/load-cell-flat', image: 'images/ile-load-cell-flat.png' },
+            { id: 151, brand: 'ILE', name: 'Load Cell Flat Medium', price: 24, volume: 4, weight: 0, material: 'Cordura', type: 'Packing Cube', description: 'Medium flat packing organizer for travel gear management.', link: 'https://ilequipment.com/products/load-cell-flat', image: 'images/ile-load-cell-flat.png' },
+            { id: 152, brand: 'ILE', name: 'Load Cell Flat Large', price: 32, volume: 6, weight: 0, material: 'Cordura', type: 'Packing Cube', description: 'Large flat packing organizer for comprehensive travel organization.', link: 'https://ilequipment.com/products/load-cell-flat', image: 'images/ile-load-cell-flat.png' },
+            { id: 153, brand: 'ILE', name: 'Load Cell Cable', price: 44, volume: 2, weight: 0, material: 'Cordura', type: 'Pouch', description: 'Cable organizer for managing cords and small items during travel.', link: 'https://ilequipment.com/products/load-cell-cable', image: 'images/ile-load-cell-cable.png' },
+            { id: 154, brand: 'ILE', name: 'Load Cell Utility', price: 38, volume: 3, weight: 0, material: 'Cordura', type: 'Pouch', description: 'Utility pouch for organizing gear within larger bags.', link: 'https://ilequipment.com/products/load-cell-utility-1', image: 'images/ile-load-cell-utility.png' },
+
+            // Boundary Supply
+            { id: 155, brand: 'Boundary Supply', name: 'Rennen Pro X-Pac', price: 449, volume: 28, weight: 0, material: 'X-Pac', type: 'Backpack', description: 'Premium travel backpack with X-Pac VX21 construction for durability and weather resistance.', link: 'https://www.boundarysupply.com/collections/backpacks/products/rennen-pro-x-pac', image: 'images/boundary-rennen-pro-xpac.png' },
+            { id: 156, brand: 'Boundary Supply', name: 'Errant Pro X-Pac', price: 424, volume: 26, weight: 0, material: 'X-Pac', type: 'Backpack', description: 'Professional travel backpack with X-Pac VX21 jet black fabric.', link: 'https://www.boundarysupply.com/collections/backpacks/products/errant-pro-x-pac', image: 'images/boundary-errant-pro-xpac.png' },
+            { id: 157, brand: 'Boundary Supply', name: 'Prima System X-Pac', price: 349, volume: 30, weight: 0, material: 'X-Pac', type: 'Backpack', description: 'Modular backpack system with X-Pac jet black construction and versatile organization.', link: 'https://www.boundarysupply.com/collections/backpacks/products/prima-system-x-pac', image: 'images/boundary-prima-system-xpac.png' },
+            { id: 158, brand: 'Boundary Supply', name: 'Arris Duffel Pack', price: 249, volume: 45, weight: 0, material: 'Nylon', type: 'Duffel', description: 'Convertible 45L duffel backpack for versatile travel and gym use.', link: 'https://www.boundarysupply.com/collections/backpacks/products/arris-duffel-pack', image: 'images/boundary-arris-duffel-pack.png' },
+
+            // Minaal
+            { id: 159, brand: 'Minaal', name: 'Carry-on 3.0', price: 349, volume: 35, weight: 0, material: 'Nylon', type: 'Backpack', description: 'Premium carry-on travel backpack designed for life on the move with maximum organization.', link: 'https://www.minaal.com/products/minaal-carry-on-bag', image: 'images/minaal-carryon-3.png' },
+            { id: 160, brand: 'Minaal', name: 'Carry-on 2.0', price: 299, volume: 35, weight: 0, material: 'Nylon', type: 'Backpack', description: 'Second generation carry-on travel backpack for digital nomads and travelers.', link: 'https://www.minaal.com/products/carry-on-2-0', image: 'images/minaal-carryon-2.png' },
+            { id: 161, brand: 'Minaal', name: 'Daily 3.0', price: 289, volume: 21, weight: 0, material: 'Nylon', type: 'Backpack', description: 'Everyday backpack with versatile organization for work and travel.', link: 'https://www.minaal.com/products/daily-bag', image: 'images/minaal-daily-3.png' },
+            { id: 162, brand: 'Minaal', name: 'Daily', price: 249, volume: 21, weight: 0, material: 'Nylon', type: 'Backpack', description: 'Streamlined everyday carry backpack for urban commuting and daily adventures.', link: 'https://www.minaal.com/products/daily', image: 'images/minaal-daily.png' },
+            { id: 163, brand: 'Minaal', name: 'Crossbody 2.0', price: 139, volume: 6, weight: 0, material: 'Nylon', type: 'Sling', description: 'Compact crossbody sling bag for essentials and quick access on the go.', link: 'https://www.minaal.com/products/crossbody-bag', image: 'images/minaal-crossbody-2.png' },
+
+            // Black Ember
+            { id: 164, brand: 'Black Ember', name: 'Citadel R3', price: 184, volume: 20, weight: 0, material: 'Embertex PFAS Free', type: 'Backpack', description: 'Urban backpack with PFAS-free waterproof Embertex fabric and modern organization.', link: 'https://blackember.com/collections/backpacks/products/citadel-r3-20', image: 'images/blackember-citadel-r3-20l.png' },
+            { id: 165, brand: 'Black Ember', name: 'Citadel R3', price: 214, volume: 25, weight: 0, material: 'Embertex PFAS Free', type: 'Backpack', description: 'Larger urban backpack with eco-friendly Embertex construction and expandable capacity.', link: 'https://blackember.com/collections/backpacks/products/citadel-r3-25', image: 'images/blackember-citadel-r3-25l.png' },
+            { id: 166, brand: 'Black Ember', name: 'Forge', price: 244, volume: 30, weight: 0, material: 'Embertex PFAS Free', type: 'Backpack', description: 'Expandable laptop travel backpack that grows from 20L to 30L for versatile packing.', link: 'https://blackember.com/collections/backpacks/products/forge-30', image: 'images/blackember-forge-30.png' },
+            { id: 167, brand: 'Black Ember', name: 'Forge', price: 281, volume: 40, weight: 0, material: 'Embertex PFAS Free', type: 'Backpack', description: 'Maximum capacity travel backpack expanding from 30L to 40L for extended trips.', link: 'https://blackember.com/collections/backpacks/products/forge-40', image: 'images/blackember-forge-40.png' },
+            { id: 168, brand: 'Black Ember', name: 'Forge SB', price: 184, volume: 20, weight: 0, material: 'Embertex PFAS Free', type: 'Backpack', description: 'Soft brief work backpack with professional styling and laptop protection.', link: 'https://blackember.com/collections/backpacks/products/forge-sb', image: 'images/blackember-forge-sb.png' },
+            { id: 169, brand: 'Black Ember', name: 'Grip-Sling', price: 116, volume: 9, weight: 0, material: 'Cordura RN66 Velocity', type: 'Sling', description: 'Premium sling bag with Cordura construction for everyday carry and quick access.', link: 'https://blackember.com/collections/slings/products/grip-sling-9', image: 'images/blackember-grip-sling-9l.png' },
+            { id: 170, brand: 'Black Ember', name: 'Grip-Sling', price: 146, volume: 12, weight: 0, material: 'Embertex PFAS Free', type: 'Sling', description: 'Larger laptop sling with waterproof Embertex fabric and versatile carrying options.', link: 'https://blackember.com/collections/slings/products/grip-sling-12', image: 'images/blackember-grip-sling-12l.png' },
+            { id: 171, brand: 'Black Ember', name: 'Dopp Kit', price: 49, volume: 2.5, weight: 0, material: 'Nylon', type: 'Toiletry Bag', description: 'Compact travel pouch for toiletries and personal care essentials.', link: 'https://blackember.com/collections/accessories/products/dopp-kit', image: 'images/blackember-dopp-kit.png' },
+
+            // Mission Workshop
+            { id: 172, brand: 'Mission Workshop', name: 'Vandal VX', price: 485, volume: 47, weight: 0, material: 'X-Pac', type: 'Backpack', description: 'Expandable travel pack with carbon fiber frame. Grows from 29L to 65L capacity.', link: 'https://missionworkshop.com/products/vandal-vx', image: 'images/mission-workshop-vandal-vx.png' },
+            { id: 173, brand: 'Mission Workshop', name: 'Rambler VX', price: 450, volume: 33, weight: 0, material: 'X-Pac', type: 'Backpack', description: 'Expandable daypack with magnetic closure. Expands from 22L to 44L.', link: 'https://missionworkshop.com/products/rambler-vx', image: 'images/mission-workshop-rambler-vx.png' },
+            { id: 174, brand: 'Mission Workshop', name: 'Rhake', price: 435, volume: 22, weight: 0, material: 'Nylon', type: 'Backpack', description: 'Purpose-built laptop backpack with Arkiv rail attachment system.', link: 'https://missionworkshop.com/products/rhake-laptop-backpack', image: 'images/mission-workshop-rhake.png' },
+            { id: 175, brand: 'Mission Workshop', name: 'Speedwell', price: 335, volume: 20, weight: 0, material: 'X-Pac', type: 'Backpack', description: 'Hydration-ready waterproof laptop backpack with X-Pac construction.', link: 'https://missionworkshop.com/products/speedwell-20l-hydration-laptop-backpack', image: 'images/mission-workshop-speedwell-20l.png' },
+            { id: 176, brand: 'Mission Workshop', name: 'R6 Arkiv Field Pack', price: 275, volume: 20, weight: 0, material: 'Nylon', type: 'Backpack', description: 'Weatherproof rolltop pack with internal frame sheet and modular system.', link: 'https://missionworkshop.com/products/r6-arkiv-field-pack-20l', image: 'images/mission-workshop-r6-arkiv-20l.png' },
+            { id: 177, brand: 'Mission Workshop', name: 'Fitzroy', price: 265, volume: 40, weight: 0, material: 'Nylon', type: 'Backpack', description: 'Waterproof rucksack with mil-spec construction and multiple weatherproof compartments.', link: 'https://missionworkshop.com/products/fitzroy-40l-waterproof-rucksack-backpack', image: 'images/mission-workshop-fitzroy-40l.png' }
         ];
 
         // State
@@ -1432,6 +1693,27 @@
             aboutModal.classList.remove('visible');
         }
 
+        // Menu toggle functions
+        function toggleMenu() {
+            const sidebar = document.getElementById('sidebar');
+            const menuButton = document.getElementById('menu-button');
+            const overlay = document.getElementById('menu-overlay');
+
+            sidebar.classList.toggle('open');
+            menuButton.classList.toggle('open');
+            overlay.classList.toggle('visible');
+        }
+
+        function closeMenu() {
+            const sidebar = document.getElementById('sidebar');
+            const menuButton = document.getElementById('menu-button');
+            const overlay = document.getElementById('menu-overlay');
+
+            sidebar.classList.remove('open');
+            menuButton.classList.remove('open');
+            overlay.classList.remove('visible');
+        }
+
         // Drawer toggle function
         function toggleDrawer(header) {
             const drawer = header.parentElement;
@@ -1440,10 +1722,11 @@
 
         // Initialize filters
         function initializeFilters() {
-            // Get unique brands, materials, and types
+            // Get unique brands, materials, and types (only from bags that have data)
             const brands = [...new Set(backpacksData.map(b => b.brand))].sort();
             const materials = [...new Set(backpacksData.map(b => b.material))].sort();
-            const types = [...new Set(backpacksData.map(b => b.type))].sort();
+            // Only show types that have at least one bag with an image
+            const types = [...new Set(backpacksData.filter(b => b.image).map(b => b.type))].sort();
 
             // Populate brand filter
             const brandGroup = document.getElementById('brand-filter-group');
@@ -1515,14 +1798,14 @@
         function createBagCard(bag) {
             const isPinned = pinnedBags.has(bag.id);
             const imageHtml = bag.image
-                ? `<img src="${bag.image}" alt="${bag.brand} ${bag.name}" />`
+                ? `<img src="${bag.image}" alt="${bag.brand} ${bag.name}" loading="lazy" />`
                 : `<span class="placeholder">🎒</span>`;
 
             const zoomLevel = parseInt(zoomSelect.value);
             const isCompact = zoomLevel >= 5;
 
             return `
-                <div class="backpack-item" data-bag-id="${bag.id}">
+                <div class="backpack-item" data-bag-id="${bag.id}" onclick="window.open('${bag.link}', '_blank')">
                     <div class="backpack-image">
                         ${imageHtml}
                     </div>
@@ -1638,11 +1921,39 @@
         loadPinnedFromLocalStorage();
         loadPinnedFromURL();
         initializeFilters();
+        updateSliderRange(); // Set mobile/desktop slider range
         updateZoom();
-        renderBackpacks();
+        applyFiltersAndSort();
         updatePinnedUI();
         initializeComingSoonHover();
         console.log('Cool Bags initialized with', backpacksData.length, 'bags');
+
+        // Update slider range on window resize
+        window.addEventListener('resize', updateSliderRange);
+
+        // Function to update slider range based on screen size
+        function updateSliderRange() {
+            const isMobile = window.innerWidth <= 768;
+            const slider = document.getElementById('zoom-select');
+
+            if (isMobile) {
+                slider.min = 1;
+                slider.max = 3;
+                // Constrain current value to mobile range
+                if (parseInt(slider.value) > 3) {
+                    slider.value = 3;
+                    updateZoom();
+                }
+            } else {
+                slider.min = 2;
+                slider.max = 8;
+                // Set default desktop value if coming from mobile
+                if (parseInt(slider.value) < 2) {
+                    slider.value = 4;
+                    updateZoom();
+                }
+            }
+        }
     </script>
 </body>
 </html>
