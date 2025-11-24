@@ -2225,7 +2225,7 @@
   {
     "id": 197,
     "brand": "Nanuk",
-    "name": "N-PVD 18L",
+    "name": "N-PVD",
     "price": 270,
     "volume": 18,
     "weight": null,
@@ -2238,7 +2238,7 @@
   {
     "id": 198,
     "brand": "Nanuk",
-    "name": "N-EDC 20L",
+    "name": "N-EDC",
     "price": 150,
     "volume": 20,
     "weight": null,
@@ -2251,7 +2251,7 @@
   {
     "id": 199,
     "brand": "Nanuk",
-    "name": "N-EDC 26L",
+    "name": "N-EDC",
     "price": 220,
     "volume": 26,
     "weight": null,
@@ -2264,7 +2264,7 @@
   {
     "id": 200,
     "brand": "Nanuk",
-    "name": "N-PVD 30L",
+    "name": "N-PVD",
     "price": 300,
     "volume": 30,
     "weight": null,
@@ -2277,7 +2277,7 @@
   {
     "id": 201,
     "brand": "Nanuk",
-    "name": "N-EDC 35L",
+    "name": "N-EDC",
     "price": 270,
     "volume": 35,
     "weight": null,
@@ -2290,7 +2290,7 @@
   {
     "id": 202,
     "brand": "Nanuk",
-    "name": "N-PVD 35L",
+    "name": "N-PVD",
     "price": 330,
     "volume": 35,
     "weight": null,
