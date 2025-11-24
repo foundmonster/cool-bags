@@ -2221,5 +2221,83 @@
     "description": "Reclaimed parachute fabric with recycled handles and industrial belts. Ripstop and plain-woven material with distinctive characteristics.",
     "link": "https://puebco.us/products/covered-parachute-document-bag-olive-puebco-504117",
     "image": "images/puebco-parachute-document.png"
+  },
+  {
+    "id": 197,
+    "brand": "Nanuk",
+    "name": "N-PVD 18L",
+    "price": 270,
+    "volume": 18,
+    "weight": null,
+    "material": "Nylon",
+    "type": "Backpack",
+    "description": "Compact protective backpack from the N-PVD series with water-resistant cover, YKK Aquaguard zippers, and customizable padded dividers for camera gear",
+    "link": "https://nanuk.com/products/n-pvd-18l",
+    "image": "images/nanuk-n-pvd-18l.png"
+  },
+  {
+    "id": 198,
+    "brand": "Nanuk",
+    "name": "N-EDC 20L",
+    "price": 150,
+    "volume": 20,
+    "weight": null,
+    "material": "Nylon",
+    "type": "Backpack",
+    "description": "Compact everyday carry backpack with 20-liter capacity, engineered with rugged performance and attention to detail",
+    "link": "https://nanuk.com/products/n-edc-20l",
+    "image": "images/nanuk-n-edc-20l.png"
+  },
+  {
+    "id": 199,
+    "brand": "Nanuk",
+    "name": "N-EDC 26L",
+    "price": 220,
+    "volume": 26,
+    "weight": null,
+    "material": "Nylon",
+    "type": "Backpack",
+    "description": "Mid-sized everyday carry backpack with durable construction and organized storage for daily adventures",
+    "link": "https://nanuk.com/products/n-edc-26l",
+    "image": "images/nanuk-n-edc-26l.png"
+  },
+  {
+    "id": 200,
+    "brand": "Nanuk",
+    "name": "N-PVD 30L",
+    "price": 300,
+    "volume": 30,
+    "weight": null,
+    "material": "Nylon",
+    "type": "Backpack",
+    "description": "Professional camera-drone backpack with water/dust cover, padded laptop sleeve up to 16 inches, and customizable foam dividers. Accommodates 1-2 camera bodies, lenses, drone, and accessories. Red Dot Design Award winner 2024",
+    "link": "https://nanuk.com/products/n-pvd-30l",
+    "image": "images/nanuk-n-pvd-30l.png"
+  },
+  {
+    "id": 201,
+    "brand": "Nanuk",
+    "name": "N-EDC 35L",
+    "price": 270,
+    "volume": 35,
+    "weight": null,
+    "material": "Nylon",
+    "type": "Backpack",
+    "description": "Larger everyday carry backpack designed for extended adventures with rugged construction and ample 35-liter capacity",
+    "link": "https://nanuk.com/products/n-edc-35l",
+    "image": "images/nanuk-n-edc-35l.png"
+  },
+  {
+    "id": 202,
+    "brand": "Nanuk",
+    "name": "N-PVD 35L",
+    "price": 330,
+    "volume": 35,
+    "weight": null,
+    "material": "Nylon",
+    "type": "Backpack",
+    "description": "Largest capacity option in the N-PVD protective camera backpack line with premium weather protection and customizable internal organization",
+    "link": "https://nanuk.com/products/n-pvd-35l",
+    "image": "images/nanuk-n-pvd-35l.png"
   }
 ]
