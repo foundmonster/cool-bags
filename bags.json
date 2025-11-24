@@ -2936,5 +2936,57 @@
     "description": "Versatile Axiom backpack with durable VX construction. Professional-grade design for tactical and urban environments",
     "link": "https://tripleaughtdesign.com/products/axiom-s2-pack",
     "image": "images/tad-axiom-vx.png"
+  },
+  {
+    "id": 252,
+    "brand": "Fresh Service",
+    "name": "Expedition Backpack",
+    "price": 188,
+    "volume": 34,
+    "weight": null,
+    "material": "Polyester",
+    "type": "Backpack",
+    "description": "34L expedition backpack with MOLLE webbing system for modular attachments. Water-resistant construction with PC sleeve and multiple pockets",
+    "link": "https://eng.freshservice.jp/products/fsp253-90066",
+    "image": "images/freshservice-expedition.png"
+  },
+  {
+    "id": 253,
+    "brand": "Fresh Service",
+    "name": "Utility Sling Bag",
+    "price": 84,
+    "volume": null,
+    "weight": null,
+    "material": "Polyester",
+    "type": "Sling",
+    "description": "Crossbody sling with multiple functional pockets. Gusseted compartments prevent over-opening for secure travel storage",
+    "link": "https://eng.freshservice.jp/products/fsp253-90069",
+    "image": "images/freshservice-sling.png"
+  },
+  {
+    "id": 254,
+    "brand": "Fresh Service",
+    "name": "Quilted Cube Bag Small",
+    "price": 84,
+    "volume": null,
+    "weight": null,
+    "material": "Micro ripstop nylon",
+    "type": "Shoulder",
+    "description": "Compact cube-shaped quilted bag with cushiony appearance. Detachable shoulder strap and abrasion-resistant ripstop construction",
+    "link": "https://eng.freshservice.jp/products/fsp253-90187",
+    "image": "images/freshservice-cube-s.png"
+  },
+  {
+    "id": 255,
+    "brand": "Fresh Service",
+    "name": "Quilted Cube Bag Medium",
+    "price": 94,
+    "volume": null,
+    "weight": null,
+    "material": "Micro ripstop nylon",
+    "type": "Shoulder",
+    "description": "Medium cube-shaped quilted bag with bulky cushioned design. Versatile carrying with detachable strap and durable ripstop fabric",
+    "link": "https://eng.freshservice.jp/products/fsp253-90188",
+    "image": "images/freshservice-cube-m.png"
   }
 ]
