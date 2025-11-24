@@ -2806,5 +2806,31 @@
     "description": "Minimalist tote bag with technical outdoor construction. Combines everyday functionality with 66°North's cold-weather heritage",
     "link": "https://www.66north.com/products/hringbraut-tote-bag-u99222-900",
     "image": "images/66north-hringbraut-tote.png"
+  },
+  {
+    "id": 242,
+    "brand": "Monos",
+    "name": "Gesso Backpack",
+    "price": 160,
+    "volume": null,
+    "weight": null,
+    "material": "Cotton canvas",
+    "type": "Backpack",
+    "description": "Premium cotton canvas backpack for everyday use and travel. Features QuickSnap™ technology and minimalist design aesthetic",
+    "link": "https://monos.com/products/gesso-backpack",
+    "image": "images/monos-gesso-backpack.png"
+  },
+  {
+    "id": 243,
+    "brand": "Monos",
+    "name": "Metro Backpack",
+    "price": 215,
+    "volume": null,
+    "weight": null,
+    "material": "Nylon",
+    "type": "Backpack",
+    "description": "Technical urban backpack with QuickSnap™ technology. Highly rated (4.9/5 stars) with 1,600+ reviews. Also available in vegan leather",
+    "link": "https://monos.com/products/metro-backpack",
+    "image": "images/monos-metro-backpack.png"
   }
 ]
