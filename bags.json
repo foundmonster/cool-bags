@@ -2351,5 +2351,83 @@
     "description": "Versatile duffel-backpack hybrid with 1,050 denier MIL-SPEC ballistic nylon construction. Features detachable padded straps, padded laptop section for 15-inch MacBook Pro, trolley strap for suitcase attachment, and YKK water-resistant zippers. Made in USA",
     "link": "https://defybags.com/products/the-ranger-black-ballistic-nylon-duffel-backpack",
     "image": "images/defy-rover.png"
+  },
+  {
+    "id": 207,
+    "brand": "Meret",
+    "name": "DELTA24",
+    "price": 200,
+    "volume": 24,
+    "weight": 0.91,
+    "material": "Nylon",
+    "type": "Backpack",
+    "description": "Compact tactical backpack with MOLLE panels and multiple compartments. Features infection control materials, padded straps, and 24L capacity for responding, traveling, or outdoor use",
+    "link": "https://meretusa.com/products/delta24",
+    "image": "images/meret-delta24.png"
+  },
+  {
+    "id": 208,
+    "brand": "Meret",
+    "name": "DELTA37",
+    "price": 216,
+    "volume": 37,
+    "weight": 1.13,
+    "material": "Nylon",
+    "type": "Backpack",
+    "description": "Fully equipped, durable high-capacity backpack with 3 pocket compartments and ergonomic padded straps. 37L capacity for extended missions and travel",
+    "link": "https://meretusa.com/products/delta37",
+    "image": "images/meret-delta37.png"
+  },
+  {
+    "id": 209,
+    "brand": "Meret",
+    "name": "Commander",
+    "price": 175,
+    "volume": 13,
+    "weight": 0.95,
+    "material": "Nylon",
+    "type": "Messenger Bag",
+    "description": "Mid-size tactical shoulder bag with multiple pockets, MOLLE panels, and laptop compartment (fits 15-inch). 13L capacity for EDC and professional use",
+    "link": "https://meretusa.com/products/commander",
+    "image": "images/meret-commander.png"
+  },
+  {
+    "id": 210,
+    "brand": "Meret",
+    "name": "OMNI PRO X",
+    "price": 500,
+    "volume": null,
+    "weight": null,
+    "material": "Ballistic Nylon",
+    "type": "Response Bag",
+    "description": "Professional EMS response bag with customizable SLIDER system, hideaway backpack straps, and infection control materials. Features 360° reflective striping and modular organization for emergency medical equipment",
+    "link": "https://meretusa.com/products/omni-pro-x",
+    "image": "images/meret-omni.png"
+  },
+  {
+    "id": 211,
+    "brand": "Meret",
+    "name": "RAPID PRO X",
+    "price": 400,
+    "volume": null,
+    "weight": 1.36,
+    "material": "Ballistic Nylon",
+    "type": "Response Bag",
+    "description": "Compact EMS response bag with hideaway backpack straps, 360° retroreflective striping, and customizable SLIDER system. Features infection control materials and laser-cut MOLLE panel",
+    "link": "https://meretusa.com/products/rapid-pro-x",
+    "image": "images/meret-rapid.png"
+  },
+  {
+    "id": 212,
+    "brand": "Meret",
+    "name": "RECOVER PRO X",
+    "price": 300,
+    "volume": null,
+    "weight": 3.63,
+    "material": "Nylon",
+    "type": "Oxygen Bag",
+    "description": "Specialized oxygen equipment bag accommodating up to Jumbo D or MD O2 cylinders and VIPR regulator systems. Features quick-pull 2-panel access, module-ready zippers, and infection control materials",
+    "link": "https://meretusa.com/products/recover-pro-x",
+    "image": "images/meret-recover.png"
   }
 ]
