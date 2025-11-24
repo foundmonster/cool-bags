@@ -2299,5 +2299,57 @@
     "description": "Largest capacity option in the N-PVD protective camera backpack line with premium weather protection and customizable internal organization",
     "link": "https://nanuk.com/products/n-pvd-35l",
     "image": "images/nanuk-n-pvd-35l.png"
+  },
+  {
+    "id": 203,
+    "brand": "Defy",
+    "name": "Bucktown",
+    "price": 273,
+    "volume": 23,
+    "weight": 1.25,
+    "material": "Ballistic Nylon",
+    "type": "Backpack",
+    "description": "Hand-crafted in USA with 1,050 denier MIL-SPEC ballistic nylon. Features padded laptop section for 16-inch MacBook Pro, YKK AquaGuard zippers, closed-cell foam padding, and triple stitching at stress points",
+    "link": "https://defybags.com/products/bucktown-backpack-black-ballistic-nylon",
+    "image": "images/defy-bucktown.png"
+  },
+  {
+    "id": 204,
+    "brand": "Defy",
+    "name": "Menace 2.0",
+    "price": 274,
+    "volume": 18,
+    "weight": 1.36,
+    "material": "Ballistic Nylon",
+    "type": "Backpack",
+    "description": "Compact EDC backpack with 1,050 denier MIL-SPEC ballistic nylon construction. Features 2-inch AustriAlpin COBRA buckle closure, padded laptop section for 16-inch MacBook Pro, and MIL-SPEC webbing straps",
+    "link": "https://defybags.com/products/the-menace-backpack-black-ballistic-nylon",
+    "image": "images/defy-menace.png"
+  },
+  {
+    "id": 205,
+    "brand": "Defy",
+    "name": "VerBockel Roll Top 2.0",
+    "price": 299,
+    "volume": 34,
+    "weight": 1.7,
+    "material": "Ballistic Nylon",
+    "type": "Backpack",
+    "description": "Expandable roll-top backpack with 28-40 liter capacity. Hand-crafted in USA with 1,050 denier MIL-SPEC ballistic nylon, AustriAlpin COBRA buckles, foam-padded laptop section, and water-resistant YKK AquaGuard zippers",
+    "link": "https://defybags.com/products/verbockel-roll-top-backpack-black-ballistic-nylon",
+    "image": "images/defy-verbockel.png"
+  },
+  {
+    "id": 206,
+    "brand": "Defy",
+    "name": "Rover",
+    "price": 388,
+    "volume": 40,
+    "weight": 2.04,
+    "material": "Ballistic Nylon",
+    "type": "Backpack",
+    "description": "Versatile duffel-backpack hybrid with 1,050 denier MIL-SPEC ballistic nylon construction. Features detachable padded straps, padded laptop section for 15-inch MacBook Pro, trolley strap for suitcase attachment, and YKK water-resistant zippers. Made in USA",
+    "link": "https://defybags.com/products/the-ranger-black-ballistic-nylon-duffel-backpack",
+    "image": "images/defy-rover.png"
   }
 ]
