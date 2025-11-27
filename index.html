@@ -335,6 +335,22 @@
             transition: opacity 0.3s ease;
         }
 
+        .link-issue-label {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(var(--random-angle, 0deg));
+            font-size: 10px;
+            font-weight: 500;
+            color: white;
+            background: #ff3b30;
+            padding: 4px 8px;
+            border-radius: 3px;
+            pointer-events: none;
+            z-index: 10;
+            letter-spacing: 0.3px;
+        }
+
         .notifications-button {
             width: 100%;
             padding: 10px 16px;
@@ -1644,6 +1660,9 @@
             const zoomLevel = parseInt(zoomSelect.value);
             const isCompact = zoomLevel >= 5;
 
+            // Random angle for link issue label (between -12 and 12 degrees)
+            const randomAngle = bag.linkIssue ? Math.floor(Math.random() * 25) - 12 : 0;
+
             return `
                 <div class="backpack-item" data-bag-id="${bag.id}" onclick="window.open('${bag.link}', '_blank')">
                     <div class="backpack-image">
@@ -1653,6 +1672,7 @@
                         <div class="pin-dot"></div>
                         <div class="pin-label">Pin</div>
                     </div>
+                    ${bag.linkIssue ? `<div class="link-issue-label" style="--random-angle: ${randomAngle}deg;">LINK ISSUE</div>` : ''}
                     <div class="backpack-brand">${bag.brand}</div>
                     <div class="backpack-info">
                         <div class="backpack-info-left">

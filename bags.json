@@ -9,7 +9,7 @@
     "material": "Nylon",
     "type": "Backpack",
     "description": "Versatile travel bag with crossover design.",
-    "link": "https://evergoods.us/collections/packs/products/civic-travel-bag-35l",
+    "link": "https://evergoods.us/products/civic-travel-bag",
     "image": "images/evergoods-civic-travel-bag-35l.png"
   },
   {
@@ -22,7 +22,7 @@
     "material": "Nylon",
     "type": "Backpack",
     "description": "Half-zip opening for quick access to gear.",
-    "link": "https://evergoods.us/collections/packs/products/civic-half-zip-22l",
+    "link": "https://evergoods.us/products/civic-half-zip",
     "image": "images/evergoods-civic-half-zip-22l.png"
   },
   {
@@ -74,7 +74,7 @@
     "material": "Cordura",
     "type": "Backpack",
     "description": "Classic daypack with Cordura construction.",
-    "link": "https://wexley.jp/collections/backpacks/products/classic-22l-daypack",
+    "link": "https://wexley.jp/products/classic-1",
     "image": "images/wexley-classic-22l-daypack.png"
   },
   {
@@ -87,7 +87,7 @@
     "material": "Cordura",
     "type": "Backpack",
     "description": "Lightweight daypack with technical materials.",
-    "link": "https://wexley.jp/collections/backpacks/products/stem-20l-daypack",
+    "link": "https://wexley.jp/products/stem-cordura",
     "image": "images/wexley-stem-20l-daypack.png"
   },
   {
@@ -100,7 +100,7 @@
     "material": "Cordura",
     "type": "Backpack",
     "description": "Professional pack for business and travel.",
-    "link": "https://wexley.jp/collections/backpacks/products/active-25l-pro-pack",
+    "link": "https://wexley.jp/products/active-propack-cordura",
     "image": "images/wexley-active-25l-pro-pack.png"
   },
   {
@@ -113,7 +113,7 @@
     "material": "Cordura",
     "type": "Backpack",
     "description": "Modular travel pack for extended trips.",
-    "link": "https://wexley.jp/collections/backpacks/products/ace-v2-32l",
+    "link": "https://wexley.jp/products/ace-v2",
     "image": "images/wexley-ace-32l-travel-pack.png"
   },
   {
@@ -126,7 +126,7 @@
     "material": "Ballistic Nylon",
     "type": "Backpack",
     "description": "Premium travel pack with ballistic nylon.",
-    "link": "https://wexley.jp/collections/backpacks/products/vernon-30l",
+    "link": "https://wexley.jp/products/vernon-cordura-r-ballistic",
     "image": "images/wexley-vernon-30l-travel-pack.png"
   },
   {
@@ -286,45 +286,6 @@
     "image": "images/aer-duffel-pack-3.png"
   },
   {
-    "id": 48,
-    "brand": "Wexley",
-    "name": "STEM Daypack",
-    "price": 176,
-    "volume": 20,
-    "weight": 1.7,
-    "material": "Cordura",
-    "type": "Backpack",
-    "description": "Ultralight daypack for urban carry.",
-    "link": "https://wexley.jp/collections/backpacks/products/stem-daypack-cordura-series",
-    "image": "images/wexley-stem-20l-daypack.png"
-  },
-  {
-    "id": 49,
-    "brand": "Wexley",
-    "name": "ACE V2 Travel Pack",
-    "price": 308,
-    "volume": 32,
-    "weight": 2.5,
-    "material": "Cordura",
-    "type": "Backpack",
-    "description": "Full-featured travel backpack.",
-    "link": "https://wexley.jp/collections/backpacks/products/ace-32l-travel-pack",
-    "image": "images/wexley-ace-32l-travel-pack.png"
-  },
-  {
-    "id": 50,
-    "brand": "Wexley",
-    "name": "ACTIVE Pro Pack",
-    "price": 231,
-    "volume": 25,
-    "weight": 2,
-    "material": "Cordura",
-    "type": "Backpack",
-    "description": "Professional laptop backpack for daily commute.",
-    "link": "https://wexley.jp/collections/backpacks/products/active-25l-pro-pack-cordura",
-    "image": "images/wexley-active-25l-pro-pack.png"
-  },
-  {
     "id": 51,
     "brand": "Aer",
     "name": "Slim Pouch 2",
@@ -464,7 +425,7 @@
     "material": "Nylon",
     "type": "Backpack",
     "description": "Crossbody sling bag for daily carry.",
-    "link": "https://paktbags.com/products/everyday-15l-bag",
+    "link": "https://paktbags.com/products/everyday-15l",
     "image": "images/pakt-everyday-15l-bag.png"
   },
   {
@@ -477,7 +438,7 @@
     "material": "Nylon",
     "type": "Sling",
     "description": "Compact sling for essentials.",
-    "link": "https://paktbags.com/products/everyday-3l-sling",
+    "link": "https://paktbags.com/products/3l-sling",
     "image": "images/pakt-everyday-3l-sling.png"
   },
   {
@@ -529,7 +490,7 @@
     "material": "Nylon",
     "type": "Pouch",
     "description": "Modular pouches that clip into Pakt bags.",
-    "link": "https://paktbags.com/products/clip-in-pouches",
+    "link": "https://paktbags.com/products/accessory-pouches",
     "image": "images/pakt-clip-in-pouches.png"
   },
   {
@@ -568,7 +529,7 @@
     "material": "Dyneema",
     "type": "Laptop Sleeve",
     "description": "Protective laptop sleeve with Dyneema construction.",
-    "link": "https://blackmile.co/products/covert-laptop-case",
+    "link": "https://blackmile.co/products/the-laptop-bag",
     "image": "images/blackmile-covert-laptop-case.png"
   },
   {
@@ -620,7 +581,7 @@
     "material": "X-Pac",
     "type": "Sling",
     "description": "Versatile sling bag with X-PAC X50 construction.",
-    "link": "https://www.dsptch.com/products/unit-sling-bag-rnd-edition",
+    "link": "https://www.dsptch.com/products/unit-sling-bag-rnd-edition-x-pac-x50-light-army",
     "image": "images/dsptch-unit-sling.png"
   },
   {
@@ -633,7 +594,7 @@
     "material": "Nylon",
     "type": "Pouch",
     "description": "Large organization pouch with sling capability.",
-    "link": "https://www.dsptch.com/products/sling-pouch-large",
+    "link": "https://www.dsptch.com/products/sling-pouch-large-black",
     "image": "images/dsptch-sling-pouch-large.png"
   },
   {
@@ -646,7 +607,7 @@
     "material": "Dyneema",
     "type": "Tote",
     "description": "Premium tote with Dyneema construction and cinch closure.",
-    "link": "https://www.dsptch.com/products/cinch-tote-dyneema-black",
+    "link": "https://www.dsptch.com/products/cinch-tote-dyneema",
     "image": "images/dsptch-cinch-tote.png"
   },
   {
@@ -672,7 +633,7 @@
     "material": "Nylon",
     "type": "Backpack",
     "description": "Max carry-on size travel backpack with premium comfort and water-resistance.",
-    "link": "https://www.tortugabackpacks.com/products/travel-backpack-pro-40l",
+    "link": "https://www.tortugabackpacks.com/products/travel-backpack-40l",
     "image": "images/tortuga-pro-40l.png"
   },
   {
@@ -1686,7 +1647,7 @@
     "material": "X-Pac",
     "type": "Backpack",
     "description": "Premium travel backpack with X-Pac VX21 construction for durability and weather resistance.",
-    "link": "https://www.boundarysupply.com/collections/backpacks/products/rennen-pro-x-pac",
+    "link": "https://www.boundarysupply.com/products/rennen-pro",
     "image": "images/boundary-rennen-pro-xpac.png"
   },
   {
@@ -1712,7 +1673,7 @@
     "material": "X-Pac",
     "type": "Backpack",
     "description": "Modular backpack system with X-Pac jet black construction and versatile organization.",
-    "link": "https://www.boundarysupply.com/collections/backpacks/products/prima-system-x-pac",
+    "link": "https://www.boundarysupply.com/products/x-pac-prima-system",
     "image": "images/boundary-prima-system-xpac.png"
   },
   {
@@ -1803,21 +1764,8 @@
     "material": "Embertex PFAS Free",
     "type": "Backpack",
     "description": "Urban backpack with PFAS-free waterproof Embertex fabric and modern organization.",
-    "link": "https://blackember.com/collections/backpacks/products/citadel-r3-20",
+    "link": "https://blackember.com/products/citadel-20",
     "image": "images/blackember-citadel-r3-20l.png"
-  },
-  {
-    "id": 165,
-    "brand": "Black Ember",
-    "name": "Citadel R3",
-    "price": 214,
-    "volume": 25,
-    "weight": 0,
-    "material": "Embertex PFAS Free",
-    "type": "Backpack",
-    "description": "Larger urban backpack with eco-friendly Embertex construction and expandable capacity.",
-    "link": "https://blackember.com/collections/backpacks/products/citadel-r3-25",
-    "image": "images/blackember-citadel-r3-25l.png"
   },
   {
     "id": 166,
@@ -1829,21 +1777,8 @@
     "material": "Embertex PFAS Free",
     "type": "Backpack",
     "description": "Expandable laptop travel backpack that grows from 20L to 30L for versatile packing.",
-    "link": "https://blackember.com/collections/backpacks/products/forge-30",
+    "link": "https://blackember.com/products/forge",
     "image": "images/blackember-forge-30.png"
-  },
-  {
-    "id": 167,
-    "brand": "Black Ember",
-    "name": "Forge",
-    "price": 281,
-    "volume": 40,
-    "weight": 0,
-    "material": "Embertex PFAS Free",
-    "type": "Backpack",
-    "description": "Maximum capacity travel backpack expanding from 30L to 40L for extended trips.",
-    "link": "https://blackember.com/collections/backpacks/products/forge-40",
-    "image": "images/blackember-forge-40.png"
   },
   {
     "id": 168,
@@ -1868,21 +1803,8 @@
     "material": "Cordura RN66 Velocity",
     "type": "Sling",
     "description": "Premium sling bag with Cordura construction for everyday carry and quick access.",
-    "link": "https://blackember.com/collections/slings/products/grip-sling-9",
+    "link": "https://blackember.com/products/grip-sling",
     "image": "images/blackember-grip-sling-9l.png"
-  },
-  {
-    "id": 170,
-    "brand": "Black Ember",
-    "name": "Grip-Sling",
-    "price": 146,
-    "volume": 12,
-    "weight": 0,
-    "material": "Embertex PFAS Free",
-    "type": "Sling",
-    "description": "Larger laptop sling with waterproof Embertex fabric and versatile carrying options.",
-    "link": "https://blackember.com/collections/slings/products/grip-sling-12",
-    "image": "images/blackember-grip-sling-12l.png"
   },
   {
     "id": 171,
@@ -2249,58 +2171,6 @@
     "image": "images/nanuk-n-edc-20l.png"
   },
   {
-    "id": 199,
-    "brand": "Nanuk",
-    "name": "N-EDC",
-    "price": 220,
-    "volume": 26,
-    "weight": null,
-    "material": "Nylon",
-    "type": "Backpack",
-    "description": "Mid-sized everyday carry backpack with durable construction and organized storage for daily adventures",
-    "link": "https://nanuk.com/products/n-edc-26l",
-    "image": "images/nanuk-n-edc-26l.png"
-  },
-  {
-    "id": 200,
-    "brand": "Nanuk",
-    "name": "N-PVD",
-    "price": 300,
-    "volume": 30,
-    "weight": null,
-    "material": "Nylon",
-    "type": "Backpack",
-    "description": "Professional camera-drone backpack with water/dust cover, padded laptop sleeve up to 16 inches, and customizable foam dividers. Accommodates 1-2 camera bodies, lenses, drone, and accessories. Red Dot Design Award winner 2024",
-    "link": "https://nanuk.com/products/n-pvd-30l",
-    "image": "images/nanuk-n-pvd-30l.png"
-  },
-  {
-    "id": 201,
-    "brand": "Nanuk",
-    "name": "N-EDC",
-    "price": 270,
-    "volume": 35,
-    "weight": null,
-    "material": "Nylon",
-    "type": "Backpack",
-    "description": "Larger everyday carry backpack designed for extended adventures with rugged construction and ample 35-liter capacity",
-    "link": "https://nanuk.com/products/n-edc-35l",
-    "image": "images/nanuk-n-edc-35l.png"
-  },
-  {
-    "id": 202,
-    "brand": "Nanuk",
-    "name": "N-PVD",
-    "price": 330,
-    "volume": 35,
-    "weight": null,
-    "material": "Nylon",
-    "type": "Backpack",
-    "description": "Largest capacity option in the N-PVD protective camera backpack line with premium weather protection and customizable internal organization",
-    "link": "https://nanuk.com/products/n-pvd-35l",
-    "image": "images/nanuk-n-pvd-35l.png"
-  },
-  {
     "id": 203,
     "brand": "Defy",
     "name": "Bucktown",
@@ -2362,7 +2232,7 @@
     "material": "Nylon",
     "type": "Backpack",
     "description": "Compact tactical backpack with MOLLE panels and multiple compartments. Features infection control materials, padded straps, and 24L capacity for responding, traveling, or outdoor use",
-    "link": "https://meretusa.com/products/delta24",
+    "link": "https://meretusa.com/products/dl24",
     "image": "images/meret-delta24.png"
   },
   {
@@ -2388,7 +2258,7 @@
     "material": "Nylon",
     "type": "Messenger Bag",
     "description": "Mid-size tactical shoulder bag with multiple pockets, MOLLE panels, and laptop compartment (fits 15-inch). 13L capacity for EDC and professional use",
-    "link": "https://meretusa.com/products/commander",
+    "link": "https://meretusa.com/products/commander-copy",
     "image": "images/meret-commander.png"
   },
   {
