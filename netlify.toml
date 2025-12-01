@@ -1,0 +1,19 @@
+# Netlify Configuration
+# This file tells Netlify how to build and deploy your site
+
+[build]
+  # No build command needed - pure HTML site
+  publish = "."
+
+  # Netlify Functions directory
+  functions = "netlify/functions"
+
+# Environment variables needed:
+# GITHUB_TOKEN - GitHub Personal Access Token (add in Netlify dashboard)
+# BUTTONDOWN_API_KEY - Buttondown API key (optional, add later)
+
+# Redirect rules (if needed later)
+# [[redirects]]
+#   from = "/api/*"
+#   to = "/.netlify/functions/:splat"
+#   status = 200

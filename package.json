@@ -1,0 +1,12 @@
+{
+  "name": "cool-bags",
+  "version": "1.0.0",
+  "description": "Cool Bags - Backpack database and catalog",
+  "scripts": {
+    "dev": "netlify dev"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "netlify-cli": "^17.0.0"
+  }
+}
