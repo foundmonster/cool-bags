@@ -1224,6 +1224,10 @@
             gap: 8px;
             justify-content: flex-end;
             border-top: 1px solid rgba(0, 0, 0, 0.06);
+            opacity: 1;
+            max-height: 200px;
+            overflow: hidden;
+            transition: opacity 0.3s ease, max-height 0.4s ease, padding 0.4s ease;
         }
 
         .feedback-modal-footer button {
@@ -1260,11 +1264,15 @@
         .feedback-success {
             text-align: center;
             padding: 40px 24px;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: opacity 0.4s ease, transform 0.4s ease;
         }
 
         .feedback-success-icon {
             font-size: 48px;
             margin-bottom: 16px;
+            display: none;
         }
 
         .feedback-success-title {
@@ -1294,6 +1302,38 @@
 
         .feedback-success-link:hover {
             background: rgba(0, 113, 227, 0.05);
+        }
+
+        /* Type Button Group */
+        .feedback-type-group {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+
+        .feedback-type-button {
+            flex: 1;
+            padding: 10px 16px;
+            font-size: 13px;
+            font-weight: 400;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            border-radius: 4px;
+            background: white;
+            color: #1d1d1f;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+
+        .feedback-type-button:hover {
+            background: rgba(0, 0, 0, 0.02);
+            border-color: rgba(0, 0, 0, 0.2);
+        }
+
+        .feedback-type-button.active {
+            background: #1d1d1f;
+            color: white;
+            border-color: #1d1d1f;
         }
     </style>
 </head>
@@ -1372,14 +1412,12 @@
             <div class="feedback-modal-body" id="feedback-modal-body">
                 <!-- Form View -->
                 <form id="feedback-form" style="display: block;">
-                    <div class="feedback-form-group">
-                        <label for="feedback-type">Type</label>
-                        <select id="feedback-type" required>
-                            <option value="bug">🐛 Bug Report</option>
-                            <option value="request" selected>💡 Feature Request</option>
-                            <option value="question">❓ Question</option>
-                        </select>
+                    <div class="feedback-type-group">
+                        <button type="button" class="feedback-type-button" data-type="bug" onclick="selectFeedbackType('bug')">Bug Report</button>
+                        <button type="button" class="feedback-type-button active" data-type="request" onclick="selectFeedbackType('request')">Feature Request</button>
+                        <button type="button" class="feedback-type-button" data-type="question" onclick="selectFeedbackType('question')">Question</button>
                     </div>
+                    <input type="hidden" id="feedback-type" value="request">
 
                     <div class="feedback-form-group">
                         <label for="feedback-title">Title</label>
@@ -2067,6 +2105,19 @@
             document.getElementById('feedback-form').style.display = 'block';
             document.getElementById('feedback-success').style.display = 'none';
             document.getElementById('feedback-submit').disabled = false;
+            // Reset type to default (Feature Request)
+            selectFeedbackType('request');
+        }
+
+        function selectFeedbackType(type) {
+            // Remove active class from all buttons
+            document.querySelectorAll('.feedback-type-button').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            // Add active class to selected button
+            document.querySelector(`.feedback-type-button[data-type="${type}"]`).classList.add('active');
+            // Update hidden input
+            document.getElementById('feedback-type').value = type;
         }
 
         function closeFeedbackModal(event) {
@@ -2077,6 +2128,10 @@
 
         async function submitFeedback() {
             const submitButton = document.getElementById('feedback-submit');
+            const cancelButton = document.querySelector('#feedback-modal .feedback-modal-footer button[type="button"]');
+            const form = document.getElementById('feedback-form');
+            const successView = document.getElementById('feedback-success');
+            const footer = document.querySelector('#feedback-modal .feedback-modal-footer');
             const type = document.getElementById('feedback-type').value;
             const title = document.getElementById('feedback-title').value.trim();
             const description = document.getElementById('feedback-description').value.trim();
@@ -2088,9 +2143,19 @@
                 return;
             }
 
-            // Disable submit button
+            // Disable all inputs and buttons
+            const inputs = form.querySelectorAll('input, textarea, button');
+            inputs.forEach(input => input.disabled = true);
             submitButton.disabled = true;
-            submitButton.textContent = 'Submitting...';
+            cancelButton.disabled = true;
+
+            // Start animated loading state
+            let dotCount = 0;
+            submitButton.textContent = 'Submitting';
+            const loadingInterval = setInterval(() => {
+                dotCount = (dotCount + 1) % 4;
+                submitButton.textContent = 'Submitting' + '.'.repeat(dotCount);
+            }, 500);
 
             try {
                 // Get browser and page info
@@ -2123,20 +2188,45 @@
 
                 const result = await response.json();
 
+                // Stop loading animation
+                clearInterval(loadingInterval);
+
                 if (result.success) {
-                    // Show success view
-                    document.getElementById('feedback-form').style.display = 'none';
-                    document.getElementById('feedback-success').style.display = 'block';
-                    document.getElementById('feedback-issue-number').textContent = result.issueNumber;
-                    document.getElementById('feedback-issue-link').href = result.issueUrl;
+                    // Fade out form
+                    form.style.opacity = '0';
+                    form.style.transform = 'translateY(-10px)';
+                    form.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+
+                    // Fade out footer
+                    footer.style.opacity = '0';
+                    footer.style.maxHeight = '0';
+                    footer.style.paddingTop = '0';
+                    footer.style.paddingBottom = '0';
+
+                    setTimeout(() => {
+                        // Hide form, show success
+                        form.style.display = 'none';
+                        successView.style.display = 'block';
+                        document.getElementById('feedback-issue-number').textContent = result.issueNumber;
+                        document.getElementById('feedback-issue-link').href = result.issueUrl;
+
+                        // Trigger fade in
+                        setTimeout(() => {
+                            successView.style.opacity = '1';
+                            successView.style.transform = 'translateY(0)';
+                        }, 10);
+                    }, 300);
                 } else {
                     throw new Error(result.error || 'Failed to submit feedback');
                 }
             } catch (error) {
+                clearInterval(loadingInterval);
                 console.error('Feedback submission error:', error);
                 alert('Failed to submit feedback. Please try again or contact us directly at GitHub.');
                 submitButton.disabled = false;
+                cancelButton.disabled = false;
                 submitButton.textContent = 'Submit Feedback';
+                inputs.forEach(input => input.disabled = false);
             }
         }
     </script>
