@@ -1106,6 +1106,195 @@
             font-size: 15px;
             text-align: center;
         }
+
+        /* Feedback Modal Styles */
+        .feedback-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 2000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 40px;
+        }
+
+        .feedback-modal.visible {
+            display: flex;
+        }
+
+        .feedback-modal-content {
+            background: white;
+            border-radius: 4px;
+            width: 100%;
+            max-width: 500px;
+            max-height: 80vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .feedback-modal-header {
+            padding: 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+        }
+
+        .feedback-modal-title {
+            font-size: 20px;
+            font-weight: 400;
+            color: #1d1d1f;
+        }
+
+        .feedback-modal-close {
+            padding: 8px 16px;
+            font-size: 13px;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            border-radius: 4px;
+            background: white;
+            color: #1d1d1f;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+
+        .feedback-modal-close:hover {
+            background: rgba(0, 0, 0, 0.02);
+        }
+
+        .feedback-modal-body {
+            padding: 24px;
+            overflow-y: auto;
+            flex: 1;
+        }
+
+        .feedback-form-group {
+            margin-bottom: 20px;
+        }
+
+        .feedback-form-group label {
+            display: block;
+            font-size: 12px;
+            font-weight: 400;
+            color: #86868b;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .feedback-form-group input[type="text"],
+        .feedback-form-group input[type="email"],
+        .feedback-form-group textarea,
+        .feedback-form-group select {
+            width: 100%;
+            padding: 10px 12px;
+            font-size: 13px;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            border-radius: 4px;
+            background: white;
+            color: #1d1d1f;
+            font-family: inherit;
+        }
+
+        .feedback-form-group textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .feedback-form-group input:focus,
+        .feedback-form-group textarea:focus,
+        .feedback-form-group select:focus {
+            outline: none;
+            border-color: rgba(0, 0, 0, 0.3);
+        }
+
+        .feedback-form-note {
+            font-size: 11px;
+            color: #86868b;
+            margin-top: 4px;
+        }
+
+        .feedback-modal-footer {
+            padding: 24px;
+            display: flex;
+            gap: 8px;
+            justify-content: flex-end;
+            border-top: 1px solid rgba(0, 0, 0, 0.06);
+        }
+
+        .feedback-modal-footer button {
+            padding: 10px 20px;
+            font-size: 13px;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            border-radius: 4px;
+            background: white;
+            color: #1d1d1f;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+
+        .feedback-modal-footer button:hover {
+            background: rgba(0, 0, 0, 0.02);
+        }
+
+        .feedback-modal-footer button.primary {
+            background: #1d1d1f;
+            color: white;
+            border-color: #1d1d1f;
+        }
+
+        .feedback-modal-footer button.primary:hover {
+            background: #3a3a3c;
+        }
+
+        .feedback-modal-footer button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .feedback-success {
+            text-align: center;
+            padding: 40px 24px;
+        }
+
+        .feedback-success-icon {
+            font-size: 48px;
+            margin-bottom: 16px;
+        }
+
+        .feedback-success-title {
+            font-size: 18px;
+            font-weight: 400;
+            color: #1d1d1f;
+            margin-bottom: 12px;
+        }
+
+        .feedback-success-message {
+            font-size: 13px;
+            color: #86868b;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .feedback-success-link {
+            display: inline-block;
+            padding: 8px 16px;
+            font-size: 13px;
+            color: #0071e3;
+            text-decoration: none;
+            border: 1px solid rgba(0, 113, 227, 0.2);
+            border-radius: 4px;
+            transition: all 0.2s;
+        }
+
+        .feedback-success-link:hover {
+            background: rgba(0, 113, 227, 0.05);
+        }
     </style>
 </head>
 <body>
@@ -1169,6 +1358,59 @@
                         <button class="share-close-btn" onclick="closeShareExpanded()">×</button>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Feedback Modal -->
+    <div class="feedback-modal" id="feedback-modal" onclick="closeFeedbackModal(event)">
+        <div class="feedback-modal-content" onclick="event.stopPropagation()">
+            <div class="feedback-modal-header">
+                <h2 class="feedback-modal-title">Send Feedback</h2>
+                <button class="feedback-modal-close" onclick="closeFeedbackModal()">Close</button>
+            </div>
+            <div class="feedback-modal-body" id="feedback-modal-body">
+                <!-- Form View -->
+                <form id="feedback-form" style="display: block;">
+                    <div class="feedback-form-group">
+                        <label for="feedback-type">Type</label>
+                        <select id="feedback-type" required>
+                            <option value="bug">🐛 Bug Report</option>
+                            <option value="request" selected>💡 Feature Request</option>
+                            <option value="question">❓ Question</option>
+                        </select>
+                    </div>
+
+                    <div class="feedback-form-group">
+                        <label for="feedback-title">Title</label>
+                        <input type="text" id="feedback-title" placeholder="Brief summary..." required>
+                    </div>
+
+                    <div class="feedback-form-group">
+                        <label for="feedback-description">Description</label>
+                        <textarea id="feedback-description" placeholder="Tell us more..." required></textarea>
+                    </div>
+
+                    <div class="feedback-form-group">
+                        <label for="feedback-email">Email (optional)</label>
+                        <input type="email" id="feedback-email" placeholder="your@email.com">
+                        <div class="feedback-form-note">We'll notify you when this is resolved</div>
+                    </div>
+                </form>
+
+                <!-- Success View -->
+                <div id="feedback-success" class="feedback-success" style="display: none;">
+                    <div class="feedback-success-icon">✅</div>
+                    <div class="feedback-success-title">Feedback Submitted!</div>
+                    <div class="feedback-success-message">
+                        Your feedback has been received and tracked as issue <strong>#<span id="feedback-issue-number"></span></strong>.
+                    </div>
+                    <a href="#" id="feedback-issue-link" class="feedback-success-link" target="_blank">View on GitHub →</a>
+                </div>
+            </div>
+            <div class="feedback-modal-footer">
+                <button type="button" onclick="closeFeedbackModal()">Cancel</button>
+                <button type="submit" class="primary" id="feedback-submit" onclick="submitFeedback()">Submit Feedback</button>
             </div>
         </div>
     </div>
@@ -1280,7 +1522,7 @@
 
             <div class="sidebar-footer">
                 <button class="brand-tracker-button" onclick="window.location.href='brands.html'">View Progress</button>
-                <button class="feedback-button" onclick="window.open('https://github.com/foundmonster/cool-bags/issues/new', '_blank')">Send Feedback</button>
+                <button class="feedback-button" onclick="openFeedbackModal()">Send Feedback</button>
                 <div class="button-wrapper">
                     <span class="coming-soon-label">Coming Soon</span>
                     <button class="notifications-button">Sign Up for Notifications</button>
@@ -1814,6 +2056,87 @@
                     slider.value = 4;
                     updateZoom();
                 }
+            }
+        }
+
+        // Feedback Modal Functions
+        function openFeedbackModal() {
+            document.getElementById('feedback-modal').classList.add('visible');
+            // Reset form
+            document.getElementById('feedback-form').reset();
+            document.getElementById('feedback-form').style.display = 'block';
+            document.getElementById('feedback-success').style.display = 'none';
+            document.getElementById('feedback-submit').disabled = false;
+        }
+
+        function closeFeedbackModal(event) {
+            const modal = document.getElementById('feedback-modal');
+            if (event && event.target !== modal) return;
+            modal.classList.remove('visible');
+        }
+
+        async function submitFeedback() {
+            const submitButton = document.getElementById('feedback-submit');
+            const type = document.getElementById('feedback-type').value;
+            const title = document.getElementById('feedback-title').value.trim();
+            const description = document.getElementById('feedback-description').value.trim();
+            const email = document.getElementById('feedback-email').value.trim();
+
+            // Validation
+            if (!title || !description) {
+                alert('Please fill in all required fields');
+                return;
+            }
+
+            // Disable submit button
+            submitButton.disabled = true;
+            submitButton.textContent = 'Submitting...';
+
+            try {
+                // Get browser and page info
+                const browser = navigator.userAgent;
+                const url = window.location.href;
+
+                // Map type to label
+                const labelMap = {
+                    'bug': 'bug',
+                    'request': 'request',
+                    'question': 'question'
+                };
+
+                // Call Netlify Function
+                const response = await fetch('/.netlify/functions/create-issue', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        type: type,
+                        title: title,
+                        description: description,
+                        email: email || null,
+                        label: labelMap[type],
+                        browser: browser,
+                        url: url
+                    })
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    // Show success view
+                    document.getElementById('feedback-form').style.display = 'none';
+                    document.getElementById('feedback-success').style.display = 'block';
+                    document.getElementById('feedback-issue-number').textContent = result.issueNumber;
+                    document.getElementById('feedback-issue-link').href = result.issueUrl;
+                } else {
+                    throw new Error(result.error || 'Failed to submit feedback');
+                }
+            } catch (error) {
+                console.error('Feedback submission error:', error);
+                alert('Failed to submit feedback. Please try again or contact us directly at GitHub.');
+                submitButton.disabled = false;
+                submitButton.textContent = 'Submit Feedback';
             }
         }
     </script>
