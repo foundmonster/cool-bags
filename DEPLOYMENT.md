@@ -10,7 +10,8 @@
 
 ## Deployment Information
 
-**Live URL:** (will be filled in after deployment)
+**Domain:** coolbags.info (configure in Netlify after deployment)
+**Netlify URL:** (will be auto-generated, e.g. cool-bags-abc123.netlify.app)
 **Deploy Status:** Check at https://app.netlify.com
 
 ---
