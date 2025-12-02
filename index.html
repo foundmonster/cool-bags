@@ -73,6 +73,11 @@
             transition: all 0.2s;
             font-family: inherit;
             margin-bottom: 16px;
+            display: none;
+        }
+
+        .reset-filters-button.visible {
+            display: block;
         }
 
         .reset-filters-button:hover {
@@ -1931,6 +1936,7 @@
             } else {
                 selectedBrands.delete(checkbox.value);
             }
+            updateResetButtonVisibility();
             applyFiltersAndSort();
         }
 
@@ -1940,6 +1946,7 @@
             } else {
                 selectedMaterials.delete(checkbox.value);
             }
+            updateResetButtonVisibility();
             applyFiltersAndSort();
         }
 
@@ -1949,7 +1956,20 @@
             } else {
                 selectedTypes.delete(checkbox.value);
             }
+            updateResetButtonVisibility();
             applyFiltersAndSort();
+        }
+
+        // Update Reset Filters button visibility
+        function updateResetButtonVisibility() {
+            const resetButton = document.getElementById('reset-filters');
+            const hasFilters = selectedBrands.size > 0 || selectedMaterials.size > 0 || selectedTypes.size > 0;
+
+            if (hasFilters) {
+                resetButton.classList.add('visible');
+            } else {
+                resetButton.classList.remove('visible');
+            }
         }
 
         // Reset filters function
@@ -1976,6 +1996,9 @@
 
             // Reset sort to default (Newest First)
             document.getElementById('sort-newest').checked = true;
+
+            // Hide reset button
+            updateResetButtonVisibility();
 
             // Apply filters to show all bags
             applyFiltersAndSort();
