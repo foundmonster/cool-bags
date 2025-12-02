@@ -72,9 +72,7 @@ exports.handler = async (event) => {
     // Add metadata
     issueBody += `**Submission Details:**\n`;
     issueBody += `- Type: ${type}\n`;
-    if (email) {
-      issueBody += `- Email: ${email}\n`;
-    }
+    issueBody += `- Email provided: ${email ? 'yes' : 'no'}\n`;
     if (browser) {
       issueBody += `- Browser: ${browser}\n`;
     }
