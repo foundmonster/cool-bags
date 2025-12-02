@@ -27,3 +27,6 @@ npm-debug.log*
 *.tmp
 .cache/
 server.pid
+bags-backup.json
+bags-temp.json
+test-load.html
