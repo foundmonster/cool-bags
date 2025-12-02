@@ -1860,9 +1860,9 @@
         function initializeFilters() {
             // Get unique brands, materials, and types (only from bags that have data)
             const brands = [...new Set(backpacksData.map(b => b.brand))].sort();
-            const materials = [...new Set(backpacksData.map(b => b.material))].sort();
+            const materials = [...new Set(backpacksData.map(b => b.material).filter(m => m != null))].sort();
             // Only show types that have at least one bag with an image
-            const types = [...new Set(backpacksData.filter(b => b.image).map(b => b.type))].sort();
+            const types = [...new Set(backpacksData.filter(b => b.image).map(b => b.type).filter(t => t != null))].sort();
 
             // Populate brand filter
             const brandGroup = document.getElementById('brand-filter-group');
