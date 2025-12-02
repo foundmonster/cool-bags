@@ -60,6 +60,30 @@
             overflow-y: auto;
         }
 
+        /* Reset Filters Button */
+        .reset-filters-button {
+            width: 100%;
+            padding: 8px 12px;
+            font-size: 13px;
+            font-weight: 400;
+            color: #86868b;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            text-align: left;
+            font-family: inherit;
+            transition: color 0.2s;
+            margin-bottom: 16px;
+        }
+
+        .reset-filters-button:hover {
+            color: #1d1d1f;
+        }
+
+        .reset-filters-button:active {
+            color: #86868b;
+        }
+
         .control-group {
             padding: 16px 0;
         }
@@ -1466,6 +1490,9 @@
             </div>
 
             <div class="controls-section">
+                <!-- Reset Filters Button -->
+                <button class="reset-filters-button" id="reset-filters" onclick="resetFilters()">Reset Filters</button>
+
                 <!-- Sort Drawer -->
                 <div class="drawer">
                     <div class="drawer-header" onclick="toggleDrawer(this)">
@@ -1922,6 +1949,35 @@
             } else {
                 selectedTypes.delete(checkbox.value);
             }
+            applyFiltersAndSort();
+        }
+
+        // Reset filters function
+        function resetFilters() {
+            // Clear all selected filters
+            selectedBrands.clear();
+            selectedMaterials.clear();
+            selectedTypes.clear();
+
+            // Uncheck all brand checkboxes
+            document.querySelectorAll('#brand-filter-group input[type="checkbox"]').forEach(checkbox => {
+                checkbox.checked = false;
+            });
+
+            // Uncheck all material checkboxes
+            document.querySelectorAll('#material-filter-group input[type="checkbox"]').forEach(checkbox => {
+                checkbox.checked = false;
+            });
+
+            // Uncheck all type checkboxes
+            document.querySelectorAll('#type-filter-group input[type="checkbox"]').forEach(checkbox => {
+                checkbox.checked = false;
+            });
+
+            // Reset sort to default (Newest First)
+            document.getElementById('sort-newest').checked = true;
+
+            // Apply filters to show all bags
             applyFiltersAndSort();
         }
 
