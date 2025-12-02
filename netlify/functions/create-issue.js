@@ -112,6 +112,32 @@ exports.handler = async (event) => {
         // Extract brand name from title (remove "[Brand Request] " prefix)
         const brandName = title.replace('[Brand Request] ', '');
 
+        // First, subscribe the user to the newsletter
+        const subscribeResponse = await fetch('https://api.buttondown.email/v1/subscribers', {
+          method: 'POST',
+          headers: {
+            'Authorization': `Token ${process.env.BUTTONDOWN_API_KEY}`,
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            email: email,
+            tags: ['brand-request'],
+            metadata: {
+              issue_number: issue.number,
+              issue_url: issue.html_url,
+              brand_requested: brandName,
+              submitted_at: new Date().toISOString()
+            }
+          })
+        });
+
+        // Continue even if subscription fails (might already be subscribed)
+        if (!subscribeResponse.ok) {
+          const subError = await subscribeResponse.text();
+          console.log('Subscription response:', subError);
+          // Don't throw - they might already be subscribed
+        }
+
         // Generate email HTML
         const emailHTML = generateBrandRequestEmail(brandName, issue.html_url, issue.number);
 
