@@ -58,10 +58,14 @@
             padding: 24px;
             flex: 1;
             overflow-y: auto;
+            position: relative;
         }
 
         /* Reset Filters Button */
         .reset-filters-button {
+            position: absolute;
+            top: 0;
+            left: 24px;
             padding: 6px 10px;
             font-size: 11px;
             font-weight: 400;
@@ -70,18 +74,15 @@
             background: white;
             color: #1d1d1f;
             cursor: pointer;
-            transition: all 0.2s;
+            transition: opacity 0.2s;
             font-family: inherit;
-            margin-bottom: 16px;
             opacity: 0;
-            max-height: 0;
-            overflow: hidden;
-            transition: opacity 0.2s, max-height 0.2s;
+            pointer-events: none;
         }
 
         .reset-filters-button.visible {
             opacity: 1;
-            max-height: 50px;
+            pointer-events: auto;
         }
 
         .reset-filters-button:hover {
