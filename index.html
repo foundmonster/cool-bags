@@ -58,14 +58,18 @@
             padding: 24px;
             flex: 1;
             overflow-y: auto;
-            position: relative;
+        }
+
+        /* Reset Filters Section */
+        .reset-filters-section {
+            padding: 0 24px;
+            height: 30px;
+            display: flex;
+            align-items: center;
         }
 
         /* Reset Filters Button */
         .reset-filters-button {
-            position: absolute;
-            top: 0;
-            left: 24px;
             padding: 6px 10px;
             font-size: 11px;
             font-weight: 400;
@@ -1499,10 +1503,12 @@
                 <p class="footer-info">Currently displaying <span id="filtered-count">0</span> of <span id="total-count">0</span> bags by&nbsp;<span id="brand-count">0</span>&nbsp;<span id="brand-label">brands</span>.</p>
             </div>
 
-            <div class="controls-section">
-                <!-- Reset Filters Button -->
+            <!-- Reset Filters Section -->
+            <div class="reset-filters-section">
                 <button class="reset-filters-button" id="reset-filters" onclick="resetFilters()">Reset Filters</button>
+            </div>
 
+            <div class="controls-section">
                 <!-- Sort Drawer -->
                 <div class="drawer">
                     <div class="drawer-header" onclick="toggleDrawer(this)">
