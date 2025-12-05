@@ -1,53 +1,58 @@
 // Netlify Function: Create GitHub Issue
 // Called when user submits feedback or brand request
 
-// Email template function
+// Email template function - Clean HTML with easy styling
 function generateBrandRequestEmail(brandName, issueUrl, issueNumber) {
   return `<!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Brand Request Received - Cool Bags</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Brand Request Received</title>
 </head>
-<body style="margin: 0; padding: 0; background: #f5f5f7; font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', sans-serif;">
-  <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background: #f5f5f7; min-height: 100vh;">
-    <tr>
-      <td align="center" style="padding: 40px 20px;">
-        <table width="500" cellpadding="0" cellspacing="0" border="0" style="background: #ffffff; border-radius: 4px; max-width: 500px;">
-          <tr>
-            <td style="padding: 32px 24px 24px; border-bottom: 1px solid rgba(0, 0, 0, 0.06);">
-              <h1 style="margin: 0; font-size: 20px; font-weight: 400; color: #1d1d1f; font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', sans-serif;">Cool Bags</h1>
-            </td>
-          </tr>
-          <tr>
-            <td style="padding: 24px; font-size: 13px; line-height: 1.6; color: #1d1d1f;">
-              <p style="margin: 0 0 16px 0; font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', sans-serif;">Hi there,</p>
-              <p style="margin: 0 0 16px 0; font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', sans-serif;">Thanks for requesting <strong style="font-weight: 500;">${brandName}</strong> to be added to Cool Bags!</p>
-              <p style="margin: 0 0 16px 0; font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', sans-serif;">We've created an issue to track this request:</p>
-              <table cellpadding="0" cellspacing="0" border="0" style="margin: 16px 0; width: 100%;">
-                <tr>
-                  <td style="background: #f5f5f7; border-radius: 4px; padding: 16px;">
-                    <a href="${issueUrl}" style="color: #0071e3; text-decoration: none; font-size: 13px; font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', sans-serif;">View Request on GitHub →</a>
-                    <div style="font-size: 11px; color: #86868b; margin-top: 4px; font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', sans-serif;">Issue #${issueNumber}</div>
-                  </td>
-                </tr>
-              </table>
-              <p style="margin: 0 0 16px 0; font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', sans-serif;">We're manually curating the catalog, so it may take a few weeks to add new brands. We'll send you an email when <strong style="font-weight: 500;">${brandName}</strong> goes live!</p>
-              <p style="margin: 0; font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', sans-serif;">✌️</p>
-            </td>
-          </tr>
-          <tr>
-            <td style="padding: 24px; border-top: 1px solid rgba(0, 0, 0, 0.06); font-size: 11px; color: #86868b; line-height: 1.5;">
-              <p style="margin: 0; font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', sans-serif;">Cool Bags • <a href="https://coolbags.info" style="color: #86868b; text-decoration: none; padding: 4px 8px; border: 1px solid rgba(0, 0, 0, 0.1); border-radius: 4px; display: inline-block;">Visit Site</a></p>
-              <p style="margin: 8px 0 0 0; font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', sans-serif;"><a href="{{unsubscribe_url}}" style="color: #86868b; text-decoration: none; padding: 4px 8px; border: 1px solid rgba(0, 0, 0, 0.1); border-radius: 4px; display: inline-block;">Unsubscribe</a></p>
-            </td>
-          </tr>
-        </table>
-      </td>
-    </tr>
-  </table>
+<body style="margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif; background-color: #f8f9fa; color: #212529;">
+  <div style="max-width: 600px; margin: 40px auto; background-color: #ffffff; border-radius: 8px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); overflow: hidden;">
+
+    <!-- Header -->
+    <div style="background-color: #007bff; color: #ffffff; padding: 32px 24px; text-align: center;">
+      <h1 style="margin: 0; font-size: 24px; font-weight: 600;">Cool Bags</h1>
+      <p style="margin: 8px 0 0 0; font-size: 16px; opacity: 0.9;">Brand Request Received</p>
+    </div>
+
+    <!-- Content -->
+    <div style="padding: 32px 24px;">
+      <h2 style="margin: 0 0 16px 0; font-size: 20px; font-weight: 600; color: #212529;">Thanks for your request!</h2>
+
+      <p style="margin: 0 0 20px 0; font-size: 16px; line-height: 1.5; color: #495057;">
+        We've received your request to add <strong style="color: #007bff;">${brandName}</strong> to our catalog.
+      </p>
+
+      <div style="background-color: #f8f9fa; border-left: 4px solid #007bff; padding: 16px; margin: 20px 0; border-radius: 4px;">
+        <p style="margin: 0 0 8px 0; font-size: 14px; font-weight: 600; color: #212529;">GitHub Issue Created</p>
+        <p style="margin: 0; font-size: 14px; color: #6c757d;">
+          <a href="${issueUrl}" style="color: #007bff; text-decoration: none;">Issue #${issueNumber}</a> - Click to track progress
+        </p>
+      </div>
+
+      <p style="margin: 20px 0 0 0; font-size: 16px; line-height: 1.5; color: #495057;">
+        We manually curate each brand, so it may take a few weeks to review and add ${brandName}.
+        We'll email you when it goes live!
+      </p>
+    </div>
+
+    <!-- Footer -->
+    <div style="background-color: #f8f9fa; padding: 20px 24px; text-align: center; border-top: 1px solid #dee2e6;">
+      <p style="margin: 0 0 8px 0; font-size: 14px; color: #6c757d;">
+        <strong>Cool Bags</strong> - The Complete Bag Database
+      </p>
+      <p style="margin: 0; font-size: 14px;">
+        <a href="https://coolbags.info" style="color: #007bff; text-decoration: none; margin-right: 16px;">Visit Site</a>
+        <span style="color: #dee2e6;">|</span>
+        <a href="mailto:hey@coolbags.info" style="color: #007bff; text-decoration: none; margin-left: 16px;">Contact Us</a>
+      </p>
+    </div>
+
+  </div>
 </body>
 </html>`;
 }
@@ -105,64 +110,38 @@ exports.handler = async (event) => {
     const issue = await response.json();
 
     // Send confirmation email for brand requests
-    if (type === 'request' && email && process.env.BUTTONDOWN_API_KEY) {
+    if (type === 'request' && email && process.env.GMAIL_APP_PASSWORD) {
       try {
         // Extract brand name from title (remove "[Brand Request] " prefix)
         const brandName = title.replace('[Brand Request] ', '');
 
-        // First, subscribe the user to the newsletter
-        const subscribeResponse = await fetch('https://api.buttondown.email/v1/subscribers', {
-          method: 'POST',
-          headers: {
-            'Authorization': `Token ${process.env.BUTTONDOWN_API_KEY}`,
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            email: email,
-            tags: ['brand-request'],
-            metadata: {
-              issue_number: issue.number,
-              issue_url: issue.html_url,
-              brand_requested: brandName,
-              submitted_at: new Date().toISOString()
-            }
-          })
-        });
-
-        // Continue even if subscription fails (might already be subscribed)
-        if (!subscribeResponse.ok) {
-          const subError = await subscribeResponse.text();
-          console.log('Subscription response:', subError);
-          // Don't throw - they might already be subscribed
-        }
-
-        // Generate email HTML
+        // Generate styled HTML email
         const emailHTML = generateBrandRequestEmail(brandName, issue.html_url, issue.number);
 
-        // Send email via Buttondown API
-        const emailResponse = await fetch('https://api.buttondown.email/v1/emails', {
-          method: 'POST',
-          headers: {
-            'Authorization': `Token ${process.env.BUTTONDOWN_API_KEY}`,
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            subject: `We received your request for ${brandName}`,
-            body: emailHTML,
-            email_type: 'private',
-            to: email
-          })
+        // Send email via Gmail SMTP using nodemailer
+        const nodemailer = require('nodemailer');
+
+        const transporter = nodemailer.createTransporter({
+          service: 'gmail',
+          auth: {
+            user: 'hey@coolbags.info',
+            pass: process.env.GMAIL_APP_PASSWORD
+          }
         });
 
-        if (!emailResponse.ok) {
-          const errorData = await emailResponse.text();
-          console.error('Buttondown email send failed:', errorData);
-          // Don't fail the whole request if email fails
-        } else {
-          console.log('Confirmation email sent successfully');
-        }
+        const mailOptions = {
+          from: '"Cool Bags Team" <hey@coolbags.info>',
+          to: email,
+          subject: `We received your request for ${brandName}`,
+          html: emailHTML,
+          text: `Hi there!\n\nThanks for requesting ${brandName} to be added to Cool Bags!\n\nWe've created an issue to track this request:\n${issue.html_url}\n(Issue #${issue.number})\n\nWe're manually curating the catalog, so it may take a few weeks to add new brands. We'll send you an email when ${brandName} goes live!\n\nBest regards,\nCool Bags Team\n\n---\nCool Bags - The Complete Bag Database\nVisit: https://coolbags.info`
+        };
+
+        await transporter.sendMail(mailOptions);
+        console.log('Confirmation email sent successfully via Gmail');
+
       } catch (emailError) {
-        console.error('Email sending error:', emailError);
+        console.error('Gmail email sending error:', emailError);
         // Don't fail the whole request if email fails
       }
     }
