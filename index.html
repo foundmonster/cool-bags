@@ -1617,7 +1617,8 @@
                         <span class="steam-wave steam-3">∿</span>
                         <span class="cup">c[_]</span>
                     </span>
-                    Buy Me a Coffee
+                    <span class="button-text-a">Buy Me a Coffee</span>
+                    <span class="button-text-b" style="display:none;">Buy My Dog a Treat</span>
                 </button>
                 <div class="version-mobile">Last updated Dec.01.25</div>
             </div>
@@ -2159,7 +2160,30 @@
             applyFiltersAndSort();
             updatePinnedUI();
             initializeComingSoonHover();
+            initializeButtonVariant();
             console.log('Cool Bags initialized with', backpacksData.length, 'bags');
+        }
+
+        // A/B Button Variant System
+        // Variant A: "Buy Me a Coffee" | Variant B: "Buy My Dog a Treat"
+        function initializeButtonVariant() {
+            // Check if user already has a variant assigned
+            let variant = localStorage.getItem('buttonVariant');
+
+            if (!variant) {
+                // Randomly assign variant (50/50 split)
+                variant = Math.random() < 0.5 ? 'A' : 'B';
+                localStorage.setItem('buttonVariant', variant);
+            }
+
+            // Apply variant
+            const textA = document.querySelector('.button-text-a');
+            const textB = document.querySelector('.button-text-b');
+
+            if (variant === 'B' && textA && textB) {
+                textA.style.display = 'none';
+                textB.style.display = 'inline';
+            }
         }
 
         // Update slider range on window resize
