@@ -3199,7 +3199,7 @@
   },
   {
     "id": 290,
-    "brand": "Baboon to the Moon",
+    "brand": "Baboon To The Moon",
     "name": "City Backpack",
     "price": 129,
     "volume": 24,
@@ -3212,7 +3212,7 @@
   },
   {
     "id": 291,
-    "brand": "Baboon to the Moon",
+    "brand": "Baboon To The Moon",
     "name": "Crescent Crossbody",
     "price": 99,
     "volume": 4.7,
@@ -3225,7 +3225,7 @@
   },
   {
     "id": 292,
-    "brand": "Baboon to the Moon",
+    "brand": "Baboon To The Moon",
     "name": "Crescent Crossbody Big",
     "price": 119,
     "volume": 8,
@@ -3238,7 +3238,7 @@
   },
   {
     "id": 293,
-    "brand": "Baboon to the Moon",
+    "brand": "Baboon To The Moon",
     "name": "Go-Bag Big",
     "price": 229,
     "volume": 60,
@@ -3251,7 +3251,7 @@
   },
   {
     "id": 294,
-    "brand": "Baboon to the Moon",
+    "brand": "Baboon To The Moon",
     "name": "Go-Bag Mini",
     "price": 169,
     "volume": 32,
@@ -3264,7 +3264,7 @@
   },
   {
     "id": 295,
-    "brand": "Baboon to the Moon",
+    "brand": "Baboon To The Moon",
     "name": "Go-Bag Small",
     "price": 199,
     "volume": 40,
@@ -3277,7 +3277,7 @@
   },
   {
     "id": 296,
-    "brand": "Baboon to the Moon",
+    "brand": "Baboon To The Moon",
     "name": "Go-Bag Roller Big",
     "price": 299,
     "volume": 55,
@@ -3290,7 +3290,7 @@
   },
   {
     "id": 297,
-    "brand": "Baboon to the Moon",
+    "brand": "Baboon To The Moon",
     "name": "Go-Tote Mega",
     "price": 111.3,
     "volume": 40,
@@ -3303,7 +3303,7 @@
   },
   {
     "id": 298,
-    "brand": "Baboon to the Moon",
+    "brand": "Baboon To The Moon",
     "name": "Mesh Tote",
     "price": 49,
     "volume": 45,
@@ -3316,7 +3316,7 @@
   },
   {
     "id": 299,
-    "brand": "Baboon to the Moon",
+    "brand": "Baboon To The Moon",
     "name": "Utility Backpack",
     "price": 159,
     "volume": 25,
@@ -3329,7 +3329,7 @@
   },
   {
     "id": 300,
-    "brand": "Baboon to the Moon",
+    "brand": "Baboon To The Moon",
     "name": "Weekender",
     "price": 169,
     "volume": 34,
@@ -7705,7 +7705,7 @@
     "material": "Nylon",
     "type": "Backpack",
     "description": "",
-    "link": "https://urth.com",
+    "link": "https://urth.co",
     "image": "images/urth-arkose-backpack-set.png"
   },
   {
@@ -7718,7 +7718,7 @@
     "material": "Nylon",
     "type": "Backpack",
     "description": "",
-    "link": "https://urth.com",
+    "link": "https://urth.co",
     "image": "images/urth-arkose-backpack.png"
   },
   {
@@ -7731,7 +7731,7 @@
     "material": "Nylon",
     "type": "Tote",
     "description": "",
-    "link": "https://urth.com",
+    "link": "https://urth.co",
     "image": "images/urth-arkose-tote-set.png"
   },
   {
@@ -7744,7 +7744,7 @@
     "material": "Nylon",
     "type": "Sling",
     "description": "",
-    "link": "https://urth.com",
+    "link": "https://urth.co",
     "image": "images/urth-dolomite-sling-8l.png"
   },
   {
@@ -7757,7 +7757,7 @@
     "material": "Nylon",
     "type": "Sling",
     "description": "",
-    "link": "https://urth.com",
+    "link": "https://urth.co",
     "image": "images/urth-dolomite-sling.png"
   },
   {
@@ -7770,7 +7770,7 @@
     "material": "Nylon",
     "type": "Backpack",
     "description": "",
-    "link": "https://urth.com",
+    "link": "https://urth.co",
     "image": "images/urth-norite-backpack-set.png"
   },
   {
@@ -7783,7 +7783,7 @@
     "material": "Nylon",
     "type": "Backpack",
     "description": "",
-    "link": "https://urth.com",
+    "link": "https://urth.co",
     "image": "images/urth-norite-backpack.png"
   }
 ]
