@@ -120,7 +120,7 @@ exports.handler = async (event) => {
         // Generate styled HTML email
         const emailHTML = generateBrandRequestEmail(brandName, issue.html_url, issue.number);
 
-        const transporter = nodemailer.createTransporter({
+        const transporter = nodemailer.createTransport({
           service: 'gmail',
           auth: {
             user: 'hey@coolbags.info',
