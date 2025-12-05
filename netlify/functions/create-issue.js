@@ -1,6 +1,8 @@
 // Netlify Function: Create GitHub Issue
 // Called when user submits feedback or brand request
 
+const nodemailer = require('nodemailer');
+
 // Email template function - Clean HTML with easy styling
 function generateBrandRequestEmail(brandName, issueUrl, issueNumber) {
   return `<!DOCTYPE html>
@@ -118,9 +120,6 @@ exports.handler = async (event) => {
         // Generate styled HTML email
         const emailHTML = generateBrandRequestEmail(brandName, issue.html_url, issue.number);
 
-        // Send email via Gmail SMTP using nodemailer
-        const nodemailer = require('nodemailer');
-
         const transporter = nodemailer.createTransporter({
           service: 'gmail',
           auth: {
@@ -137,11 +136,16 @@ exports.handler = async (event) => {
           text: `Hi there!\n\nThanks for requesting ${brandName} to be added to Cool Bags!\n\nWe've created an issue to track this request:\n${issue.html_url}\n(Issue #${issue.number})\n\nWe're manually curating the catalog, so it may take a few weeks to add new brands. We'll send you an email when ${brandName} goes live!\n\nBest regards,\nCool Bags Team\n\n---\nCool Bags - The Complete Bag Database\nVisit: https://coolbags.info`
         };
 
-        await transporter.sendMail(mailOptions);
-        console.log('Confirmation email sent successfully via Gmail');
+        const result = await transporter.sendMail(mailOptions);
+        console.log('Confirmation email sent successfully via Gmail:', result.messageId);
 
       } catch (emailError) {
         console.error('Gmail email sending error:', emailError);
+        console.error('Email error details:', {
+          message: emailError.message,
+          code: emailError.code,
+          response: emailError.response
+        });
         // Don't fail the whole request if email fails
       }
     }
