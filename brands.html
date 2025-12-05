@@ -1517,8 +1517,12 @@
 
         // Brand Request Modal Functions
         function openBrandRequestModal() {
+            document.getElementById('brand-request-modal').classList.add('visible');
             document.getElementById('brand-request-success').style.display = 'none';
+            document.getElementById('brand-request-form').style.display = 'block';
             document.getElementById('brand-request-submit').disabled = false;
+            // Reset form
+            document.getElementById('brand-request-form').reset();
         }
 
         function closeBrandRequestModal(event) {
