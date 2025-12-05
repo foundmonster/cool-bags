@@ -2165,7 +2165,7 @@
         }
 
         // A/B Button Variant System
-        // Variant A: "Buy Me a Coffee" | Variant B: "Buy My Dog a Treat"
+        // Variant A: "Buy Me a Coffee" (with mug) | Variant B: "Buy My Dog a Treat" (no mug)
         function initializeButtonVariant() {
             // Check if user already has a variant assigned
             let variant = localStorage.getItem('buttonVariant');
@@ -2179,10 +2179,13 @@
             // Apply variant
             const textA = document.querySelector('.button-text-a');
             const textB = document.querySelector('.button-text-b');
+            const coffeeVisual = document.querySelector('.coffee-with-steam');
 
-            if (variant === 'B' && textA && textB) {
+            if (variant === 'B' && textA && textB && coffeeVisual) {
                 textA.style.display = 'none';
                 textB.style.display = 'inline';
+                // Hide coffee mug/steam for dog treat variant
+                coffeeVisual.style.display = 'none';
             }
         }
 
