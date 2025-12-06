@@ -35,3 +35,10 @@ test-load.html
 
 # Workflow documentation (use [skip netlify] in commits)
 WORKFLOW.md
+
+# Development documentation files (keep local only)
+.nojekyll
+BUTTONDOWN-SETUP.md
+DEPLOYMENT.md
+NETLIFY-SETUP-STEPS.md
+github-issue-dead-links.md
