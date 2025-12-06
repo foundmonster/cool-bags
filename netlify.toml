@@ -8,6 +8,15 @@
   # Netlify Functions directory
   functions = "netlify/functions"
 
+# Branch deploy settings - only deploy main branch to production
+[context.production]
+  # Production builds from main branch only
+  command = "echo 'Production deployment from main branch'"
+
+[context.dev]
+  # Dev branch builds but doesn't deploy to production
+  command = "echo 'Development branch - no production deployment'"
+
 # Environment variables needed:
 # GITHUB_TOKEN - GitHub Personal Access Token (add in Netlify dashboard)
 # BUTTONDOWN_API_KEY - Buttondown API key (optional, add later)

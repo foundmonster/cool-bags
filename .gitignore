@@ -27,6 +27,18 @@ npm-debug.log*
 *.tmp
 .cache/
 server.pid
+
+# Development backups (don't trigger deployments)
 bags-backup.json
 bags-temp.json
 test-load.html
+
+# Workflow documentation (use [skip netlify] in commits)
+WORKFLOW.md
+
+# Development documentation files (keep local only)
+.nojekyll
+BUTTONDOWN-SETUP.md
+DEPLOYMENT.md
+NETLIFY-SETUP-STEPS.md
+github-issue-dead-links.md
