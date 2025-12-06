@@ -2230,11 +2230,34 @@
         // Feedback Modal Functions
         function openFeedbackModal() {
             document.getElementById('feedback-modal').classList.add('visible');
+            const form = document.getElementById('feedback-form');
+            const footer = document.querySelector('#feedback-modal .feedback-modal-footer');
+
             // Reset form
-            document.getElementById('feedback-form').reset();
-            document.getElementById('feedback-form').style.display = 'block';
+            form.reset();
+            form.style.display = 'block';
             document.getElementById('feedback-success').style.display = 'none';
             document.getElementById('feedback-submit').disabled = false;
+
+            // Reset all CSS properties that might be modified during submission
+            form.style.opacity = '1';
+            form.style.transform = 'translateY(0)';
+            form.style.transition = '';
+
+            // Reset footer styles
+            footer.style.opacity = '1';
+            footer.style.maxHeight = '';
+            footer.style.paddingTop = '';
+            footer.style.paddingBottom = '';
+
+            // Re-enable all form inputs
+            const inputs = form.querySelectorAll('input, textarea, button');
+            inputs.forEach(input => input.disabled = false);
+
+            // Reset buttons
+            document.getElementById('feedback-submit').textContent = 'Submit Feedback';
+            document.querySelector('#feedback-modal .feedback-modal-footer button[type="button"]').disabled = false;
+
             // Reset type to default (Feature Request)
             selectFeedbackType('request');
         }
