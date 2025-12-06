@@ -94,16 +94,7 @@ jobs:
               echo "🚀 Successfully merged! Netlify deployment will start shortly."
             else
               echo "⚠️  PR #$PR_NUMBER has conflicts - manual review required"
-              gh pr comment $PR_NUMBER --body "⚠️ **Manual Review Required**
-
-This PR has merge conflicts that need to be resolved manually.
-
-**To resolve:**
-1. Review the conflicts in the Files tab
-2. Resolve conflicts locally or via GitHub web interface
-3. Merge when ready
-
-The next scheduled merge is in ~3-4 days."
+              gh pr comment $PR_NUMBER --body "⚠️ **Manual Review Required**\n\nThis PR has merge conflicts that need to be resolved manually.\n\n**To resolve:**\n1. Review the conflicts in the Files tab\n2. Resolve conflicts locally or via GitHub web interface\n3. Merge when ready\n\nThe next scheduled merge is in ~3-4 days."
             fi
           else
             echo "❌ Could not find PR number"
