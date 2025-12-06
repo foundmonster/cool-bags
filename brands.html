@@ -1529,11 +1529,33 @@
         // Brand Request Modal Functions
         function openBrandRequestModal() {
             document.getElementById('brand-request-modal').classList.add('visible');
-            document.getElementById('brand-request-success').style.display = 'none';
-            document.getElementById('brand-request-form').style.display = 'block';
-            document.getElementById('brand-request-submit').disabled = false;
+            const form = document.getElementById('brand-request-form');
+            const footer = document.querySelector('#brand-request-modal .feedback-modal-footer');
+
             // Reset form
-            document.getElementById('brand-request-form').reset();
+            form.reset();
+            form.style.display = 'block';
+            document.getElementById('brand-request-success').style.display = 'none';
+            document.getElementById('brand-request-submit').disabled = false;
+
+            // Reset all CSS properties that might be modified during submission
+            form.style.opacity = '1';
+            form.style.transform = 'translateY(0)';
+            form.style.transition = '';
+
+            // Reset footer styles
+            footer.style.opacity = '1';
+            footer.style.maxHeight = '';
+            footer.style.paddingTop = '';
+            footer.style.paddingBottom = '';
+
+            // Re-enable all form inputs
+            const inputs = form.querySelectorAll('input, textarea, button');
+            inputs.forEach(input => input.disabled = false);
+
+            // Reset buttons
+            document.getElementById('brand-request-submit').textContent = 'Submit Brand Request';
+            document.querySelector('#brand-request-modal .feedback-modal-footer button[type="button"]').disabled = false;
         }
 
         function closeBrandRequestModal(event) {
