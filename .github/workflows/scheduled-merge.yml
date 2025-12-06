@@ -1,0 +1,118 @@
+name: Scheduled Merge (Dev to Main)
+
+# Run twice weekly: Tuesday and Friday at 10 AM UTC (5 AM EST / 2 AM PST)
+on:
+  schedule:
+    # Tuesday at 10:00 AM UTC
+    - cron: '0 10 * * 2'
+    # Friday at 10:00 AM UTC
+    - cron: '0 10 * * 5'
+
+  # Allow manual triggering for testing
+  workflow_dispatch:
+
+jobs:
+  auto-merge:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Configure Git
+        run: |
+          git config user.name "GitHub Actions Bot"
+          git config user.email "actions@github.com"
+
+      - name: Check for changes on dev branch
+        id: check-changes
+        run: |
+          git fetch origin
+
+          # Check if dev is ahead of main
+          AHEAD=$(git rev-list --count origin/main..origin/dev)
+          echo "commits_ahead=$AHEAD" >> $GITHUB_OUTPUT
+
+          if [ "$AHEAD" -gt 0 ]; then
+            echo "✅ Dev branch has $AHEAD new commits to merge"
+            echo "has_changes=true" >> $GITHUB_OUTPUT
+          else
+            echo "ℹ️  No new changes on dev branch"
+            echo "has_changes=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Create Pull Request
+        if: steps.check-changes.outputs.has_changes == 'true'
+        uses: repo-sync/pull-request@v2
+        with:
+          source_branch: "dev"
+          destination_branch: "main"
+          pr_title: "🚀 Scheduled Release - ${{ github.event.schedule && 'Auto' || 'Manual' }} Merge"
+          pr_body: |
+            ## 📦 Scheduled Release
+
+            This PR contains ${{ steps.check-changes.outputs.commits_ahead }} new commits from the `dev` branch.
+
+            **Merge Schedule:** Twice weekly (Tuesday & Friday)
+            **Triggered:** ${{ github.event.schedule && 'Automatically via schedule' || 'Manually via workflow dispatch' }}
+
+            ### 🔍 Changes Summary
+            <!-- Auto-generated commit list below -->
+
+            ### 🚀 After Merge
+            - ✅ Netlify will automatically deploy to production
+            - ✅ New brands/bags will be live on coolbags.info
+            - ✅ Users will receive any pending email notifications
+
+            ---
+            *This PR was created automatically. Review changes and merge when ready.*
+          pr_draft: false
+          pr_allow_empty: false
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Auto-merge if no conflicts
+        if: steps.check-changes.outputs.has_changes == 'true'
+        run: |
+          # Wait a moment for PR to be created
+          sleep 10
+
+          # Get the latest PR number
+          PR_NUMBER=$(gh pr list --head dev --base main --json number --jq '.[0].number')
+
+          if [ -n "$PR_NUMBER" ]; then
+            echo "🔄 Checking if PR #$PR_NUMBER can be auto-merged..."
+
+            # Check if PR is mergeable (no conflicts)
+            MERGEABLE=$(gh pr view $PR_NUMBER --json mergeable --jq '.mergeable')
+
+            if [ "$MERGEABLE" = "MERGEABLE" ]; then
+              echo "✅ Auto-merging PR #$PR_NUMBER (no conflicts detected)"
+              gh pr merge $PR_NUMBER --merge --delete-branch=false
+              echo "🚀 Successfully merged! Netlify deployment will start shortly."
+            else
+              echo "⚠️  PR #$PR_NUMBER has conflicts - manual review required"
+              gh pr comment $PR_NUMBER --body "⚠️ **Manual Review Required**
+
+This PR has merge conflicts that need to be resolved manually.
+
+**To resolve:**
+1. Review the conflicts in the Files tab
+2. Resolve conflicts locally or via GitHub web interface
+3. Merge when ready
+
+The next scheduled merge is in ~3-4 days."
+            fi
+          else
+            echo "❌ Could not find PR number"
+          fi
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: No changes notification
+        if: steps.check-changes.outputs.has_changes == 'false'
+        run: |
+          echo "ℹ️  No scheduled merge needed - dev branch is up to date with main"
+          echo "Next scheduled check: ${{ github.event.schedule == '0 10 * * 2' && 'Friday' || 'Tuesday' }} at 10:00 AM UTC"
