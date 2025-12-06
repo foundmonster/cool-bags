@@ -1,7 +1,7 @@
 // Netlify Function: Create GitHub Issue
 // Called when user submits feedback or brand request
 
-const nodemailer = require('nodemailer');
+const fetch = require('node-fetch');
 
 // Email template function - Clean HTML with easy styling
 function generateBrandRequestEmail(brandName, issueUrl, issueNumber) {
@@ -111,41 +111,56 @@ exports.handler = async (event) => {
 
     const issue = await response.json();
 
-    // Send confirmation email for brand requests
-    if (type === 'request' && email && process.env.GMAIL_APP_PASSWORD) {
+// Send confirmation email for brand requests using Mailgun
+    if (type === 'request' && email && process.env.MAILGUN_API_KEY) {
       try {
         // Extract brand name from title (remove "[Brand Request] " prefix)
         const brandName = title.replace('[Brand Request] ', '');
 
-        // Generate styled HTML email
-        const emailHTML = generateBrandRequestEmail(brandName, issue.html_url, issue.number);
+        // Simple plain text email
+        const emailText = `Hi there!
 
-        const transporter = nodemailer.createTransport({
-          service: 'gmail',
-          auth: {
-            user: 'hey@coolbags.info',
-            pass: process.env.GMAIL_APP_PASSWORD
-          }
+Thanks for requesting ${brandName} to be added to Cool Bags!
+
+We've created an issue to track this request:
+${issue.html_url}
+(Issue #${issue.number})
+
+We're manually curating the catalog, so it may take a few weeks to add new brands. We'll send you an email when ${brandName} goes live!
+
+Best regards,
+Cool Bags Team
+
+---
+Cool Bags - The Complete Bag Database
+Visit: https://coolbags.info`;
+
+        // Mailgun API request
+        const mailgunResponse = await fetch(`https://api.mailgun.net/v3/${process.env.MAILGUN_DOMAIN}/messages`, {
+          method: 'POST',
+          headers: {
+            'Authorization': `Basic ${Buffer.from(`api:${process.env.MAILGUN_API_KEY}`).toString('base64')}`,
+            'Content-Type': 'application/x-www-form-urlencoded'
+          },
+          body: new URLSearchParams({
+            from: `Cool Bags Team <noreply@${process.env.MAILGUN_DOMAIN}>`,
+            to: email,
+            subject: `We received your request for ${brandName}`,
+            text: emailText,
+            'h:Reply-To': 'hey@coolbags.info'
+          })
         });
 
-        const mailOptions = {
-          from: '"Cool Bags Team" <hey@coolbags.info>',
-          to: email,
-          subject: `We received your request for ${brandName}`,
-          html: emailHTML,
-          text: `Hi there!\n\nThanks for requesting ${brandName} to be added to Cool Bags!\n\nWe've created an issue to track this request:\n${issue.html_url}\n(Issue #${issue.number})\n\nWe're manually curating the catalog, so it may take a few weeks to add new brands. We'll send you an email when ${brandName} goes live!\n\nBest regards,\nCool Bags Team\n\n---\nCool Bags - The Complete Bag Database\nVisit: https://coolbags.info`
-        };
-
-        const result = await transporter.sendMail(mailOptions);
-        console.log('Confirmation email sent successfully via Gmail:', result.messageId);
+        if (mailgunResponse.ok) {
+          const result = await mailgunResponse.json();
+          console.log('Confirmation email sent successfully via Mailgun:', result.id);
+        } else {
+          const errorText = await mailgunResponse.text();
+          console.error('Mailgun API error:', mailgunResponse.status, errorText);
+        }
 
       } catch (emailError) {
-        console.error('Gmail email sending error:', emailError);
-        console.error('Email error details:', {
-          message: emailError.message,
-          code: emailError.code,
-          response: emailError.response
-        });
+        console.error('Mailgun email sending error:', emailError);
         // Don't fail the whole request if email fails
       }
     }
