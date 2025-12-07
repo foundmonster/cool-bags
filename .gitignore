@@ -42,3 +42,5 @@ BUTTONDOWN-SETUP.md
 DEPLOYMENT.md
 NETLIFY-SETUP-STEPS.md
 github-issue-dead-links.md
+link-check-results.json
+link-checker.js
