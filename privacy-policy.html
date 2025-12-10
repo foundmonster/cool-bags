@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy Policy - Cool Bags</title>
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DRQ142RSKW"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-DRQ142RSKW');
+    </script>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', sans-serif;
+            background: #ffffff;
+            font-weight: 400;
+            color: #1d1d1f;
+            overflow-x: hidden;
+        }
+
+        /* Main Layout: Sidebar + Content */
+        .app-container {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            min-height: 100vh;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            background: #fafafa;
+            border-right: 1px solid rgba(0, 0, 0, 0.06);
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            position: sticky;
+            top: 0;
+        }
+
+        .sidebar-header {
+            padding: 32px 24px 24px;
+        }
+
+        .sidebar-header h1 {
+            font-size: 20px;
+            font-weight: 400;
+            color: #1d1d1f;
+            margin-bottom: 4px;
+        }
+
+        .sidebar-header a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        .sidebar-header .subtitle {
+            font-size: 12px;
+            color: #86868b;
+            text-align: left;
+            margin-top: 8px;
+            line-height: 1.5;
+        }
+
+        /* Sidebar Content */
+        .sidebar-content {
+            padding: 24px;
+            flex: 1;
+            overflow-y: auto;
+        }
+
+        .nav-section-title {
+            font-size: 11px;
+            color: #86868b;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 12px;
+        }
+
+        .nav-link {
+            display: block;
+            font-size: 13px;
+            color: #86868b;
+            text-decoration: none;
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+            transition: color 0.2s;
+        }
+
+        .nav-link:hover {
+            color: #1d1d1f;
+        }
+
+        /* Sidebar Footer */
+        .sidebar-footer {
+            padding: 24px;
+        }
+
+        .sidebar-footer a {
+            display: block;
+            text-align: center;
+            font-size: 13px;
+            color: #1d1d1f;
+            text-decoration: none;
+            padding: 10px 16px;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            border-radius: 4px;
+            background: white;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+
+        .sidebar-footer a:hover {
+            background: rgba(0, 0, 0, 0.02);
+            border-color: rgba(0, 0, 0, 0.2);
+        }
+
+        /* Main Content */
+        .main-content {
+            padding: 32px 80px 80px;
+            max-width: 800px;
+            overflow-y: auto;
+        }
+
+        /* Title */
+        .page-title {
+            font-size: 20px;
+            font-weight: 400;
+            margin-bottom: 16px;
+        }
+
+        .last-updated {
+            font-size: 13px;
+            color: #86868b;
+            margin-bottom: 60px;
+        }
+
+        /* Intro */
+        .intro {
+            font-size: 15px;
+            color: #1d1d1f;
+            line-height: 1.6;
+            margin-bottom: 60px;
+        }
+
+        /* Summary box */
+        .summary-box {
+            margin-bottom: 80px;
+        }
+
+        .summary-title {
+            font-size: 13px;
+            color: #86868b;
+            margin-bottom: 16px;
+        }
+
+        .summary-item {
+            font-size: 14px;
+            color: #1d1d1f;
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+        }
+
+        .summary-item:last-child {
+            border-bottom: none;
+        }
+
+        /* Sections */
+        .section {
+            margin-bottom: 60px;
+        }
+
+        .section-title {
+            font-size: 14px;
+            font-weight: 400;
+            color: #1d1d1f;
+            margin-bottom: 16px;
+        }
+
+        .section-content {
+            font-size: 14px;
+            color: #86868b;
+            line-height: 1.6;
+        }
+
+        .section-content p {
+            margin-bottom: 16px;
+        }
+
+        .section-content p:last-child {
+            margin-bottom: 0;
+        }
+
+        .section-content strong {
+            color: #1d1d1f;
+            font-weight: 400;
+        }
+
+        .section-content ul {
+            list-style: none;
+            margin: 16px 0;
+        }
+
+        .section-content li {
+            padding: 4px 0;
+            padding-left: 16px;
+            position: relative;
+        }
+
+        .section-content li::before {
+            content: '·';
+            position: absolute;
+            left: 0;
+            color: #86868b;
+        }
+
+        .section-content a {
+            color: #1d1d1f;
+            text-decoration: underline;
+            text-decoration-color: rgba(0, 0, 0, 0.2);
+            text-underline-offset: 2px;
+        }
+
+        .section-content a:hover {
+            text-decoration-color: #1d1d1f;
+        }
+
+        /* Contact section */
+        .contact-section {
+            margin-top: 40px;
+            padding: 24px;
+            background: #fafafa;
+            border-radius: 4px;
+        }
+
+        .contact-section .section-title {
+            margin-bottom: 8px;
+        }
+
+        .contact-section .section-content {
+            margin-bottom: 0;
+        }
+
+        .contact-section .section-content a {
+            color: #1d1d1f;
+            text-decoration: underline;
+            text-decoration-color: rgba(0, 0, 0, 0.2);
+            text-underline-offset: 2px;
+        }
+
+        .contact-section .section-content a:hover {
+            text-decoration-color: #1d1d1f;
+        }
+
+        /* Mobile */
+        @media (max-width: 768px) {
+            .app-container {
+                grid-template-columns: 1fr;
+            }
+
+            .sidebar {
+                display: none;
+            }
+
+            .main-content {
+                padding: 40px 24px;
+            }
+
+            .page-title {
+                font-size: 28px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <h1><a href="/">Cool Bags</a></h1>
+                <div class="subtitle">Privacy Policy</div>
+            </div>
+
+            <div class="sidebar-content">
+                <div class="nav-section">
+                    <p class="nav-section-title">On This Page</p>
+                    <a href="#analytics" class="nav-link">Analytics</a>
+                    <a href="#email" class="nav-link">Email</a>
+                    <a href="#cookies" class="nav-link">Cookies</a>
+                    <a href="#third-party" class="nav-link">Third-party services</a>
+                    <a href="#what-we-dont-do" class="nav-link">What we don't do</a>
+                    <a href="#your-rights" class="nav-link">Your rights</a>
+                    <a href="#external-links" class="nav-link">External links</a>
+                    <a href="#changes" class="nav-link">Changes</a>
+                    <a href="#contact" class="nav-link">Questions</a>
+                </div>
+            </div>
+
+            <div class="sidebar-footer">
+                <a href="index-prototype.html">← Back to Cool Bags</a>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <h1 class="page-title">Privacy Policy</h1>
+            <p class="last-updated">Last updated December 7, 2025</p>
+
+            <p class="intro">
+                Cool Bags is a curated catalog of bags and backpacks. We believe in transparency and minimal data collection.
+            </p>
+
+            <div class="summary-box">
+                <p class="summary-title">The short version</p>
+                <div class="summary-item">We collect basic analytics to understand how the site is used</div>
+                <div class="summary-item">We only store your email if you voluntarily submit it</div>
+                <div class="summary-item">We never sell your data</div>
+                <div class="summary-item">We only send emails you've signed up for</div>
+            </div>
+
+            <div class="section" id="analytics">
+                <h2 class="section-title">Analytics</h2>
+                <div class="section-content">
+                    <p>We use Google Analytics to understand how visitors use the site. This includes pages viewed, time spent, approximate location (city-level), device type, and which external links you click.</p>
+                    <p>This data is aggregated and anonymous. We cannot identify individual users.</p>
+                </div>
+            </div>
+
+            <div class="section" id="email">
+                <h2 class="section-title">Email</h2>
+                <div class="section-content">
+                    <p>We collect your email address in two scenarios, both entirely optional:</p>
+                    <ul>
+                        <li><strong>Brand requests</strong> — If you submit a brand request, we use your email to confirm receipt and notify you when that brand is added.</li>
+                        <li><strong>Newsletter</strong> — If you sign up for our newsletter, we'll send occasional updates about new brands and features. You can unsubscribe at any time.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="section" id="cookies">
+                <h2 class="section-title">Cookies</h2>
+                <div class="section-content">
+                    <p>Google Analytics uses cookies to distinguish between visitors and understand site usage patterns. We do not use any other tracking cookies.</p>
+                </div>
+            </div>
+
+            <div class="section" id="third-party">
+                <h2 class="section-title">Third-party services</h2>
+                <div class="section-content">
+                    <ul>
+                        <li><strong>Google Analytics</strong> — Website analytics</li>
+                        <li><strong>Netlify</strong> — Website hosting</li>
+                        <li><strong>Email provider</strong> — Email delivery</li>
+                        <li><strong>GitHub</strong> — Brand request tracking</li>
+                    </ul>
+                    <p>Each service has their own privacy policy.</p>
+                </div>
+            </div>
+
+            <div class="section" id="what-we-dont-do">
+                <h2 class="section-title">What we don't do</h2>
+                <div class="section-content">
+                    <ul>
+                        <li>Sell or share your data with advertisers</li>
+                        <li>Send unsolicited emails</li>
+                        <li>Require account creation</li>
+                        <li>Store personal information beyond voluntarily submitted emails</li>
+                        <li>Use targeted advertising</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="section" id="your-rights">
+                <h2 class="section-title">Your rights</h2>
+                <div class="section-content">
+                    <p>You can unsubscribe from the newsletter at any time using the link in any email. You can also request that we delete your email address by contacting us.</p>
+                </div>
+            </div>
+
+            <div class="section" id="external-links">
+                <h2 class="section-title">External links</h2>
+                <div class="section-content">
+                    <p>Cool Bags contains links to external websites. When you click these links, you leave our site and are subject to those sites' privacy policies. We track that a click occurred for analytics purposes.</p>
+                </div>
+            </div>
+
+            <div class="section" id="changes">
+                <h2 class="section-title">Changes</h2>
+                <div class="section-content">
+                    <p>If we make significant changes to this policy, we'll update the date at the top.</p>
+                </div>
+            </div>
+
+            <div class="contact-section" id="contact">
+                <h2 class="section-title">Questions?</h2>
+                <p class="section-content">Reach us through the feedback form on the site or by opening an issue on <a href="https://github.com/foundmonster/cool-bags" target="_blank">GitHub</a>.</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

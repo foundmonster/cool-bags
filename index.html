@@ -1388,8 +1388,8 @@
     </style>
 </head>
 <body>
-    <!-- Version Indicator -->
-    <div class="version">Last updated Dec.01.25</div>
+    <!-- Privacy Policy Link -->
+    <a href="privacy-policy.html" class="version" style="text-decoration: none; color: #1d1d1f;">Privacy Policy</a>
 
     <!-- Floating About Button (Desktop) -->
     <button class="floating-about" onclick="openAboutModal()">About</button>
@@ -2383,6 +2383,20 @@
                 inputs.forEach(input => input.disabled = false);
             }
         }
+    </script>
+
+    <!-- Outbound Link Click Tracking -->
+    <script>
+        document.addEventListener('click', function(e) {
+            const link = e.target.closest('a');
+            if (link && link.hostname && link.hostname !== window.location.hostname) {
+                gtag('event', 'outbound_click', {
+                    'link_url': link.href,
+                    'link_domain': link.hostname,
+                    'transport_type': 'beacon'
+                });
+            }
+        });
     </script>
 </body>
 </html>
