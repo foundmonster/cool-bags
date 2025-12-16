@@ -47,3 +47,11 @@ link-checker.js
 brand-tracking-complete.csv
 brand-tracking-corrected.csv
 brand-tracking-import.csv
+BRAND-SYNC.md
+brands-html-categories.md
+brands.html.backup
+brands_temp.html
+github-project-board-status.md
+images/badge-scan.txt
+sync-brands-from-github.py
+sync-brands.sh
