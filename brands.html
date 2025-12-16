@@ -1,4 +1,595 @@
-<div class="main-content">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brands - Cool Bags</title>
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DRQ142RSKW"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-DRQ142RSKW');
+    </script>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', sans-serif;
+            background: #ffffff;
+            font-weight: 400;
+            color: #1d1d1f;
+            overflow: hidden;
+            height: 100vh;
+        }
+
+        /* Main Layout: Sidebar + Content */
+        .app-container {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            height: 100vh;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            background: #fafafa;
+            border-right: 1px solid rgba(0, 0, 0, 0.06);
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            overflow-y: auto;
+        }
+
+        .sidebar-header {
+            padding: 32px 24px 24px;
+        }
+
+        .sidebar-header h1 {
+            font-size: 20px;
+            font-weight: 400;
+            color: #1d1d1f;
+            margin-bottom: 4px;
+        }
+
+        .sidebar-header .subtitle {
+            font-size: 12px;
+            color: #86868b;
+            line-height: 1.4;
+        }
+
+        /* Sidebar Content */
+        .sidebar-content {
+            padding: 24px;
+            flex: 1;
+        }
+
+        .info-section {
+            padding: 16px 0;
+        }
+
+        .info-section:first-child {
+            padding-top: 0;
+        }
+
+        .info-section h2 {
+            font-size: 12px;
+            font-weight: 400;
+            color: #86868b;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+        }
+
+        .footer-info {
+            font-size: 12px;
+            color: #86868b;
+            text-align: left;
+            margin-top: 8px;
+            line-height: 1.5;
+        }
+
+        /* Sidebar Footer */
+        .sidebar-footer {
+            padding: 24px;
+        }
+
+        .sidebar-footer a {
+            display: block;
+            text-align: center;
+            font-size: 13px;
+            color: #1d1d1f;
+            text-decoration: none;
+            padding: 10px 16px;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            border-radius: 4px;
+            background: white;
+            transition: all 0.2s;
+            font-family: inherit;
+            margin-bottom: 8px;
+        }
+
+        .sidebar-footer a:hover {
+            background: rgba(0, 0, 0, 0.02);
+            border-color: rgba(0, 0, 0, 0.2);
+        }
+
+        .sidebar-footer a:active {
+            background: rgba(0, 0, 0, 0.04);
+        }
+
+        .sidebar-footer button {
+            display: block;
+            width: 100%;
+            text-align: center;
+            font-size: 13px;
+            color: #1d1d1f;
+            padding: 10px 16px;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            border-radius: 4px;
+            background: white;
+            transition: all 0.2s;
+            font-family: inherit;
+            margin-bottom: 8px;
+            cursor: pointer;
+        }
+
+        .sidebar-footer button:hover {
+            background: rgba(0, 0, 0, 0.02);
+            border-color: rgba(0, 0, 0, 0.2);
+        }
+
+        .sidebar-footer button:active {
+            background: rgba(0, 0, 0, 0.04);
+        }
+
+        .version {
+            position: fixed;
+            bottom: 12px;
+            left: 24px;
+            font-size: 10px;
+            color: #86868b;
+            opacity: 0.5;
+            z-index: 10;
+            font-weight: 400;
+            letter-spacing: 0.3px;
+        }
+
+        .stats-list li.progress-item {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stats-list li.progress-item::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 0%;
+            background: rgba(0, 122, 255, 0.08);
+            animation: fillProgress 1.5s cubic-bezier(0.4, 0.0, 0.2, 1) forwards;
+            z-index: 0;
+        }
+
+        @keyframes fillProgress {
+            from {
+                width: 0%;
+            }
+            to {
+                width: var(--progress-width, 36%);
+            }
+        }
+
+        .stats-list li.progress-item span {
+            position: relative;
+            z-index: 1;
+        }
+
+        .stats-list {
+            list-style: none;
+        }
+
+        .stats-list li {
+            font-size: 13px;
+            color: #1d1d1f;
+            padding: 6px 0;
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+        }
+
+        .stats-list li:last-child {
+            border-bottom: none;
+        }
+
+        .stat-label {
+            color: #86868b;
+        }
+
+        .stat-value {
+            font-weight: 500;
+        }
+
+        /* Main Content */
+        .main-content {
+            padding: 32px 24px 24px;
+            overflow-y: auto;
+            height: 100vh;
+        }
+
+        .section {
+            margin-bottom: 48px;
+        }
+
+        .section-title {
+            font-size: 15px;
+            font-weight: 400;
+            color: #1d1d1f;
+            margin-bottom: 16px;
+            max-width: 500px;
+            margin: 0 auto 16px;
+        }
+
+        .brands-list {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2px;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .brand-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 6px 12px;
+            border-radius: 6px;
+            transition: background 0.2s;
+            cursor: pointer;
+        }
+
+        .brand-item:hover {
+            background: #fafafa;
+        }
+
+        .checkbox {
+            width: 20px;
+            height: 20px;
+            border: 1.5px solid rgba(0, 0, 0, 0.2);
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            background: white;
+        }
+
+        .brand-item.completed .checkbox {
+            background: #1d1d1f;
+            border-color: #1d1d1f;
+        }
+
+        .checkbox svg {
+            width: 12px;
+            height: 12px;
+            stroke: white;
+            stroke-width: 2.5;
+            display: none;
+        }
+
+        .brand-item.completed .checkbox svg {
+            display: block;
+        }
+
+        /* In Progress State */
+        .brand-item.in-progress .checkbox {
+            background: white;
+            border-color: rgba(0, 0, 0, 0.2);
+        }
+
+        .brand-item.in-progress .checkbox::after {
+            content: '';
+            width: 6px;
+            height: 6px;
+            background: #1d1d1f;
+            border-radius: 50%;
+            display: block;
+        }
+
+        /* Blocked/Issue State */
+        .brand-item.blocked .checkbox {
+            background: white;
+            border-color: rgba(255, 59, 48, 0.3);
+        }
+
+        .brand-item.blocked .checkbox::after {
+            content: '';
+            width: 10px;
+            height: 2px;
+            background: #ff3b30;
+            display: block;
+        }
+
+        .brand-item.blocked .brand-name {
+            color: #ff3b30;
+        }
+
+        .brand-name {
+            font-size: 14px;
+            font-weight: 400;
+            color: #1d1d1f;
+            flex: 1;
+        }
+
+        .brand-item.completed .brand-name {
+            color: #86868b;
+        }
+
+        .brand-item.in-progress .brand-name {
+            color: #1d1d1f;
+        }
+
+        /* Feedback Modal Styles */
+        .feedback-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 2000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 40px;
+        }
+
+        .feedback-modal.visible {
+            display: flex;
+        }
+
+        .feedback-modal-content {
+            background: white;
+            border-radius: 4px;
+            width: 100%;
+            max-width: 500px;
+            max-height: 80vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .feedback-modal-header {
+            padding: 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+        }
+
+        .feedback-modal-title {
+            font-size: 20px;
+            font-weight: 400;
+            color: #1d1d1f;
+        }
+
+        .feedback-modal-close {
+            padding: 8px 16px;
+            font-size: 13px;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            border-radius: 4px;
+            background: white;
+            color: #1d1d1f;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+
+        .feedback-modal-close:hover {
+            background: rgba(0, 0, 0, 0.02);
+        }
+
+        .feedback-modal-body {
+            padding: 24px;
+            overflow-y: auto;
+            flex: 1;
+        }
+
+        .feedback-form-group {
+            margin-bottom: 20px;
+        }
+
+        .feedback-form-group label {
+            display: block;
+            font-size: 12px;
+            font-weight: 400;
+            color: #86868b;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .feedback-form-group input[type="text"],
+        .feedback-form-group input[type="email"],
+        .feedback-form-group textarea {
+            width: 100%;
+            padding: 10px 12px;
+            font-size: 13px;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            border-radius: 4px;
+            background: white;
+            color: #1d1d1f;
+            font-family: inherit;
+        }
+
+        .feedback-form-group textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .feedback-form-group input:focus,
+        .feedback-form-group textarea:focus {
+            outline: none;
+            border-color: rgba(0, 0, 0, 0.3);
+        }
+
+        .feedback-form-note {
+            font-size: 11px;
+            color: #86868b;
+            margin-top: 4px;
+        }
+
+        .feedback-modal-footer {
+            padding: 24px;
+            display: flex;
+            gap: 8px;
+            justify-content: flex-end;
+            border-top: 1px solid rgba(0, 0, 0, 0.06);
+            opacity: 1;
+            max-height: 200px;
+            overflow: hidden;
+            transition: opacity 0.3s ease, max-height 0.4s ease, padding 0.4s ease;
+        }
+
+        .feedback-modal-footer button {
+            padding: 10px 20px;
+            font-size: 13px;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            border-radius: 4px;
+            background: white;
+            color: #1d1d1f;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+
+        .feedback-modal-footer button:hover {
+            background: rgba(0, 0, 0, 0.02);
+        }
+
+        .feedback-modal-footer button.primary {
+            background: #1d1d1f;
+            color: white;
+            border-color: #1d1d1f;
+        }
+
+        .feedback-modal-footer button.primary:hover {
+            background: #3a3a3c;
+        }
+
+        .feedback-modal-footer button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .feedback-success {
+            text-align: center;
+            padding: 40px 24px;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: opacity 0.4s ease, transform 0.4s ease;
+        }
+
+        .feedback-success-icon {
+            font-size: 48px;
+            margin-bottom: 16px;
+            display: none;
+        }
+
+        .feedback-success-title {
+            font-size: 18px;
+            font-weight: 400;
+            color: #1d1d1f;
+            margin-bottom: 12px;
+        }
+
+        .feedback-success-message {
+            font-size: 13px;
+            color: #86868b;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .feedback-success-link {
+            display: inline-block;
+            padding: 8px 16px;
+            font-size: 13px;
+            color: #0071e3;
+            text-decoration: none;
+            border: 1px solid rgba(0, 113, 227, 0.2);
+            border-radius: 4px;
+            transition: all 0.2s;
+        }
+
+        .feedback-success-link:hover {
+            background: rgba(0, 113, 227, 0.05);
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <h1>Cool Bags</h1>
+                <p class="footer-info">Progress Tracker</p>
+            </div>
+
+            <div class="sidebar-content">
+                <div class="info-section">
+                    <h2>Overview</h2>
+                    <p class="footer-info">A comprehensive catalog of bag brands being added to Cool Bags.</p>
+                    <p class="footer-info">Brands are added following a multi-phase project that takes a few hours per brand: image collection, image background removal, image creation, and catalog integration.</p>
+                </div>
+
+                <div class="info-section">
+                    <h2>Statistics</h2>
+                    <ul class="stats-list">
+                        <li>
+                            <span class="stat-label">Live Brands</span>
+                            <span class="stat-value">43</span>
+                        </li>
+                        <li>
+                            <span class="stat-label">In Progress</span>
+                            <span class="stat-value">59</span>
+                        </li>
+                        <li>
+                            <span class="stat-label">Blocked/Issues</span>
+                            <span class="stat-value">0</span>
+                        </li>
+                        <li>
+                            <span class="stat-label">To Be Added</span>
+                            <span class="stat-value">42</span>
+                        </li>
+                        <li>
+                            <span class="stat-label">Total Brands</span>
+                            <span class="stat-value">139</span>
+                        </li>
+                        <li class="progress-item">
+                            <span class="stat-label">Progress</span>
+                            <span class="stat-value">31%</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="sidebar-footer">
+                <button onclick="openBrandRequestModal()">Request a Brand</button>
+                <a href="index.html">← Back to Cool Bags</a>
+            </div>
+
+            <div class="version">Last updated Dec.15.25</div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
 
 
             
@@ -429,3 +1020,229 @@
     </div>
 
     <script>
+        // Calculate statistics dynamically
+        const inProgressBrands = document.querySelectorAll('.brand-item.in-progress').length;
+        const blockedBrands = document.querySelectorAll('.brand-item.blocked').length;
+        const totalBrands = document.querySelectorAll('.brand-item').length;
+        const toBeAdded = totalBrands - inProgressBrands - blockedBrands;
+
+        // Fetch live brands count from bags.json
+        let liveBrands = 43; // fallback value
+        let progressPercentage = Math.round((liveBrands / (liveBrands + totalBrands)) * 100);
+
+        fetch('bags.json')
+            .then(response => response.json())
+            .then(bags => {
+                // Count unique brands (not individual bags)
+                const uniqueBrands = [...new Set(bags.map(bag => bag.brand))];
+                liveBrands = uniqueBrands.length;
+                const totalBrandsWithLive = liveBrands + totalBrands;
+                progressPercentage = Math.round((liveBrands / totalBrandsWithLive) * 100);
+
+                // Update sidebar statistics with live data
+                document.querySelectorAll('.stat-value')[0].textContent = liveBrands;
+                document.querySelectorAll('.stat-value')[4].textContent = totalBrandsWithLive;
+                document.querySelectorAll('.stat-value')[5].textContent = progressPercentage + '%';
+
+                // Set CSS variable for progress animation
+                const progressItem = document.querySelector('.progress-item');
+                if (progressItem) {
+                    progressItem.style.setProperty('--progress-width', progressPercentage + '%');
+                }
+            })
+            .catch(error => {
+                console.log('Could not fetch live brands count, using fallback');
+                // Use fallback values already set above
+                document.querySelectorAll('.stat-value')[5].textContent = progressPercentage + '%';
+            });
+
+        // Update sidebar statistics (non-live counts)
+        document.querySelectorAll('.stat-value')[1].textContent = inProgressBrands;
+        document.querySelectorAll('.stat-value')[2].textContent = blockedBrands;
+        document.querySelectorAll('.stat-value')[3].textContent = toBeAdded;
+
+        // Update section titles
+        document.querySelectorAll('.section-title')[0].textContent = `In Progress (${inProgressBrands})`;
+        document.querySelectorAll('.section-title')[1].textContent = `Blocked/Issues (${blockedBrands})`;
+        document.querySelectorAll('.section-title')[2].textContent = `To Be Added (${toBeAdded})`;
+
+        // Brand Request Modal Functions
+        function openBrandRequestModal() {
+            document.getElementById('brand-request-modal').classList.add('visible');
+            const form = document.getElementById('brand-request-form');
+            const footer = document.querySelector('#brand-request-modal .feedback-modal-footer');
+
+            // Reset form
+            form.reset();
+            form.style.display = 'block';
+            document.getElementById('brand-request-success').style.display = 'none';
+            document.getElementById('brand-request-submit').disabled = false;
+
+            // Reset all CSS properties that might be modified during submission
+            form.style.opacity = '1';
+            form.style.transform = 'translateY(0)';
+            form.style.transition = '';
+
+            // Reset footer styles
+            footer.style.opacity = '1';
+            footer.style.maxHeight = '';
+            footer.style.paddingTop = '';
+            footer.style.paddingBottom = '';
+
+            // Re-enable all form inputs
+            const inputs = form.querySelectorAll('input, textarea, button');
+            inputs.forEach(input => input.disabled = false);
+
+            // Reset buttons
+            document.getElementById('brand-request-submit').textContent = 'Submit Brand Request';
+            document.querySelector('#brand-request-modal .feedback-modal-footer button[type="button"]').disabled = false;
+        }
+
+        function closeBrandRequestModal(event) {
+            const modal = document.getElementById('brand-request-modal');
+            if (event && event.target !== modal) return;
+            modal.classList.remove('visible');
+        }
+
+        async function submitBrandRequest() {
+            const submitButton = document.getElementById('brand-request-submit');
+            const cancelButton = document.querySelector('#brand-request-modal .feedback-modal-footer button[type="button"]');
+            const form = document.getElementById('brand-request-form');
+            const successView = document.getElementById('brand-request-success');
+            const footer = document.querySelector('#brand-request-modal .feedback-modal-footer');
+            const brandName = document.getElementById('brand-name').value.trim();
+            const reason = document.getElementById('brand-reason').value.trim();
+            const email = document.getElementById('brand-email').value.trim();
+
+            // Validation
+            if (!brandName || !reason) {
+                alert('Please fill in all required fields');
+                return;
+            }
+
+            // Disable all inputs and buttons
+            const inputs = form.querySelectorAll('input, textarea');
+            inputs.forEach(input => input.disabled = true);
+            submitButton.disabled = true;
+            cancelButton.disabled = true;
+
+            // Start animated loading state
+            let dotCount = 0;
+            submitButton.textContent = 'Submitting';
+            const loadingInterval = setInterval(() => {
+                dotCount = (dotCount + 1) % 4;
+                submitButton.textContent = 'Submitting' + '.'.repeat(dotCount);
+            }, 500);
+
+            try {
+                // Get browser and page info
+                const browser = navigator.userAgent;
+                const url = window.location.href;
+
+                // Call Netlify Function
+                const response = await fetch('/.netlify/functions/create-issue', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        type: 'request',
+                        title: `[Brand Request] ${brandName}`,
+                        description: reason,
+                        email: email || null,
+                        label: 'request',
+                        browser: browser,
+                        url: url
+                    })
+                });
+
+                const result = await response.json();
+
+                // Stop loading animation
+                clearInterval(loadingInterval);
+
+                if (result.success) {
+                    // Fade out form
+                    form.style.opacity = '0';
+                    form.style.transform = 'translateY(-10px)';
+                    form.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+
+                    // Fade out footer
+                    footer.style.opacity = '0';
+                    footer.style.maxHeight = '0';
+                    footer.style.paddingTop = '0';
+                    footer.style.paddingBottom = '0';
+
+                    setTimeout(() => {
+                        // Hide form, show success
+                        form.style.display = 'none';
+                        successView.style.display = 'block';
+                        document.getElementById('brand-request-issue-number').textContent = result.issueNumber;
+                        document.getElementById('brand-request-issue-link').href = result.issueUrl;
+
+                        // Trigger fade in
+                        setTimeout(() => {
+                            successView.style.opacity = '1';
+                            successView.style.transform = 'translateY(0)';
+                        }, 10);
+                    }, 300);
+                } else {
+                    throw new Error(result.error || 'Failed to submit brand request');
+                }
+            } catch (error) {
+                clearInterval(loadingInterval);
+                console.error('Brand request submission error:', error);
+                alert('Failed to submit brand request. Please try again or contact us directly at GitHub.');
+                submitButton.disabled = false;
+                cancelButton.disabled = false;
+                submitButton.textContent = 'Submit Request';
+                inputs.forEach(input => input.disabled = false);
+            }
+        }
+    </script>
+
+    <!-- Brand Request Modal -->
+    <div class="feedback-modal" id="brand-request-modal" onclick="closeBrandRequestModal(event)">
+        <div class="feedback-modal-content" onclick="event.stopPropagation()">
+            <div class="feedback-modal-header">
+                <h2 class="feedback-modal-title">Request a Brand</h2>
+                <button class="feedback-modal-close" onclick="closeBrandRequestModal()">Close</button>
+            </div>
+            <div class="feedback-modal-body">
+                <!-- Form View -->
+                <form id="brand-request-form" style="display: block;">
+                    <div class="feedback-form-group">
+                        <label for="brand-name">Brand Name</label>
+                        <input type="text" id="brand-name" placeholder="e.g., Patagonia" required>
+                    </div>
+
+                    <div class="feedback-form-group">
+                        <label for="brand-reason">Why should we add this brand?</label>
+                        <textarea id="brand-reason" placeholder="Tell us what makes this brand special..." required></textarea>
+                    </div>
+
+                    <div class="feedback-form-group">
+                        <label for="brand-email">Email (optional)</label>
+                        <input type="email" id="brand-email" placeholder="your@email.com">
+                        <div class="feedback-form-note">We'll notify you when this brand is added</div>
+                    </div>
+                </form>
+
+                <!-- Success View -->
+                <div id="brand-request-success" class="feedback-success" style="display: none;">
+                    <div class="feedback-success-icon">✅</div>
+                    <div class="feedback-success-title">Brand Request Submitted!</div>
+                    <div class="feedback-success-message">
+                        Your request has been received and tracked as issue <strong>#<span id="brand-request-issue-number"></span></strong>.
+                    </div>
+                    <a href="#" id="brand-request-issue-link" class="feedback-success-link" target="_blank">View on GitHub →</a>
+                </div>
+            </div>
+            <div class="feedback-modal-footer">
+                <button type="button" onclick="closeBrandRequestModal()">Cancel</button>
+                <button type="submit" class="primary" id="brand-request-submit" onclick="submitBrandRequest()">Submit Request</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
