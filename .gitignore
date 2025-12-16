@@ -44,3 +44,6 @@ NETLIFY-SETUP-STEPS.md
 github-issue-dead-links.md
 link-check-results.json
 link-checker.js
+brand-tracking-complete.csv
+brand-tracking-corrected.csv
+brand-tracking-import.csv
