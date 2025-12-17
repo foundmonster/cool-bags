@@ -13,6 +13,21 @@
       gtag('js', new Date());
 
       gtag('config', 'G-DRQ142RSKW');
+
+      // Track bag clicks for affiliate analytics
+      function trackBagClick(url, brand, bagName) {
+          // Track the click in GA4
+          gtag('event', 'bag_click', {
+              'bag_brand': brand,
+              'bag_name': bagName,
+              'destination_url': url,
+              'event_category': 'outbound_link',
+              'event_label': brand + ' - ' + bagName
+          });
+
+          // Open the link in new tab (same behavior as before)
+          window.open(url, '_blank');
+      }
     </script>
 
     <style>
@@ -1747,7 +1762,7 @@
 
             pinnedData.forEach(bag => {
                 if (bag.link) {
-                    window.open(bag.link, '_blank');
+                    trackBagClick(bag.link, bag.brand, bag.name);
                 }
             });
         }
@@ -1859,7 +1874,7 @@
 
             const bag = backpacksData.find(b => b.id === bagId);
             if (bag && bag.link) {
-                window.open(bag.link, '_blank');
+                trackBagClick(bag.link, bag.brand, bag.name);
             } else {
                 console.log('Would open link for:', bag ? bag.name : 'Unknown bag');
             }
@@ -2048,7 +2063,7 @@
             const randomAngle = bag.linkIssue ? Math.floor(Math.random() * 25) - 12 : 0;
 
             return `
-                <div class="backpack-item" data-bag-id="${bag.id}" onclick="window.open('${bag.link}', '_blank')">
+                <div class="backpack-item" data-bag-id="${bag.id}" onclick="trackBagClick('${bag.link}', '${bag.brand}', '${bag.name}')">
                     <div class="backpack-image">
                         ${imageHtml}
                     </div>
