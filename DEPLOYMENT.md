@@ -29,8 +29,11 @@ Site configuration → Environment variables:
 
 ### In GitHub Actions secrets
 
-- ✅ `BUTTONDOWN_API_KEY` - Used only by `.github/workflows/notify-brand-added.yml` to send the
-  "your brand is live" email. This is a GitHub secret, not a Netlify variable.
+- ✅ `BUTTONDOWN_API_KEY` - Read only by `.github/workflows/notify-brand-added.yml`, to send the
+  "your brand is live" email. It needs to exist as a **GitHub Actions secret**.
+  Note: it is *also* set as a Netlify project variable (confirmed in the 2026-08-15 dev-server log),
+  but no Netlify Function reads it, so that copy is unused. Harmless, but it is one more place a
+  secret lives than necessary — consider removing it from Netlify.
 
 See `.env.example` for the canonical list.
 
