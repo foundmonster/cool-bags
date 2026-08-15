@@ -1,8 +1,19 @@
+# RULE: pipeline scripts and project documentation are COMMITTED, never ignored.
+#
+# An earlier version of this file ignore-listed the project's own tooling —
+# sync-brands.sh, sync-brands-from-github.py, link-checker.js, BRAND-SYNC.md,
+# WORKFLOW.md, DEPLOYMENT.md and the brand-tracking CSVs. Because they were never
+# committed, they were lost permanently when the working copy went stale.
+# WORKFLOW.md and DEPLOYMENT.md were only recoverable because a single commit
+# (782ff9d^) happened to contain them before the ignore rule took effect.
+#
+# Only ignore things that are regenerable, machine-local, or secret.
+
 # Dependencies
 node_modules/
 package-lock.json
 
-# Environment variables
+# Environment variables — never commit real values; .env.example IS committed
 .env
 .env.local
 
@@ -28,30 +39,15 @@ npm-debug.log*
 .cache/
 server.pid
 
-# Development backups (don't trigger deployments)
+# Scratch copies of the database (the real one, bags.json, is committed)
 bags-backup.json
 bags-temp.json
 test-load.html
 
-# Workflow documentation (use [skip netlify] in commits)
-WORKFLOW.md
-
-# Development documentation files (keep local only)
-.nojekyll
-BUTTONDOWN-SETUP.md
-DEPLOYMENT.md
-NETLIFY-SETUP-STEPS.md
-github-issue-dead-links.md
-link-check-results.json
-link-checker.js
-brand-tracking-complete.csv
-brand-tracking-corrected.csv
-brand-tracking-import.csv
-BRAND-SYNC.md
-brands-html-categories.md
+# Scratch copies of pages
 brands.html.backup
 brands_temp.html
-github-project-board-status.md
+
+# Machine-generated scan output
 images/badge-scan.txt
-sync-brands-from-github.py
-sync-brands.sh
+link-check-results.json
