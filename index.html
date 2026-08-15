@@ -14,9 +14,9 @@
 
       gtag('config', 'G-DRQ142RSKW');
 
-      // Track bag clicks for affiliate analytics
-      function trackBagClick(url, brand, bagName) {
-          // Track the click in GA4
+      // Record a bag click in GA4 WITHOUT navigating.
+      // Used on its own by real <a href> fallback links, which navigate themselves.
+      function trackBagClickEvent(url, brand, bagName) {
           gtag('event', 'bag_click', {
               'bag_brand': brand,
               'bag_name': bagName,
@@ -24,9 +24,31 @@
               'event_category': 'outbound_link',
               'event_label': brand + ' - ' + bagName
           });
+      }
 
-          // Open the link in new tab (same behavior as before)
-          window.open(url, '_blank');
+      // Track bag clicks for affiliate analytics, then open the link in a new tab.
+      // Returns the Window handle from window.open, or null if the browser blocked
+      // the pop-up, so callers can detect blocking (openAllPinnedLinks relies on it).
+      //
+      // Do NOT pass 'noopener' in the feature string: window.open(..., 'noopener')
+      // always returns null, which is indistinguishable from a blocked pop-up and
+      // would make every "Open All" report every tab as blocked. Sever the opener
+      // on the returned handle instead - same result (the destination gets no
+      // window.opener reference back to this site, so it cannot navigate or probe
+      // the tab the user came from) while the handle stays usable here. The
+      // assignment lands synchronously, before the new document runs any script.
+      function trackBagClick(url, brand, bagName) {
+          trackBagClickEvent(url, brand, bagName);
+          const opened = window.open(url, '_blank');
+          if (opened) {
+              try {
+                  opened.opener = null;
+              } catch (e) {
+                  // Some browsers refuse the assignment on a cross-origin window.
+                  // Nothing to recover - fall through and return the handle.
+              }
+          }
+          return opened;
       }
     </script>
 
@@ -84,6 +106,70 @@
             padding: 24px;
             flex: 1;
             overflow-y: auto;
+        }
+
+        /* Search Control */
+        .search-control {
+            position: relative;
+        }
+
+        .search-control input {
+            width: 100%;
+            padding: 8px 28px 8px 10px;
+            font-size: 13px;
+            font-weight: 400;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            border-radius: 4px;
+            background: white;
+            color: #1d1d1f;
+            font-family: inherit;
+            -webkit-appearance: none;
+            appearance: none;
+        }
+
+        .search-control input::placeholder {
+            color: #86868b;
+        }
+
+        .search-control input:focus {
+            outline: none;
+            border-color: rgba(0, 0, 0, 0.3);
+        }
+
+        /* Suppress the browser's own clear widget - .search-clear replaces it */
+        .search-control input::-webkit-search-cancel-button {
+            -webkit-appearance: none;
+            appearance: none;
+        }
+
+        .search-clear {
+            position: absolute;
+            top: 50%;
+            right: 6px;
+            transform: translateY(-50%);
+            width: 20px;
+            height: 20px;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 0;
+            font-size: 14px;
+            line-height: 0;
+            color: #86868b;
+            background: transparent;
+            border: none;
+            border-radius: 2px;
+            cursor: pointer;
+            font-family: inherit;
+        }
+
+        .search-clear.visible {
+            display: flex;
+        }
+
+        .search-clear:hover {
+            background: rgba(0, 0, 0, 0.02);
+            color: #1d1d1f;
         }
 
         /* Reset Filters Section */
@@ -1030,6 +1116,40 @@
             justify-content: space-between;
         }
 
+        /* Blocked pop-up fallback links (shown after "Open All in New Tabs") */
+        .pinned-fallback {
+            margin-top: 16px;
+            padding: 16px;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            border-radius: 4px;
+            background: rgba(0, 0, 0, 0.02);
+        }
+
+        .pinned-fallback-note {
+            font-size: 12px;
+            line-height: 1.5;
+            color: #86868b;
+            margin-bottom: 12px;
+        }
+
+        .pinned-fallback-links {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .pinned-fallback-link {
+            font-size: 13px;
+            color: #1d1d1f;
+            text-decoration: none;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            padding-bottom: 6px;
+        }
+
+        .pinned-fallback-link:hover {
+            color: #0071e3;
+        }
+
         /* Main Grid Area */
         .grid-container {
             height: 100vh;
@@ -1452,6 +1572,8 @@
                 <div class="pinned-grid" id="pinned-grid">
                     <!-- Pinned items will be populated here -->
                 </div>
+                <!-- Links the browser refused to open as pop-ups appear here -->
+                <div class="pinned-fallback" id="pinned-fallback" style="display: none;"></div>
             </div>
             <div class="pinned-modal-footer">
                 <button class="pinned-modal-action" onclick="openAllPinnedLinks()">Open All in New Tabs</button>
@@ -1535,6 +1657,17 @@
             </div>
 
             <div class="controls-section">
+                <!-- Search (always visible, not in a drawer - it is the primary control) -->
+                <div class="control-group">
+                    <label for="search-input">Search</label>
+                    <div class="search-control">
+                        <input type="search" id="search-input" placeholder="Brand, name, material, type"
+                               autocomplete="off" spellcheck="false" oninput="handleSearchInput(this.value)">
+                        <button type="button" class="search-clear" id="search-clear"
+                                aria-label="Clear search" onclick="clearSearch()">×</button>
+                    </div>
+                </div>
+
                 <!-- Sort Drawer -->
                 <div class="drawer">
                     <div class="drawer-header" onclick="toggleDrawer(this)">
@@ -1659,8 +1792,8 @@
     </div>
 
     <script>
-        // Backpack Database - 152 bags across 15+ brands (loaded from bags.json)
-        // Bag data loaded from external JSON
+        // Bag database - every record is loaded from bags.json at runtime, so the
+        // catalog size is whatever that file holds (611 records, 43 brands today).
         let backpacksData = [];
 
         // Load bag data from JSON file
@@ -1681,6 +1814,13 @@
         let selectedMaterials = new Set();
         let selectedTypes = new Set();
         let pinnedBags = new Set();
+
+        // Search state. searchQuery is the raw box contents (used for the clear
+        // affordance and the empty-result message); searchTerms is the tokenized
+        // form the filter actually runs on, recomputed only when the debounce fires.
+        let searchQuery = '';
+        let searchTerms = [];
+        let searchDebounceTimer = null;
 
         // Load pinned bags from localStorage on page load
         function loadPinnedFromLocalStorage() {
@@ -1718,6 +1858,48 @@
             localStorage.setItem('coolbags-pinned', JSON.stringify(Array.from(pinnedBags)));
         }
 
+        // ---- Rendering safety helpers -------------------------------------
+        // Cards are built by string interpolation, so every value that lands in
+        // the markup has to be escaped, and every value that may be null has to
+        // be checked before it is printed.
+
+        // True when a field actually has something worth rendering.
+        // Catches null, undefined and empty/whitespace-only strings.
+        // NOTE: 0 is deliberately treated as present so a genuinely free item
+        // ($0) would still render; bags.json has no 0 prices today.
+        function hasValue(value) {
+            return value !== null && value !== undefined && String(value).trim() !== '';
+        }
+
+        // Escape for use as HTML text OR inside a double-quoted attribute.
+        function escapeHtml(value) {
+            if (value === null || value === undefined) return '';
+            return String(value)
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#39;');
+        }
+
+        // Escape for a value that sits inside a single-quoted JS string literal
+        // which is itself inside a double-quoted HTML attribute, e.g.
+        //   onclick="trackBagClick('<here>', ...)"
+        // JS-level escaping first (backslash, quote, newlines), then HTML-level.
+        // The browser HTML-decodes the attribute before parsing it as JS, so
+        // &#39; decodes back to ' and the leading backslash keeps it inside the
+        // string literal.
+        function escapeJsAttr(value) {
+            if (value === null || value === undefined) return '';
+            return escapeHtml(
+                String(value)
+                    .replace(/\\/g, '\\\\')
+                    .replace(/'/g, "\\'")
+                    .replace(/\r/g, '\\r')
+                    .replace(/\n/g, '\\n')
+            );
+        }
+
         // Get control elements
         const zoomSelect = document.getElementById('zoom-select');
         const backpackGrid = document.getElementById('backpack-grid');
@@ -1732,6 +1914,13 @@
         const pinnedGrid = document.getElementById('pinned-grid');
 
         // Pin functions
+        //
+        // Nothing in applyFiltersAndSort() reads pinnedBags - the grid filters on
+        // brand/material/type/search and sorts on price, volume, name and id, none
+        // of which change when a pin flips. createBagCard() is the only grid code
+        // that touches the pinned set, and only to add a class. So rebuilding all
+        // 611 cards through innerHTML (which also throws away and re-creates every
+        // <img>) to move one class was pure waste. Update the one card in place.
         function togglePin(bagId, event) {
             event.stopPropagation();
 
@@ -1742,29 +1931,107 @@
             }
 
             savePinnedToLocalStorage();
+            updatePinButtonState(bagId);
             updatePinnedUI();
-            applyFiltersAndSort(); // Use filtered render instead of renderBackpacks()
         }
 
-        // Open all pinned bag links in new tabs
+        // Sync a single card's pin button with the pinned set. The card is legitimately
+        // absent whenever the bag is filtered out or the pin was removed from inside
+        // the pinned modal, so a miss is not an error - there is just nothing to update.
+        function updatePinButtonState(bagId) {
+            const card = backpackGrid.querySelector(`.backpack-item[data-bag-id="${bagId}"]`);
+            if (!card) return;
+
+            const pinButton = card.querySelector('.pin-button');
+            if (!pinButton) return;
+
+            pinButton.classList.toggle('pinned', pinnedBags.has(bagId));
+        }
+
+        // Open all pinned bag links in new tabs.
+        //
+        // A single user gesture buys exactly one guaranteed pop-up; every further
+        // window.open in the same loop can be blocked silently. The old code fired
+        // N opens and told the user N tabs were coming, so typically one tab opened
+        // and the rest vanished with no feedback. Now we attempt all of them, detect
+        // which ones the browser refused (window.open returns null / an
+        // already-closed window when blocked), and render the refused ones as real
+        // anchors in the modal. Each anchor click is its own user gesture, so those
+        // always work — the user still reaches every pinned link without leaving
+        // the modal, and the message reflects what actually happened.
         function openAllPinnedLinks() {
             const pinnedData = backpacksData.filter(bag => pinnedBags.has(bag.id));
+            const linkable = pinnedData.filter(bag => hasValue(bag.link));
 
             if (pinnedData.length === 0) {
                 alert('No bags pinned yet!');
                 return;
             }
 
-            if (pinnedData.length > 10) {
-                const userConfirm = window.confirm(`This will open ${pinnedData.length} tabs. Continue?`);
+            if (linkable.length === 0) {
+                alert('None of your pinned bags have a link yet.');
+                return;
+            }
+
+            if (linkable.length > 10) {
+                const userConfirm = window.confirm(
+                    `This will try to open ${linkable.length} tabs. Most browsers only allow one pop-up per click, ` +
+                    `so any tabs that get blocked will be listed in the modal for you to open individually. Continue?`
+                );
                 if (!userConfirm) return;
             }
 
-            pinnedData.forEach(bag => {
-                if (bag.link) {
-                    trackBagClick(bag.link, bag.brand, bag.name);
+            const blocked = [];
+            linkable.forEach(bag => {
+                let opened = null;
+                try {
+                    opened = trackBagClick(bag.link, bag.brand, bag.name);
+                } catch (e) {
+                    opened = null;
+                }
+                if (!opened || opened.closed) {
+                    blocked.push(bag);
                 }
             });
+
+            renderPinnedFallback(blocked, linkable.length);
+        }
+
+        // Hide/empty the blocked-links fallback panel.
+        function clearPinnedFallback() {
+            const fallback = document.getElementById('pinned-fallback');
+            if (!fallback) return;
+            fallback.innerHTML = '';
+            fallback.style.display = 'none';
+        }
+
+        // Show the bags whose tabs the browser refused to open, as real links.
+        function renderPinnedFallback(blockedBags, attemptedCount) {
+            const fallback = document.getElementById('pinned-fallback');
+            if (!fallback) return;
+
+            if (blockedBags.length === 0) {
+                clearPinnedFallback();
+                return;
+            }
+
+            const openedCount = attemptedCount - blockedBags.length;
+            const links = blockedBags.map(bag => `
+                <a class="pinned-fallback-link"
+                   href="${escapeHtml(bag.link)}"
+                   target="_blank"
+                   rel="noopener noreferrer"
+                   onclick="trackBagClickEvent('${escapeJsAttr(bag.link)}', '${escapeJsAttr(bag.brand)}', '${escapeJsAttr(bag.name)}')">${escapeHtml(bag.brand)} — ${escapeHtml(bag.name)}</a>
+            `).join('');
+
+            fallback.innerHTML = `
+                <div class="pinned-fallback-note">
+                    Your browser blocked ${blockedBags.length} of ${attemptedCount} tabs${openedCount > 0 ? ` (${openedCount} opened)` : ''}.
+                    Allow pop-ups for this site to open them all at once, or open the rest here:
+                </div>
+                <div class="pinned-fallback-links">${links}</div>
+            `;
+            fallback.style.display = 'block';
         }
 
         // Share list - toggle expanded view
@@ -1848,22 +2115,43 @@
         function renderPinnedModal() {
             const pinnedData = backpacksData.filter(bag => pinnedBags.has(bag.id));
 
+            // The blocked-links fallback describes one specific "Open All" attempt;
+            // it is stale as soon as the pinned set changes.
+            clearPinnedFallback();
+
             if (pinnedData.length === 0) {
                 pinnedGrid.innerHTML = '<p style="color: #86868b; text-align: center; margin: auto;">Pinned bags appear here</p>';
                 return;
             }
 
-            pinnedGrid.innerHTML = pinnedData.map(bag => `
+            pinnedGrid.innerHTML = pinnedData.map(bag => {
+                const hasVolume = hasValue(bag.volume);
+                const hasPrice = hasValue(bag.price);
+
+                // .pinned-item-details is justify-content: space-between, so the
+                // price has to keep the right-hand slot. When volume is missing we
+                // emit an empty (invisible) span to hold the left slot rather than
+                // letting the price slide across; when both are missing the whole
+                // row is dropped.
+                let detailsHtml = '';
+                if (hasVolume || hasPrice) {
+                    const volumeSpan = hasVolume ? `<span>${escapeHtml(bag.volume)}L</span>` : '<span></span>';
+                    const priceSpan = hasPrice ? `<span>$${escapeHtml(bag.price)}</span>` : '';
+                    detailsHtml = `<div class="pinned-item-details">
+                        ${volumeSpan}
+                        ${priceSpan}
+                    </div>`;
+                }
+
+                return `
                 <div class="pinned-item" onclick="openBagLink(${bag.id}, event)">
                     <div class="pinned-item-remove" onclick="togglePin(${bag.id}, event)">×</div>
-                    <div class="pinned-item-brand">${bag.brand}</div>
-                    <div class="pinned-item-name">${bag.name}</div>
-                    <div class="pinned-item-details">
-                        <span>${bag.volume}L</span>
-                        <span>$${bag.price}</span>
-                    </div>
+                    <div class="pinned-item-brand">${escapeHtml(bag.brand)}</div>
+                    <div class="pinned-item-name">${escapeHtml(bag.name)}</div>
+                    ${detailsHtml}
                 </div>
-            `).join('');
+            `;
+            }).join('');
         }
 
         function openBagLink(bagId, event) {
@@ -1889,6 +2177,8 @@
             pinnedModal.classList.remove('visible');
             // Reset share expanded state
             closeShareExpanded();
+            // Drop any stale blocked-pop-up list
+            clearPinnedFallback();
         }
 
         function openAboutModal() {
@@ -1941,8 +2231,8 @@
             brandGroup.innerHTML = brands.map(brand => `
                 <div class="checkbox-option">
                     <input type="checkbox" id="brand-${brand.replace(/[^a-z0-9]/gi, '-')}"
-                           value="${brand}" onchange="handleBrandFilter(this)">
-                    <label for="brand-${brand.replace(/[^a-z0-9]/gi, '-')}">${brand}</label>
+                           value="${escapeHtml(brand)}" onchange="handleBrandFilter(this)">
+                    <label for="brand-${brand.replace(/[^a-z0-9]/gi, '-')}">${escapeHtml(brand)}</label>
                 </div>
             `).join('');
 
@@ -1951,8 +2241,8 @@
             materialGroup.innerHTML = materials.map(material => `
                 <div class="checkbox-option">
                     <input type="checkbox" id="material-${material.replace(/[^a-z0-9]/gi, '-')}"
-                           value="${material}" onchange="handleMaterialFilter(this)">
-                    <label for="material-${material.replace(/[^a-z0-9]/gi, '-')}">${material}</label>
+                           value="${escapeHtml(material)}" onchange="handleMaterialFilter(this)">
+                    <label for="material-${material.replace(/[^a-z0-9]/gi, '-')}">${escapeHtml(material)}</label>
                 </div>
             `).join('');
 
@@ -1961,8 +2251,8 @@
             typeGroup.innerHTML = types.map(type => `
                 <div class="checkbox-option">
                     <input type="checkbox" id="type-${type.replace(/[^a-z0-9]/gi, '-')}"
-                           value="${type}" onchange="handleTypeFilter(this)">
-                    <label for="type-${type.replace(/[^a-z0-9]/gi, '-')}">${type}</label>
+                           value="${escapeHtml(type)}" onchange="handleTypeFilter(this)">
+                    <label for="type-${type.replace(/[^a-z0-9]/gi, '-')}">${escapeHtml(type)}</label>
                 </div>
             `).join('');
         }
@@ -1998,10 +2288,132 @@
             applyFiltersAndSort();
         }
 
+        // Search
+        //
+        // The query is just another filter consumed by applyFiltersAndSort(), so it
+        // composes with the brand/material/type checkboxes and the active sort
+        // instead of forking a second render path.
+
+        // Typing re-renders the whole grid, so wait for a pause before doing it.
+        const SEARCH_DEBOUNCE_MS = 120;
+
+        function handleSearchInput(value) {
+            searchQuery = value;
+
+            // The clear affordance and the Reset button track the box immediately;
+            // only the expensive re-render waits for the debounce.
+            updateSearchClearVisibility();
+            updateResetButtonVisibility();
+
+            clearTimeout(searchDebounceTimer);
+            searchDebounceTimer = setTimeout(() => {
+                searchTerms = tokenizeSearchQuery(searchQuery);
+                applyFiltersAndSort();
+            }, SEARCH_DEBOUNCE_MS);
+        }
+
+        // Split on whitespace, lower-cased. Every term has to match somewhere in the
+        // record, so "aer sling" finds Aer slings rather than everything Aer plus
+        // every sling.
+        function tokenizeSearchQuery(query) {
+            return query.toLowerCase().split(/\s+/).filter(term => term !== '');
+        }
+
+        // Fields a query is matched against.
+        function bagSearchText(bag) {
+            return [bag.brand, bag.name, bag.material, bag.type]
+                .filter(hasValue)
+                .join(' ')
+                .toLowerCase();
+        }
+
+        function bagMatchesSearch(bag) {
+            const haystack = bagSearchText(bag);
+            return searchTerms.every(term => haystack.includes(term));
+        }
+
+        // Drop the query without re-rendering - callers decide when to re-render, so
+        // resetFilters() does not pay for two passes over the grid.
+        function clearSearchState() {
+            const searchInput = document.getElementById('search-input');
+            if (searchInput) searchInput.value = '';
+
+            clearTimeout(searchDebounceTimer);
+            searchQuery = '';
+            searchTerms = [];
+            updateSearchClearVisibility();
+        }
+
+        // The × button and Escape both land here. No debounce: this is one
+        // deliberate action, not a keystroke in a run of keystrokes.
+        function clearSearch() {
+            clearSearchState();
+            updateResetButtonVisibility();
+            applyFiltersAndSort();
+        }
+
+        // Browsers restore form values on reload and back-navigation, so the box can
+        // already hold a query before any input event fires. Adopt whatever is in it
+        // rather than rendering an unfiltered grid under a filled-in search box.
+        function initializeSearch() {
+            const searchInput = document.getElementById('search-input');
+            if (!searchInput) return;
+
+            searchQuery = searchInput.value;
+            searchTerms = tokenizeSearchQuery(searchQuery);
+            updateSearchClearVisibility();
+            updateResetButtonVisibility();
+        }
+
+        function updateSearchClearVisibility() {
+            const clearButton = document.getElementById('search-clear');
+            if (!clearButton) return;
+
+            if (searchQuery.trim() !== '') {
+                clearButton.classList.add('visible');
+            } else {
+                clearButton.classList.remove('visible');
+            }
+        }
+
+        // Keyboard: "/" jumps to the search box, Escape clears it while it has focus.
+        // "/" is ignored while any other field has focus so it never hijacks a
+        // character being typed into the feedback form.
+        document.addEventListener('keydown', function(e) {
+            const searchInput = document.getElementById('search-input');
+            if (!searchInput) return;
+
+            if (e.key === 'Escape' && document.activeElement === searchInput) {
+                if (searchQuery !== '') {
+                    e.preventDefault();
+                    clearSearch();
+                }
+                return;
+            }
+
+            if (e.key === '/' && document.activeElement !== searchInput) {
+                const activeTag = document.activeElement ? document.activeElement.tagName : '';
+                if (activeTag === 'INPUT' || activeTag === 'TEXTAREA' || activeTag === 'SELECT') return;
+
+                e.preventDefault();
+
+                // On mobile the sidebar is an off-canvas slide-over, so focusing the
+                // box without opening it would move focus somewhere invisible.
+                const sidebar = document.getElementById('sidebar');
+                if (window.innerWidth <= 768 && sidebar && !sidebar.classList.contains('open')) {
+                    toggleMenu();
+                }
+
+                searchInput.focus();
+                searchInput.select();
+            }
+        });
+
         // Update Reset Filters button visibility
         function updateResetButtonVisibility() {
             const resetButton = document.getElementById('reset-filters');
-            const hasFilters = selectedBrands.size > 0 || selectedMaterials.size > 0 || selectedTypes.size > 0;
+            const hasFilters = selectedBrands.size > 0 || selectedMaterials.size > 0 ||
+                               selectedTypes.size > 0 || searchQuery.trim() !== '';
 
             if (hasFilters) {
                 resetButton.classList.add('visible');
@@ -2016,6 +2428,9 @@
             selectedBrands.clear();
             selectedMaterials.clear();
             selectedTypes.clear();
+
+            // Clear the search box (state only - the single render happens below)
+            clearSearchState();
 
             // Uncheck all brand checkboxes
             document.querySelectorAll('#brand-filter-group input[type="checkbox"]').forEach(checkbox => {
@@ -2052,8 +2467,9 @@
 
         function createBagCard(bag) {
             const isPinned = pinnedBags.has(bag.id);
-            const imageHtml = bag.image
-                ? `<img src="${bag.image}" alt="${bag.brand} ${bag.name}" loading="lazy" />`
+            const altText = escapeHtml([bag.brand, bag.name].filter(hasValue).join(' '));
+            const imageHtml = hasValue(bag.image)
+                ? `<img src="${escapeHtml(bag.image)}" alt="${altText}" loading="lazy" />`
                 : `<span class="placeholder">🎒</span>`;
 
             const zoomLevel = parseInt(zoomSelect.value);
@@ -2062,8 +2478,22 @@
             // Random angle for link issue label (between -12 and 12 degrees)
             const randomAngle = bag.linkIssue ? Math.floor(Math.random() * 25) - 12 : 0;
 
+            // Missing data is omitted, never printed. Without these guards a null
+            // volume/price/material renders literally as "nullL", "$null", "null".
+            const volumeHtml = (!isCompact && hasValue(bag.volume))
+                ? `<div class="backpack-stats">
+                                <span class="backpack-volume">${escapeHtml(bag.volume)}L</span>
+                            </div>`
+                : '';
+            const materialHtml = (!isCompact && hasValue(bag.material))
+                ? `<div class="backpack-material">${escapeHtml(bag.material)}</div>`
+                : '';
+            const priceHtml = hasValue(bag.price)
+                ? `<div class="backpack-price">$${escapeHtml(bag.price)}</div>`
+                : '';
+
             return `
-                <div class="backpack-item" data-bag-id="${bag.id}" onclick="trackBagClick('${bag.link}', '${bag.brand}', '${bag.name}')">
+                <div class="backpack-item" data-bag-id="${bag.id}" onclick="trackBagClick('${escapeJsAttr(bag.link)}', '${escapeJsAttr(bag.brand)}', '${escapeJsAttr(bag.name)}')">
                     <div class="backpack-image">
                         ${imageHtml}
                     </div>
@@ -2072,25 +2502,47 @@
                         <div class="pin-label">Pin</div>
                     </div>
                     ${bag.linkIssue ? `<div class="link-issue-label" style="--random-angle: ${randomAngle}deg;">LINK ISSUE</div>` : ''}
-                    <div class="backpack-brand">${bag.brand}</div>
+                    <div class="backpack-brand">${escapeHtml(bag.brand)}</div>
                     <div class="backpack-info">
                         <div class="backpack-info-left">
-                            <div class="backpack-name">${bag.name}</div>
-                            ${!isCompact ? `<div class="backpack-stats">
-                                <span class="backpack-volume">${bag.volume}L</span>
-                            </div>` : ''}
+                            <div class="backpack-name">${escapeHtml(bag.name)}</div>
+                            ${volumeHtml}
                         </div>
                         <div class="backpack-info-right">
-                            ${!isCompact ? `<div class="backpack-material">${bag.material}</div>` : ''}
-                            <div class="backpack-price">$${bag.price}</div>
+                            ${materialHtml}
+                            ${priceHtml}
                         </div>
                     </div>
                 </div>
             `;
         }
 
+        // Order two records by a numeric field, keeping records that have no value
+        // for that field at the end of the list in BOTH directions.
+        //
+        // Plain `a.price - b.price` coerces a null price to 0, so the 3 price-less
+        // records sorted to the very front of "Price: Low to High" - above the
+        // genuinely cheapest bag - as though they were free, while showing no price
+        // at all. Same for the 57 volume-less records under "Size: Small to Large".
+        // Unknown is not the same as zero, so unknown sinks to the bottom either way.
+        function compareNumericField(a, b, field, descending) {
+            const aHas = hasValue(a[field]);
+            const bHas = hasValue(b[field]);
+
+            if (!aHas && !bHas) return 0;
+            if (!aHas) return 1;
+            if (!bHas) return -1;
+
+            return descending ? b[field] - a[field] : a[field] - b[field];
+        }
+
         function applyFiltersAndSort() {
             let filteredData = [...backpacksData];
+
+            // Apply search query (all terms must match somewhere in the record)
+            if (searchTerms.length > 0) {
+                filteredData = filteredData.filter(bag => bagMatchesSearch(bag));
+            }
 
             // Apply brand filter
             if (selectedBrands.size > 0) {
@@ -2111,16 +2563,16 @@
             const sortValue = document.querySelector('input[name="sort"]:checked').value;
             switch(sortValue) {
                 case 'price-low':
-                    filteredData.sort((a, b) => a.price - b.price);
+                    filteredData.sort((a, b) => compareNumericField(a, b, 'price', false));
                     break;
                 case 'price-high':
-                    filteredData.sort((a, b) => b.price - a.price);
+                    filteredData.sort((a, b) => compareNumericField(a, b, 'price', true));
                     break;
                 case 'size-small':
-                    filteredData.sort((a, b) => a.volume - b.volume);
+                    filteredData.sort((a, b) => compareNumericField(a, b, 'volume', false));
                     break;
                 case 'size-large':
-                    filteredData.sort((a, b) => b.volume - a.volume);
+                    filteredData.sort((a, b) => compareNumericField(a, b, 'volume', true));
                     break;
                 case 'name':
                     filteredData.sort((a, b) => a.name.localeCompare(b.name));
@@ -2143,8 +2595,21 @@
         }
 
         function renderBackpacks(data = backpacksData) {
-            const html = data.map(bag => createBagCard(bag)).join('');
-            backpackGrid.innerHTML = html;
+            if (data.length === 0) {
+                // Say why the grid is empty instead of leaving a blank page. The
+                // .empty-state rule already spans the full grid width.
+                const message = searchQuery.trim() !== ''
+                    ? `No bags match "${escapeHtml(searchQuery.trim())}".`
+                    : 'No bags match these filters.';
+                backpackGrid.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-state-icon">🎒</div>
+                        <div class="empty-state-text">${message}</div>
+                    </div>
+                `;
+            } else {
+                backpackGrid.innerHTML = data.map(bag => createBagCard(bag)).join('');
+            }
 
             // Update counts
             filteredCount.textContent = data.length;
@@ -2181,6 +2646,7 @@
             loadPinnedFromLocalStorage();
             loadPinnedFromURL();
             initializeFilters();
+            initializeSearch();
             updateSliderRange(); // Set mobile/desktop slider range
             updateZoom();
             applyFiltersAndSort();
