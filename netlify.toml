@@ -17,9 +17,14 @@
   # Dev branch builds but doesn't deploy to production
   command = "echo 'Development branch - no production deployment'"
 
-# Environment variables needed:
-# GITHUB_TOKEN - GitHub Personal Access Token (add in Netlify dashboard)
-# BUTTONDOWN_API_KEY - Buttondown API key (optional, add later)
+# Environment variables needed (add in Netlify dashboard).
+# These are every variable netlify/functions/create-issue.js reads:
+# GITHUB_TOKEN - GitHub Personal Access Token, opens issues on foundmonster/cool-bags (required)
+# MAILGUN_API_KEY - Mailgun private API key; if unset, the brand-request confirmation email is skipped
+# MAILGUN_DOMAIN - Mailgun sending domain, e.g. mg.coolbags.info; required whenever MAILGUN_API_KEY is set
+#
+# BUTTONDOWN_API_KEY is NOT a Netlify variable - it is a GitHub Actions repository
+# secret used by .github/workflows/notify-brand-added.yml.
 
 # Redirect rules (if needed later)
 # [[redirects]]

@@ -3,76 +3,233 @@
 
 const fetch = require('node-fetch');
 
-// Email template function - Clean HTML with easy styling
-function generateBrandRequestEmail(brandName, issueUrl, issueNumber) {
-  return `<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Brand Request Received</title>
-</head>
-<body style="margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif; background-color: #f8f9fa; color: #212529;">
-  <div style="max-width: 600px; margin: 40px auto; background-color: #ffffff; border-radius: 8px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); overflow: hidden;">
+// --- Abuse hardening -------------------------------------------------------
+// This endpoint is public and unauthenticated, and every call opens an issue in
+// a public repo, so everything below is about keeping that cheap to do once and
+// expensive to do a thousand times.
 
-    <!-- Header -->
-    <div style="background-color: #007bff; color: #ffffff; padding: 32px 24px; text-align: center;">
-      <h1 style="margin: 0; font-size: 24px; font-weight: 600;">Cool Bags</h1>
-      <p style="margin: 8px 0 0 0; font-size: 16px; opacity: 0.9;">Brand Request Received</p>
-    </div>
+// Size caps. Anything past these is abuse, not a person filling in a form.
+const MAX_BODY_BYTES = 20000;
+const MAX_TITLE_LENGTH = 200;
+const MAX_DESCRIPTION_LENGTH = 5000;
+const MAX_EMAIL_LENGTH = 254;
+const MAX_METADATA_LENGTH = 1000;
 
-    <!-- Content -->
-    <div style="padding: 32px 24px;">
-      <h2 style="margin: 0 0 16px 0; font-size: 20px; font-weight: 600; color: #212529;">Thanks for your request!</h2>
+// Labels the site actually sends (see labelMap in index.html and brands.html).
+// Anything else is rejected rather than forwarded, so a caller cannot attach
+// arbitrary labels to issues in the repo.
+const ALLOWED_LABELS = ['bug', 'request', 'question'];
 
-      <p style="margin: 0 0 20px 0; font-size: 16px; line-height: 1.5; color: #495057;">
-        We've received your request to add <strong style="color: #007bff;">${brandName}</strong> to our catalog.
-      </p>
+// Callers we accept: production, Netlify deploy/branch previews, and localhost
+// for `netlify dev`.
+const ALLOWED_HOSTNAMES = ['coolbags.info', 'www.coolbags.info', 'localhost', '127.0.0.1'];
+const ALLOWED_HOSTNAME_SUFFIXES = ['.netlify.app'];
 
-      <div style="background-color: #f8f9fa; border-left: 4px solid #007bff; padding: 16px; margin: 20px 0; border-radius: 4px;">
-        <p style="margin: 0 0 8px 0; font-size: 14px; font-weight: 600; color: #212529;">GitHub Issue Created</p>
-        <p style="margin: 0; font-size: 14px; color: #6c757d;">
-          <a href="${issueUrl}" style="color: #007bff; text-decoration: none;">Issue #${issueNumber}</a> - Click to track progress
-        </p>
-      </div>
+const RATE_LIMIT_MAX = 5;
+const RATE_LIMIT_WINDOW_MS = 10 * 60 * 1000;
 
-      <p style="margin: 20px 0 0 0; font-size: 16px; line-height: 1.5; color: #495057;">
-        We manually curate each brand, so it may take a few weeks to review and add ${brandName}.
-        We'll email you when it goes live!
-      </p>
-    </div>
+// Ceiling on how many IPs we track at once. Every call sweeps the whole map, so
+// the sweep is O(tracked IPs) - without a cap, someone rotating source addresses
+// makes the rate limiter itself the most expensive part of the request.
+const RATE_LIMIT_MAX_TRACKED_IPS = 5000;
 
-    <!-- Footer -->
-    <div style="background-color: #f8f9fa; padding: 20px 24px; text-align: center; border-top: 1px solid #dee2e6;">
-      <p style="margin: 0 0 8px 0; font-size: 14px; color: #6c757d;">
-        <strong>Cool Bags</strong> - The Complete Bag Database
-      </p>
-      <p style="margin: 0; font-size: 14px;">
-        <a href="https://coolbags.info" style="color: #007bff; text-decoration: none; margin-right: 16px;">Visit Site</a>
-        <span style="color: #dee2e6;">|</span>
-        <a href="mailto:hey@coolbags.info" style="color: #007bff; text-decoration: none; margin-left: 16px;">Contact Us</a>
-      </p>
-    </div>
+// Sliding window of request timestamps, keyed by client IP. Honest caveat: this
+// lives in the memory of a single warm function instance. Netlify recycles
+// instances and runs several in parallel, so a determined abuser only has to be
+// routed to a cold one to get a fresh allowance. It is a speed bump against
+// casual floods and double-submits, not a guarantee - real throttling needs the
+// edge or shared storage.
+const requestLog = new Map();
 
-  </div>
-</body>
-</html>`;
+// `name` must be lowercase. Netlify lowercases incoming header names, but this
+// does not lean on that: matching only the exact key would fail closed on a
+// `Content-Type` sent with any other casing and take the whole form down. A
+// non-string value reads as absent so no caller can make .toLowerCase() throw.
+function getHeader(headers, name) {
+  if (!headers) {
+    return '';
+  }
+  const key = Object.keys(headers).find(header => header.toLowerCase() === name);
+  const value = key === undefined ? '' : headers[key];
+  return typeof value === 'string' ? value : '';
+}
+
+function hostnameOf(value) {
+  try {
+    return new URL(value).hostname.toLowerCase();
+  } catch (error) {
+    return '';
+  }
+}
+
+function isAllowedHostname(hostname) {
+  if (!hostname) {
+    return false;
+  }
+  if (ALLOWED_HOSTNAMES.includes(hostname)) {
+    return true;
+  }
+  return ALLOWED_HOSTNAME_SUFFIXES.some(suffix => hostname.endsWith(suffix));
+}
+
+// Browsers always send Origin on a cross-origin-capable POST and Referer on a
+// same-origin one, so a request carrying neither did not come from the site.
+function isAllowedCaller(headers) {
+  const origin = getHeader(headers, 'origin');
+  if (origin) {
+    return isAllowedHostname(hostnameOf(origin));
+  }
+  const referer = getHeader(headers, 'referer');
+  if (referer) {
+    return isAllowedHostname(hostnameOf(referer));
+  }
+  return false;
+}
+
+function getClientIp(headers) {
+  const netlifyIp = getHeader(headers, 'x-nf-client-connection-ip');
+  if (netlifyIp) {
+    return netlifyIp;
+  }
+  const forwardedFor = getHeader(headers, 'x-forwarded-for');
+  if (forwardedFor) {
+    return forwardedFor.split(',')[0].trim();
+  }
+  return 'unknown';
+}
+
+function isRateLimited(ip) {
+  const now = Date.now();
+  const windowStart = now - RATE_LIMIT_WINDOW_MS;
+
+  // Forget IPs whose window has fully expired so the map cannot grow forever
+  for (const [key, timestamps] of requestLog) {
+    const recent = timestamps.filter(time => time > windowStart);
+    if (recent.length === 0) {
+      requestLog.delete(key);
+    } else {
+      requestLog.set(key, recent);
+    }
+  }
+
+  const hits = requestLog.get(ip) || [];
+
+  // Stop recording once this IP is already over its allowance. Appending a
+  // timestamp per request would let one flooder grow a single array without
+  // bound - 50k requests in a window meant 50k stored timestamps, re-filtered
+  // by the sweep above on every later request.
+  if (hits.length >= RATE_LIMIT_MAX) {
+    return true;
+  }
+
+  // At the ceiling, an unseen IP is simply not tracked. It gets the same
+  // allowance it would have had anyway, and the sweep stays a fixed cost.
+  if (!requestLog.has(ip) && requestLog.size >= RATE_LIMIT_MAX_TRACKED_IPS) {
+    return false;
+  }
+
+  hits.push(now);
+  requestLog.set(ip, hits);
+
+  return false;
+}
+
+function isValidEmail(email) {
+  // Deliberately loose - just enough to catch typos and to reject the newlines
+  // and spaces that would let someone inject headers into the Mailgun call
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+}
+
+function isWithinLength(value, maxLength) {
+  return typeof value === 'string' && value.length <= maxLength;
+}
+
+function errorResponse(statusCode, message) {
+  return {
+    statusCode: statusCode,
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      success: false,
+      error: message
+    })
+  };
 }
 
 exports.handler = async (event) => {
   // Only allow POST requests
   if (event.httpMethod !== 'POST') {
-    return {
-      statusCode: 405,
-      body: JSON.stringify({ error: 'Method not allowed' })
-    };
+    return errorResponse(405, 'Method not allowed');
+  }
+
+  // Only accept calls that came from our own pages
+  if (!isAllowedCaller(event.headers)) {
+    return errorResponse(403, 'Requests must come from coolbags.info.');
+  }
+
+  // Only accept the content type the site actually sends
+  const contentType = getHeader(event.headers, 'content-type').toLowerCase();
+  if (!contentType.startsWith('application/json')) {
+    return errorResponse(415, 'Content-Type must be application/json.');
+  }
+
+  if (isRateLimited(getClientIp(event.headers))) {
+    return errorResponse(429, 'Too many submissions. Please try again in a few minutes.');
+  }
+
+  // A missing body is a malformed request, not an oversized one. Measure the
+  // real UTF-8 size too - String.length counts UTF-16 units, so a body of
+  // astral characters is up to 4x larger on the wire than it looks here.
+  if (typeof event.body !== 'string') {
+    return errorResponse(400, 'Submission could not be read. Please try again.');
+  }
+  if (Buffer.byteLength(event.body, 'utf8') > MAX_BODY_BYTES) {
+    return errorResponse(413, 'Submission is too large.');
+  }
+
+  // Parse form data - malformed JSON is the caller's mistake, not a server error
+  let data;
+  try {
+    data = JSON.parse(event.body);
+  } catch (parseError) {
+    return errorResponse(400, 'Submission could not be read. Please try again.');
+  }
+
+  if (data === null || typeof data !== 'object' || Array.isArray(data)) {
+    return errorResponse(400, 'Submission could not be read. Please try again.');
+  }
+
+  const { type, title, description, email, label, browser, url } = data;
+
+  // Validate everything we are about to forward to GitHub
+  if (typeof title !== 'string' || title.trim() === '') {
+    return errorResponse(400, 'A title is required.');
+  }
+  if (title.length > MAX_TITLE_LENGTH) {
+    return errorResponse(400, `Title must be ${MAX_TITLE_LENGTH} characters or fewer.`);
+  }
+  if (typeof description !== 'string' || description.trim() === '') {
+    return errorResponse(400, 'A description is required.');
+  }
+  if (description.length > MAX_DESCRIPTION_LENGTH) {
+    return errorResponse(400, `Description must be ${MAX_DESCRIPTION_LENGTH} characters or fewer.`);
+  }
+  if (email !== undefined && email !== null && email !== '') {
+    if (!isWithinLength(email, MAX_EMAIL_LENGTH) || !isValidEmail(email)) {
+      return errorResponse(400, 'Please provide a valid email address.');
+    }
+  }
+  if (label !== undefined && label !== null && !ALLOWED_LABELS.includes(label)) {
+    return errorResponse(400, 'Unknown label.');
+  }
+  for (const value of [type, browser, url]) {
+    if (value !== undefined && value !== null && !isWithinLength(value, MAX_METADATA_LENGTH)) {
+      return errorResponse(400, 'Submission details are too long.');
+    }
   }
 
   try {
-    // Parse form data
-    const data = JSON.parse(event.body);
-    const { type, title, description, email, label, browser, url } = data;
-
     // Build issue body with all info
     let issueBody = `${description}\n\n---\n\n`;
 
