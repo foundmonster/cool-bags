@@ -1,0 +1,14 @@
+# Ordinary permissive storefront robots.txt (shape taken from a stock Shopify
+# template). Nothing here names us, so the '*' group binds and we are allowed.
+User-agent: *
+Disallow: /admin
+Disallow: /cart
+Disallow: /orders
+Disallow: /checkouts/
+Disallow: /collections/*sort_by*
+Disallow: /*/collections/*sort_by*
+Disallow: /collections/*+*
+Allow: /products.json
+Crawl-delay: 3
+
+Sitemap: https://example-storefront.test/sitemap.xml

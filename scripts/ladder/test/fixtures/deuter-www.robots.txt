@@ -1,0 +1,15 @@
+User-agent: *
+Allow: /
+Disallow: */?
+Disallow: */account/
+Disallow: */checkout/
+Disallow: */widgets/
+Disallow: */navigation/
+Disallow: */bundles/
+
+Sitemap: https://www.deuter.com/de-de/sitemap.xml
+Sitemap: https://www.deuter.com/de-en/sitemap.xml
+Sitemap: https://www.deuter.com/nl-nl/sitemap.xml
+Sitemap: https://www.deuter.com/it-it/sitemap.xml
+Sitemap: https://www.deuter.com/fr-fr/sitemap.xml
+Sitemap: https://www.deuter.com/es-es/sitemap.xml
