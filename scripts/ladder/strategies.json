@@ -1,7 +1,7 @@
 {
   "version": 1,
   "expiry_days": 90,
-  "updated_at": "2026-08-16T03:58:32.215Z",
+  "updated_at": "2026-08-18T02:45:02.384Z",
   "brands": {
     "511tactical": {
       "brand": "5.11",
@@ -2359,6 +2359,66 @@
         "recorded_at": "2026-08-15T23:44:20.095Z"
       }
     },
+    "jansport": {
+      "brand": "Jansport",
+      "domain": "www.jansport.com",
+      "issue": null,
+      "platform": "shopify",
+      "signals": [
+        "robots:shopify-collections-sort_by",
+        "robots:shopify-checkouts",
+        "html:cdn.shopify.com",
+        "html:window.Shopify"
+      ],
+      "winner": {
+        "rung": "B",
+        "url": "https://www.jansport.com/products.json?limit=250",
+        "returned": {
+          "products": 132,
+          "listings_est": 77,
+          "bytes": 1256784,
+          "sha256": "55ac363f0b5272a14c5aa2b6e128a98d1eb0de3a78a4331c4c666ac800839b01",
+          "structure_fingerprint": "9b24b129e79437da5c7cfc19e313726dcb31fcd096f584515547c39f4e5ea357"
+        },
+        "at": "2026-08-18T02:45:02.377Z",
+        "first_seen": "2026-08-18T02:45:02.377Z"
+      },
+      "attempts": {
+        "B": {
+          "ok": true,
+          "code": null,
+          "status": 200,
+          "bytes": 1256784,
+          "url": "https://www.jansport.com/products.json?limit=250",
+          "at": "2026-08-18T02:45:02.377Z"
+        },
+        "A": {
+          "ok": true,
+          "code": null,
+          "status": 200,
+          "bytes": 478810,
+          "url": "https://www.jansport.com/products/travel-pack-30l-tech-organizer-elemental-blue-set",
+          "at": "2026-08-18T02:45:02.377Z"
+        }
+      },
+      "policy": {
+        "verdict": "allow",
+        "reason": null,
+        "rule": null,
+        "blocked_path": null,
+        "robots_sha256": "b172cd4a2e4ecaef722d5c7be6254c997db31643b260eb128b6fd350ebc415a8",
+        "crawl_delay": null,
+        "at": "2026-08-18T02:45:02.377Z"
+      },
+      "history": [
+        {
+          "at": "2026-08-18T02:45:02.377Z",
+          "from": null,
+          "to": "B",
+          "note": "first winning rung recorded"
+        }
+      ]
+    },
     "jstark": {
       "brand": "J. Stark",
       "domain": "jstark.co",
@@ -2400,6 +2460,28 @@
         ],
         "recorded_at": "2026-08-15T23:44:20.095Z"
       }
+    },
+    "kelty": {
+      "brand": "Kelty",
+      "domain": "www.kelty.com",
+      "issue": null,
+      "platform": null,
+      "signals": [],
+      "winner": null,
+      "attempts": {},
+      "policy": {
+        "verdict": "do-not-scrape",
+        "reason": "named-ua-disallow",
+        "rule": {
+          "type": "disallow",
+          "path": "/"
+        },
+        "blocked_path": "/",
+        "robots_sha256": "842b34303164ead41bccb7c05d1707422e98d108753b397b6dcc19683eb02101",
+        "crawl_delay": null,
+        "at": "2026-08-18T02:44:44.712Z"
+      },
+      "history": []
     },
     "klattermusen": {
       "brand": "Klattermusen",
@@ -6280,16 +6362,16 @@
       },
       "start_rung": "A",
       "brands": 1,
-      "updated_at": "2026-08-16T03:58:32.208Z"
+      "updated_at": "2026-08-18T02:45:02.378Z"
     },
     "shopify": {
       "wins": {
         "A": 3,
-        "B": 32
+        "B": 33
       },
       "start_rung": "B",
-      "brands": 35,
-      "updated_at": "2026-08-16T03:58:32.208Z"
+      "brands": 36,
+      "updated_at": "2026-08-18T02:45:02.378Z"
     },
     "unknown": {
       "wins": {
@@ -6298,7 +6380,7 @@
       },
       "start_rung": "A",
       "brands": 4,
-      "updated_at": "2026-08-16T03:58:32.208Z"
+      "updated_at": "2026-08-18T02:45:02.378Z"
     }
   }
 }
