@@ -5573,19 +5573,6 @@
     "image": "images/kelty-redwing-traveler-50.webp"
   },
   {
-    "id": 471,
-    "brand": "Kelty",
-    "name": "Sling Bag",
-    "price": 50,
-    "volume": null,
-    "weight": null,
-    "material": "Nylon",
-    "type": "Sling",
-    "description": "",
-    "link": "https://www.kelty.com/products/sling-bag",
-    "image": "images/kelty-sling-bag.webp"
-  },
-  {
     "id": 472,
     "brand": "Kelty",
     "name": "Trekker 65",
