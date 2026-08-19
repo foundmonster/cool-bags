@@ -794,7 +794,7 @@
             align-items: center;
             gap: 4px;
             opacity: 0;
-            transition: opacity 0.2s;
+            transition: opacity 0.12s linear;
             z-index: 4;
             cursor: pointer;
         }
@@ -1169,7 +1169,11 @@
             display: flex;
             flex-direction: column;
             cursor: pointer;
-            transition: opacity 0.2s;
+            /* linear, not the shorthand's default ease. Over a delta this small
+               (1 -> 0.7) an ease curve moves opacity by under 0.05 in its first
+               60ms, so the effect looks like it starts late even though it
+               starts immediately. Linear is visible from the first frame. */
+            transition: opacity 0.12s linear;
             position: relative;
             overflow: hidden;
             aspect-ratio: 1 / 1;
