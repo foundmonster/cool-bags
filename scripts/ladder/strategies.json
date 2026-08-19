@@ -1,7 +1,7 @@
 {
   "version": 1,
   "expiry_days": 90,
-  "updated_at": "2026-08-19T06:52:55.360Z",
+  "updated_at": "2026-08-19T07:22:29.532Z",
   "brands": {
     "511tactical": {
       "brand": "5.11",
@@ -3315,6 +3315,64 @@
         ],
         "recorded_at": "2026-08-15T23:44:20.095Z"
       }
+    },
+    "missionworkshop": {
+      "brand": "Mission Workshop",
+      "domain": "missionworkshop.com",
+      "issue": null,
+      "platform": "shopify",
+      "signals": [
+        "html:cdn.shopify.com",
+        "html:window.Shopify"
+      ],
+      "winner": {
+        "rung": "B",
+        "url": "https://missionworkshop.com/products.json?limit=250",
+        "returned": {
+          "products": 161,
+          "listings_est": 32,
+          "bytes": 2060718,
+          "sha256": "c2ebaa1010af983f01e3650da2f809c87ae67ee39320545845b4ce810e539921",
+          "structure_fingerprint": "9b24b129e79437da5c7cfc19e313726dcb31fcd096f584515547c39f4e5ea357"
+        },
+        "at": "2026-08-19T07:22:29.522Z",
+        "first_seen": "2026-08-19T07:22:29.522Z"
+      },
+      "attempts": {
+        "B": {
+          "ok": true,
+          "code": null,
+          "status": 200,
+          "bytes": 2060718,
+          "url": "https://missionworkshop.com/products.json?limit=250",
+          "at": "2026-08-19T07:22:29.522Z"
+        },
+        "A": {
+          "ok": true,
+          "code": null,
+          "status": 200,
+          "bytes": 439599,
+          "url": "https://missionworkshop.com/products/ultra-mass-transit-duffle",
+          "at": "2026-08-19T07:22:29.522Z"
+        }
+      },
+      "policy": {
+        "verdict": "allow",
+        "reason": null,
+        "rule": null,
+        "blocked_path": null,
+        "robots_sha256": "be55c5b9f50e42ba86410c421b6c2b1ad9f5fa175dd9484b031440be2c570d88",
+        "crawl_delay": null,
+        "at": "2026-08-19T07:22:29.522Z"
+      },
+      "history": [
+        {
+          "at": "2026-08-19T07:22:29.522Z",
+          "from": null,
+          "to": "B",
+          "note": "first winning rung recorded"
+        }
+      ]
     },
     "mixed": {
       "brand": "Mixed",
@@ -6662,16 +6720,16 @@
       },
       "start_rung": "A",
       "brands": 1,
-      "updated_at": "2026-08-19T06:52:55.350Z"
+      "updated_at": "2026-08-19T07:22:29.523Z"
     },
     "shopify": {
       "wins": {
         "A": 3,
-        "B": 38
+        "B": 39
       },
       "start_rung": "B",
-      "brands": 41,
-      "updated_at": "2026-08-19T06:52:55.350Z"
+      "brands": 42,
+      "updated_at": "2026-08-19T07:22:29.523Z"
     },
     "unknown": {
       "wins": {
@@ -6680,7 +6738,7 @@
       },
       "start_rung": "A",
       "brands": 4,
-      "updated_at": "2026-08-19T06:52:55.350Z"
+      "updated_at": "2026-08-19T07:22:29.523Z"
     }
   }
 }
