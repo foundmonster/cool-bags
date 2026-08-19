@@ -4,6 +4,11 @@ on:
   issues:
     types: [closed, labeled]
 
+# This job reads attacker-controlled issue text and holds an email API key.
+# Nothing here needs write access to the repo.
+permissions:
+  contents: read
+
 jobs:
   send-email:
     runs-on: ubuntu-latest
@@ -13,12 +18,21 @@ jobs:
     steps:
       - name: Extract email and brand name from issue
         id: extract
+        # Issue title and body are written by anyone who can open an issue, so
+        # they are passed in as environment variables and only ever read as
+        # quoted shell variables - never interpolated with ${{ }} into `run`,
+        # which would splice attacker text straight into this script.
+        env:
+          ISSUE_BODY: ${{ github.event.issue.body }}
+          ISSUE_TITLE: ${{ github.event.issue.title }}
         run: |
           # Extract email from issue body (looks for "Email: email@example.com")
-          EMAIL=$(echo "${{ github.event.issue.body }}" | grep -oP 'Email:\s*\K[\w\.-]+@[\w\.-]+' || echo "")
+          # head -n 1 stops a body with several matches from writing extra lines
+          # into $GITHUB_OUTPUT and setting outputs it was never meant to set.
+          EMAIL=$(printf '%s\n' "$ISSUE_BODY" | grep -oP 'Email:\s*\K[\w\.-]+@[\w\.-]+' | head -n 1 || echo "")
 
           # Extract brand name from title (remove "[Brand Request] " prefix)
-          BRAND_NAME=$(echo "${{ github.event.issue.title }}" | sed 's/\[Brand Request\] //')
+          BRAND_NAME=$(printf '%s\n' "$ISSUE_TITLE" | sed 's/\[Brand Request\] //' | head -n 1)
 
           echo "email=$EMAIL" >> $GITHUB_OUTPUT
           echo "brand_name=$BRAND_NAME" >> $GITHUB_OUTPUT
@@ -29,15 +43,25 @@ jobs:
 
       - name: Send brand added notification email
         if: steps.extract.outputs.email != ''
+        # Same rule as above: the brand name and address both derive from issue
+        # text, and the API key must not be reachable from either.
+        env:
+          BRAND_NAME: ${{ steps.extract.outputs.brand_name }}
+          RECIPIENT_EMAIL: ${{ steps.extract.outputs.email }}
+          BUTTONDOWN_API_KEY: ${{ secrets.BUTTONDOWN_API_KEY }}
         run: |
-          # Create HTML email (escape quotes for JSON)
-          EMAIL_HTML='<!DOCTYPE html>
+          # Escape the brand name before it is placed into the email markup
+          BRAND_NAME_HTML=$(printf '%s' "$BRAND_NAME" | sed -e 's/&/\&amp;/g' -e 's/</\&lt;/g' -e 's/>/\&gt;/g')
+
+          # Create HTML email
+          EMAIL_HTML=$(cat <<EOF
+          <!DOCTYPE html>
           <html lang="en">
           <head>
             <meta charset="utf-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
             <meta http-equiv="X-UA-Compatible" content="IE=edge">
-            <title>${{ steps.extract.outputs.brand_name }} is now on Cool Bags!</title>
+            <title>${BRAND_NAME_HTML} is now on Cool Bags!</title>
           </head>
           <body style="margin: 0; padding: 0; background: #f5f5f7; font-family: -apple-system, BlinkMacSystemFont, SF Pro Display, SF Pro Text, sans-serif;">
             <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background: #f5f5f7; min-height: 100vh;">
@@ -52,11 +76,11 @@ jobs:
                     <tr>
                       <td style="padding: 24px; font-size: 13px; line-height: 1.6; color: #1d1d1f;">
                         <p style="font-size: 17px; margin: 0 0 16px 0; font-weight: 400; font-family: -apple-system, BlinkMacSystemFont, SF Pro Display, SF Pro Text, sans-serif;">Great news!</p>
-                        <p style="margin: 0 0 24px 0; font-family: -apple-system, BlinkMacSystemFont, SF Pro Display, SF Pro Text, sans-serif;"><strong style="font-weight: 500;">${{ steps.extract.outputs.brand_name }}</strong> is now on Cool Bags. Thanks for the suggestion!</p>
+                        <p style="margin: 0 0 24px 0; font-family: -apple-system, BlinkMacSystemFont, SF Pro Display, SF Pro Text, sans-serif;"><strong style="font-weight: 500;">${BRAND_NAME_HTML}</strong> is now on Cool Bags. Thanks for the suggestion!</p>
                         <table cellpadding="0" cellspacing="0" border="0" style="margin: 24px 0; width: 100%;">
                           <tr>
                             <td align="center">
-                              <a href="https://coolbags.info" style="display: inline-block; padding: 12px 24px; font-size: 13px; font-weight: 400; color: #ffffff; background: #1d1d1f; text-decoration: none; border-radius: 4px; font-family: -apple-system, BlinkMacSystemFont, SF Pro Display, SF Pro Text, sans-serif;">Browse ${{ steps.extract.outputs.brand_name }} Bags →</a>
+                              <a href="https://coolbags.info" style="display: inline-block; padding: 12px 24px; font-size: 13px; font-weight: 400; color: #ffffff; background: #1d1d1f; text-decoration: none; border-radius: 4px; font-family: -apple-system, BlinkMacSystemFont, SF Pro Display, SF Pro Text, sans-serif;">Browse ${BRAND_NAME_HTML} Bags →</a>
                             </td>
                           </tr>
                         </table>
@@ -75,18 +99,22 @@ jobs:
               </tr>
             </table>
           </body>
-          </html>'
+          </html>
+          EOF
+          )
 
-          # Send email via Buttondown API
-          curl -X POST https://api.buttondown.email/v1/emails \
-            -H "Authorization: Token ${{ secrets.BUTTONDOWN_API_KEY }}" \
-            -H "Content-Type: application/json" \
-            -d "{
-              \"subject\": \"${{ steps.extract.outputs.brand_name }} is now on Cool Bags!\",
-              \"body\": $(echo "$EMAIL_HTML" | jq -Rs .),
-              \"email_type\": \"private\",
-              \"to\": \"${{ steps.extract.outputs.email }}\"
-            }"
+          # Send email via Buttondown API. jq builds the payload so no untrusted
+          # value can break out of the JSON, and the request body is piped in
+          # rather than pasted into the command line.
+          jq -n \
+            --arg subject "$BRAND_NAME is now on Cool Bags!" \
+            --arg body "$EMAIL_HTML" \
+            --arg to "$RECIPIENT_EMAIL" \
+            '{subject: $subject, body: $body, email_type: "private", to: $to}' \
+            | curl -X POST https://api.buttondown.email/v1/emails \
+              -H "Authorization: Token $BUTTONDOWN_API_KEY" \
+              -H "Content-Type: application/json" \
+              --data @-
 
       - name: Log completion
         if: steps.extract.outputs.email == ''

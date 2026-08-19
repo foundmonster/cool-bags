@@ -4,11 +4,28 @@ This folder contains standardized product images for the Cool Bags database.
 
 ## Image Standards
 
-**Format:** PNG with transparent background
+**Format:** WebP with transparent background (`.webp` — see the migration note below)
 **Dimensions:** 800x800px (square canvas, centered)
 **Style:** Front-facing, isolated product on transparent background
 **Quantity:** 1 image per product
 **Bag Fill:** Target 60-65% of canvas (480-520px max dimension)
+
+> **Migrated to WebP on 2026-08-14.** All 583 images were converted from PNG at the same 800x800
+> dimensions, taking the folder from 104 MB to 13 MB (~88% smaller) with no visible quality change.
+> The processing steps below still describe the PNG working format — keep editing in PNG, then
+> encode to WebP as the last step before committing:
+>
+> ```bash
+> cwebp -q 82 -m 6 -alpha_q 100 -sharp_yuv -metadata none input.png -o output.webp
+> ```
+>
+> `-alpha_q 100` makes the transparency mask lossless, which is what keeps cutout edges clean
+> against the card background. Do not resize during encoding — 800x800 is the retina source for a
+> ~400px display slot. `bags.json` must reference the `.webp` filename.
+>
+> Ten of the original PNGs had no alpha channel at all and are therefore opaque as WebP. Three of
+> those are live (Halfday ids 644/645/646). They currently blend into the card background, but they
+> would become visible boxes if a dark theme is ever added.
 
 ### Standardization Requirements
 
@@ -124,7 +141,7 @@ Images follow this naming pattern:
 1. **Brand**: Lowercase, hyphenated (e.g., `evergoods`, `wexley`, `aer`)
 2. **Model**: Lowercase, hyphenated, descriptive (e.g., `civic-panel-loader`, `travel-pack-3`)
 3. **Size**: Include capacity if available (e.g., `24l`, `30l`)
-4. **Extension**: Always `.png`
+4. **Extension**: Always `.webp` for committed images (`.png` only as an intermediate working file)
 
 ### Special Cases:
 - If no size is specified: Use version number or omit (e.g., `aer-go-pack-2.png`)

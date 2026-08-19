@@ -1,0 +1,11 @@
+# The ONLY thing under scripts/ladder/ that is ignored.
+#
+# .cache/ holds raw response bodies, the content-addressed manifest and per-brand
+# probe.json / events.ndjson. It is regenerable (delete it and re-probe) and
+# machine-local, which is the standard this repo's root .gitignore sets for what
+# may be ignored at all.
+#
+# Everything else here is COMMITTED on purpose: probe.js, lib/, test/ and
+# especially strategies.json. strategies.json is the ladder's memory — the whole
+# point is that it survives, is diffable, and is reviewable. Do not add it here.
+.cache/
