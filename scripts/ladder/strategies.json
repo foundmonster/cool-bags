@@ -1,7 +1,7 @@
 {
   "version": 1,
   "expiry_days": 90,
-  "updated_at": "2026-08-18T02:45:02.384Z",
+  "updated_at": "2026-08-19T06:52:55.360Z",
   "brands": {
     "511tactical": {
       "brand": "5.11",
@@ -79,6 +79,66 @@
         ],
         "recorded_at": "2026-08-15T23:44:20.095Z"
       }
+    },
+    "aersf": {
+      "brand": "Aer",
+      "domain": "www.aersf.com",
+      "issue": null,
+      "platform": "shopify",
+      "signals": [
+        "robots:shopify-collections-sort_by",
+        "robots:shopify-checkouts",
+        "html:cdn.shopify.com",
+        "html:window.Shopify"
+      ],
+      "winner": {
+        "rung": "B",
+        "url": "https://aersf.com/products.json?limit=250",
+        "returned": {
+          "products": 113,
+          "listings_est": 90,
+          "bytes": 304128,
+          "sha256": "779b3aa5e0a27605478b50cac718a81c9869f6bbd6597eb9a986877007316e79",
+          "structure_fingerprint": "9b24b129e79437da5c7cfc19e313726dcb31fcd096f584515547c39f4e5ea357"
+        },
+        "at": "2026-08-19T06:52:42.460Z",
+        "first_seen": "2026-08-19T06:52:42.460Z"
+      },
+      "attempts": {
+        "B": {
+          "ok": true,
+          "code": null,
+          "status": 200,
+          "bytes": 304128,
+          "url": "https://aersf.com/products.json?limit=250",
+          "at": "2026-08-19T06:52:42.460Z"
+        },
+        "A": {
+          "ok": true,
+          "code": null,
+          "status": 200,
+          "bytes": 306938,
+          "url": "https://aersf.com/products/personalized-city-pack-pro-2-24l",
+          "at": "2026-08-19T06:52:42.460Z"
+        }
+      },
+      "policy": {
+        "verdict": "allow",
+        "reason": null,
+        "rule": null,
+        "blocked_path": null,
+        "robots_sha256": "b942aedcecc02633ba10fc5a2588395a8693257cb10bce3bfa82a0a8981a5647",
+        "crawl_delay": null,
+        "at": "2026-08-19T06:52:42.460Z"
+      },
+      "history": [
+        {
+          "at": "2026-08-19T06:52:42.460Z",
+          "from": null,
+          "to": "B",
+          "note": "first winning rung recorded"
+        }
+      ]
     },
     "almondoak": {
       "brand": "Almond Oak",
@@ -775,6 +835,66 @@
           "verdict": "do-not-scrape",
           "reason": "brand-level-opt-out",
           "note": "Apex serves a permissive stock Shopify robots.txt with no ClaudeBot group, but the brand opted out at www.berghaus.com (User-agent: ClaudeBot / Disallow: /). The opt-out is the publisher's intent and covers every host of this brand. Never probe this apex."
+        }
+      ]
+    },
+    "blackmile": {
+      "brand": "Black Mile",
+      "domain": "blackmile.co",
+      "issue": null,
+      "platform": "shopify",
+      "signals": [
+        "robots:shopify-collections-sort_by",
+        "robots:shopify-checkouts",
+        "html:cdn.shopify.com",
+        "html:window.Shopify"
+      ],
+      "winner": {
+        "rung": "B",
+        "url": "https://blackmile.co/products.json?limit=250",
+        "returned": {
+          "products": 4,
+          "listings_est": 3,
+          "bytes": 19648,
+          "sha256": "5c2a89779ea48dc07569852fbc2149acd30f139d2e517955f478163f00411b1e",
+          "structure_fingerprint": "9b24b129e79437da5c7cfc19e313726dcb31fcd096f584515547c39f4e5ea357"
+        },
+        "at": "2026-08-19T06:52:55.350Z",
+        "first_seen": "2026-08-19T06:52:55.350Z"
+      },
+      "attempts": {
+        "B": {
+          "ok": true,
+          "code": null,
+          "status": 200,
+          "bytes": 19648,
+          "url": "https://blackmile.co/products.json?limit=250",
+          "at": "2026-08-19T06:52:55.350Z"
+        },
+        "A": {
+          "ok": true,
+          "code": null,
+          "status": 200,
+          "bytes": 172196,
+          "url": "https://blackmile.co/products/roll-top-toiletry-bag",
+          "at": "2026-08-19T06:52:55.350Z"
+        }
+      },
+      "policy": {
+        "verdict": "allow",
+        "reason": null,
+        "rule": null,
+        "blocked_path": null,
+        "robots_sha256": "61e21cfdd35ee01ad0cf36cfba03f773d3af77f5f062409abd5ac33b7c854eba",
+        "crawl_delay": null,
+        "at": "2026-08-19T06:52:55.350Z"
+      },
+      "history": [
+        {
+          "at": "2026-08-19T06:52:55.350Z",
+          "from": null,
+          "to": "B",
+          "note": "first winning rung recorded"
         }
       ]
     },
@@ -1743,6 +1863,66 @@
             "at": "2026-08-15T23:14:30.153Z"
           },
           "note": "eastpak.com is the old Akamai-fronted site; /products.json?limit=250 returned 403 and no sample PDP was discoverable. Eastpak replatformed to Shopify at us.eastpak.com, which is where the catalog now lives. The historical 403 belongs to a site that no longer serves the catalog and is not evidence that Eastpak is blocked."
+        }
+      ]
+    },
+    "evergoods": {
+      "brand": "EVERGOODS",
+      "domain": "evergoods.us",
+      "issue": null,
+      "platform": "shopify",
+      "signals": [
+        "robots:shopify-collections-sort_by",
+        "robots:shopify-checkouts",
+        "html:cdn.shopify.com",
+        "html:window.Shopify"
+      ],
+      "winner": {
+        "rung": "B",
+        "url": "https://evergoods.us/products.json?limit=250",
+        "returned": {
+          "products": 41,
+          "listings_est": 22,
+          "bytes": 467531,
+          "sha256": "c5ebdb0e115344f15b8464168c0ac11b833859be5a605f19deb5b0877f53f342",
+          "structure_fingerprint": "5388f581870e4a55870377d12e34be1c0d5c12699ff462400c1055a89626d24b"
+        },
+        "at": "2026-08-19T06:52:29.019Z",
+        "first_seen": "2026-08-19T06:52:29.019Z"
+      },
+      "attempts": {
+        "B": {
+          "ok": true,
+          "code": null,
+          "status": 200,
+          "bytes": 467531,
+          "url": "https://evergoods.us/products.json?limit=250",
+          "at": "2026-08-19T06:52:29.019Z"
+        },
+        "A": {
+          "ok": true,
+          "code": null,
+          "status": 200,
+          "bytes": 364231,
+          "url": "https://evergoods.us/products/civic-access-pouch-1l-x-pac",
+          "at": "2026-08-19T06:52:29.019Z"
+        }
+      },
+      "policy": {
+        "verdict": "allow",
+        "reason": null,
+        "rule": null,
+        "blocked_path": null,
+        "robots_sha256": "e0b91644494f1491e01ba6184358cd8781f2fbc0df53c7adc9fecdd4b521ef86",
+        "crawl_delay": null,
+        "at": "2026-08-19T06:52:29.019Z"
+      },
+      "history": [
+        {
+          "at": "2026-08-19T06:52:29.019Z",
+          "from": null,
+          "to": "B",
+          "note": "first winning rung recorded"
         }
       ]
     },
@@ -4291,6 +4471,66 @@
         "recorded_at": "2026-08-15T23:44:20.095Z"
       }
     },
+    "paktbags": {
+      "brand": "Pakt",
+      "domain": "paktbags.com",
+      "issue": null,
+      "platform": "shopify",
+      "signals": [
+        "robots:shopify-collections-sort_by",
+        "robots:shopify-checkouts",
+        "html:cdn.shopify.com",
+        "html:window.Shopify"
+      ],
+      "winner": {
+        "rung": "B",
+        "url": "https://paktbags.com/products.json?limit=250",
+        "returned": {
+          "products": 23,
+          "listings_est": 16,
+          "bytes": 274181,
+          "sha256": "b5d91b5cc4f2b5e967377ec56de44c1a47e2f0f905828dcf716446eeb380b3ea",
+          "structure_fingerprint": "9b24b129e79437da5c7cfc19e313726dcb31fcd096f584515547c39f4e5ea357"
+        },
+        "at": "2026-08-19T06:52:49.017Z",
+        "first_seen": "2026-08-19T06:52:49.017Z"
+      },
+      "attempts": {
+        "B": {
+          "ok": true,
+          "code": null,
+          "status": 200,
+          "bytes": 274181,
+          "url": "https://paktbags.com/products.json?limit=250",
+          "at": "2026-08-19T06:52:49.017Z"
+        },
+        "A": {
+          "ok": true,
+          "code": null,
+          "status": 200,
+          "bytes": 407723,
+          "url": "https://paktbags.com/products/mode-shoulder-bag-12l",
+          "at": "2026-08-19T06:52:49.017Z"
+        }
+      },
+      "policy": {
+        "verdict": "allow",
+        "reason": null,
+        "rule": null,
+        "blocked_path": null,
+        "robots_sha256": "8edb9ad7685a2b6df0140bea6c2713fcb01c8119faa3b93aad5ba957f6d246a1",
+        "crawl_delay": null,
+        "at": "2026-08-19T06:52:49.017Z"
+      },
+      "history": [
+        {
+          "at": "2026-08-19T06:52:49.017Z",
+          "from": null,
+          "to": "B",
+          "note": "first winning rung recorded"
+        }
+      ]
+    },
     "patagonia": {
       "brand": "Patagonia",
       "domain": "www.patagonia.com",
@@ -6173,6 +6413,66 @@
         "recorded_at": "2026-08-15T23:44:20.095Z"
       }
     },
+    "wexley": {
+      "brand": "Wexley",
+      "domain": "wexley.jp",
+      "issue": null,
+      "platform": "shopify",
+      "signals": [
+        "robots:shopify-collections-sort_by",
+        "robots:shopify-checkouts",
+        "html:cdn.shopify.com",
+        "html:window.Shopify"
+      ],
+      "winner": {
+        "rung": "B",
+        "url": "https://wexley.jp/products.json?limit=250",
+        "returned": {
+          "products": 38,
+          "listings_est": 34,
+          "bytes": 535367,
+          "sha256": "2d8a225e8543cddf116ac62dc0c354e7dcb712036c2b910b26a5594707b1d66a",
+          "structure_fingerprint": "9b24b129e79437da5c7cfc19e313726dcb31fcd096f584515547c39f4e5ea357"
+        },
+        "at": "2026-08-19T06:52:35.513Z",
+        "first_seen": "2026-08-19T06:52:35.513Z"
+      },
+      "attempts": {
+        "B": {
+          "ok": true,
+          "code": null,
+          "status": 200,
+          "bytes": 535367,
+          "url": "https://wexley.jp/products.json?limit=250",
+          "at": "2026-08-19T06:52:35.513Z"
+        },
+        "A": {
+          "ok": true,
+          "code": null,
+          "status": 200,
+          "bytes": 343672,
+          "url": "https://wexley.jp/products/stem-20l-daypack-crinkle-nylon",
+          "at": "2026-08-19T06:52:35.513Z"
+        }
+      },
+      "policy": {
+        "verdict": "allow",
+        "reason": null,
+        "rule": null,
+        "blocked_path": null,
+        "robots_sha256": "7d04314eab3668396dd1aeb0c7f204c7cd6ed3d16a5ae4bb62b3a1bb9e6b2ef1",
+        "crawl_delay": null,
+        "at": "2026-08-19T06:52:35.513Z"
+      },
+      "history": [
+        {
+          "at": "2026-08-19T06:52:35.513Z",
+          "from": null,
+          "to": "B",
+          "note": "first winning rung recorded"
+        }
+      ]
+    },
     "wotancraft": {
       "brand": "Wotancraft",
       "domain": "wotancraft.com",
@@ -6362,16 +6662,16 @@
       },
       "start_rung": "A",
       "brands": 1,
-      "updated_at": "2026-08-18T02:45:02.378Z"
+      "updated_at": "2026-08-19T06:52:55.350Z"
     },
     "shopify": {
       "wins": {
         "A": 3,
-        "B": 33
+        "B": 38
       },
       "start_rung": "B",
-      "brands": 36,
-      "updated_at": "2026-08-18T02:45:02.378Z"
+      "brands": 41,
+      "updated_at": "2026-08-19T06:52:55.350Z"
     },
     "unknown": {
       "wins": {
@@ -6380,7 +6680,7 @@
       },
       "start_rung": "A",
       "brands": 4,
-      "updated_at": "2026-08-18T02:45:02.378Z"
+      "updated_at": "2026-08-19T06:52:55.350Z"
     }
   }
 }
