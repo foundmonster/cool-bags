@@ -5307,20 +5307,6 @@
     "image": "images/jansport-superbreak-plus.webp"
   },
   {
-    "id": 451,
-    "brand": "Jansport",
-    "name": "West Break",
-    "price": 60,
-    "volume": null,
-    "weight": null,
-    "material": "Nylon",
-    "type": "Unclassified",
-    "typeRaw": "Bag",
-    "description": "",
-    "link": "https://www.jansport.com/products/superbreak-js0a4qut",
-    "image": "images/jansport-west-break.webp"
-  },
-  {
     "id": 452,
     "brand": "Kelty",
     "name": "Asher 18",
