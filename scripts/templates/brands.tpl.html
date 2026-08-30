@@ -337,6 +337,37 @@
            a bag count for live brands, a rung for in-progress, and for blocked
            the measured reason AND the date it was checked. A blocked claim with
            no date is what let a 2025 failure still be believed in 2026. */
+        /* ---- Brand table -------------------------------------------------
+           Fixed layout, not auto. With auto the browser measures column widths
+           from the rows currently in the DOM, so filtering the table drops the
+           widest cells and every column jumps sideways. Fixed widths make the
+           columns independent of which rows are shown. */
+        .table-controls { display: flex; gap: 10px; align-items: center; margin-bottom: 14px; flex-wrap: wrap; }
+        .table-controls input[type="search"] { font: inherit; font-size: 13px; padding: 7px 10px;
+            border: 1px solid #e5e5e7; border-radius: 6px; width: 220px; }
+        .table-controls input[type="search"]:focus { outline: none; border-color: #1d1d1f; }
+        .chip { font-size: 12px; color: #86868b; border: 1px solid #e5e5e7; border-radius: 999px;
+            padding: 5px 11px; cursor: pointer; background: #fff; font-family: inherit; }
+        .chip[aria-pressed="true"] { background: #1d1d1f; color: #fff; border-color: #1d1d1f; }
+        table.brands { border-collapse: collapse; width: 100%; font-size: 13px; table-layout: fixed; }
+        table.brands thead th { text-align: left; font-weight: 400; color: #86868b; font-size: 11px;
+            text-transform: uppercase; letter-spacing: .5px; padding: 0 12px 8px 0;
+            border-bottom: 1px solid #e5e5e7; cursor: pointer; user-select: none; white-space: nowrap; }
+        table.brands thead th:hover { color: #1d1d1f; }
+        table.brands th .arrow { opacity: .3; margin-left: 4px; }
+        table.brands th[aria-sort] .arrow { opacity: 1; }
+        table.brands th:not([aria-sort]) .arrow::after { content: "\2195"; }
+        table.brands th[aria-sort="ascending"] .arrow::after { content: "\2191"; }
+        table.brands th[aria-sort="descending"] .arrow::after { content: "\2193"; }
+        table.brands td { padding: 9px 12px 9px 0; border-bottom: 1px solid #f2f2f4; color: #1d1d1f;
+            overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        table.brands td.num, table.brands th.num { text-align: right; padding-right: 24px; }
+        table.brands tbody tr:hover { background: #fafafa; }
+        table.brands a { color: #1d1d1f; }
+        .muted { color: #c7c7cc; }
+        .no { color: #86868b; }
+        .rowcount { color: #86868b; font-size: 12px; margin-top: 14px; }
+
         .brand-note {
             color: #86868b;
             font-size: 11px;

@@ -21,8 +21,14 @@
  *
  * None of that is fixable by editing, because the page's categories encoded a
  * judgement no source recorded. So the page becomes a VIEW over three files
- * that are measured, and the categories are given definitions that can be
- * checked:
+ * that are measured.
+ *
+ * It renders as ONE SORTABLE TABLE — issue, brand, website, bags, on the site —
+ * rather than four two-column lists. The lists could not answer "is brand X on
+ * the site?" without scanning four sections, and they had no room for the URL,
+ * which is the field that actually unblocks work: probe.js can determine
+ * nothing without one. The four categories survive as the sidebar statistics,
+ * with these definitions:
  *
  *   LIVE        it has records in bags.json. Ground truth — this is what
  *               index.html renders.
@@ -81,8 +87,11 @@ const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replac
 function loadIssues(offline) {
   if (!offline) {
     try {
+      // ALL states, not just open. A live brand's issue is closed — that is the
+      // "shipped, issue closed" case — and fetching only open ones stripped the
+      // issue number off every one of the 47 live rows.
       const raw = execFileSync('gh', ['issue', 'list', '--repo', 'foundmonster/cool-bags',
-        '--state', 'open', '--limit', '400', '--json', 'number,title,labels'], { encoding: 'utf8' });
+        '--state', 'all', '--limit', '500', '--json', 'number,title,labels,state'], { encoding: 'utf8' });
       fs.writeFileSync(ISSUE_CACHE, raw);
       return JSON.parse(raw);
     } catch (e) {
@@ -93,117 +102,236 @@ function loadIssues(offline) {
   return JSON.parse(fs.readFileSync(ISSUE_CACHE, 'utf8'));
 }
 
+// Issue titles are user-submitted prose, not a field. The open list contains
+// feature requests ("Capacity filtrer", "filter by bag size", "Add list view"),
+// test submissions ("9 test 9", "another testo 4") and sentences ("Add Patagonia
+// and Osprey please"). The old page listed every one of them as a brand.
+const JUNK = /\btest(o|ing)?\b|\bfilter\b|\bview\b|\bproject\b|\bsearch\b|\bsort\b|\bdark mode\b|\bfeature\b|\bbug\b|\bpage\b/i;
+
 /** Strip the decorations issue titles carry so the brand name is comparable. */
 function brandFromIssue(title) {
-  return title
+  const name = title
     .replace(/^\[?(brand request|brand)\]?:?\s*/i, '')
-    .replace(/\s*[-–—]\s*(add|integration|research).*$/i, '')
+    .replace(/\s*(brand integration|[-–—]\s*(add|integration|research).*)$/i, '')
+    .replace(/^add\s+/i, '')      // "Add Bellroy Brand" -> "Bellroy Brand"
+    .replace(/\s+brand$/i, '')    // -> "Bellroy", which merges with the live row
+    .replace(/\s+please$/i, '')
     .trim();
+  if (!name || JUNK.test(name)) return null;
+  if (/[:?]|\sand\s|^obtain\b|^sample\b|^request\b/i.test(name)) return null;
+  // A brand name is a name, not a sentence. Four words is generous — the longest
+  // real one here is "Hyperlite Mountain Gear".
+  if (name.split(/\s+/).length > 4) return null;
+  return name;
 }
 
 function build({ offline = false } = {}) {
   const bags = JSON.parse(fs.readFileSync(path.join(ROOT, 'bags.json'), 'utf8'));
-  const strategies = JSON.parse(fs.readFileSync(path.join(__dirname, 'ladder', 'strategies.json'), 'utf8'));
+  const strategies = JSON.parse(fs.readFileSync(path.join(__dirname, 'ladder', 'strategies.json'), 'utf8')).brands || {};
   const issues = loadIssues(offline);
 
-  // ---- LIVE: ground truth, straight from what the catalog renders
+  // ---- LIVE is ground truth: it is what index.html renders. The website comes
+  // from the brand's own record links, which is more reliable than the ladder's
+  // domain because those URLs are link-checked.
   const counts = new Map();
-  for (const b of bags) counts.set(b.brand, (counts.get(b.brand) || 0) + 1);
-  const live = [...counts.entries()].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))
-    .map(([name, n]) => ({ name, n }));
-  const liveKeys = new Set();
-  for (const l of live) for (const k of aliasKeys(l.name)) liveKeys.add(k);
-
-  // ---- ladder verdicts, keyed for lookup
-  const ladder = new Map();
-  for (const [slug, rec] of Object.entries(strategies.brands || {})) {
-    const entry = {
-      verdict: rec.verdict, rung: rec.winner ? rec.winner.rung : null,
-      policy: rec.policy ? rec.policy.verdict : null,
-      reason: (rec.policy && rec.policy.reason) || rec.verdict,
-      at: (rec.winner && rec.winner.at) || (rec.policy && rec.policy.at) || (rec.probe && rec.probe.at) || null,
-      products: rec.probe ? rec.probe.products_found : null,
-      name: rec.brand || slug,
-    };
-    for (const k of aliasKeys(rec.brand || slug)) if (!ladder.has(k)) ladder.set(k, entry);
-    if (!ladder.has(key(slug))) ladder.set(key(slug), entry);
+  const siteFromRecords = new Map();
+  for (const b of bags) {
+    counts.set(b.brand, (counts.get(b.brand) || 0) + 1);
+    if (!siteFromRecords.has(b.brand)) {
+      try { siteFromRecords.set(b.brand, new URL(b.link).hostname.replace(/^www\./, '')); } catch { /* unparseable link */ }
+    }
   }
 
-  // ---- open issues that name a brand, excluding anything already live
-  const seen = new Set();
-  const pending = [];
+  const ladder = new Map();
+  for (const [slug, rec] of Object.entries(strategies)) {
+    const entry = {
+      verdict: rec.verdict || null,
+      rung: rec.winner ? rec.winner.rung : null,
+      domain: rec.domain ? String(rec.domain).replace(/^www\./, '') : null,
+      products: rec.probe ? rec.probe.products_found : null,
+    };
+    for (const k of [...aliasKeys(rec.brand || slug), key(slug), key(String(slug).replace(/^name:/, ''))]) {
+      if (k && !ladder.has(k)) ladder.set(k, entry);
+    }
+  }
+  const look = (name) => {
+    for (const k of aliasKeys(name)) if (ladder.has(k)) return ladder.get(k);
+    return null;
+  };
+
+  // ---- one row per brand, merged across all three sources
+  const rows = new Map();
+  const findKey = (name) => {
+    for (const k of aliasKeys(name)) if (rows.has(k)) return k;
+    return key(name);
+  };
+  const put = (name, patch) => {
+    const k = findKey(name);
+    const cur = rows.get(k) || { brand: name, issue: null, website: null, bags: 0, live: false };
+    rows.set(k, { ...cur, ...patch, brand: cur.brand || name });
+  };
+
+  for (const [brand, n] of counts) {
+    const l = look(brand);
+    put(brand, { brand, bags: n, live: true, website: siteFromRecords.get(brand) || (l && l.domain) || null });
+  }
   for (const iss of issues) {
     const labels = (iss.labels || []).map((l) => l.name.toLowerCase());
+    if (labels.includes('bug') || labels.includes('enhancement')) continue;
+    if (/^seo:|^link rot|^defective|^brands\.html/i.test(iss.title)) continue;
     const name = brandFromIssue(iss.title);
     if (!name || name.length > 40) continue;
-    if (labels.includes('bug') || labels.includes('enhancement') || /^seo:|^link rot|^defective/i.test(iss.title)) continue;
-    const k = key(name);
-    if (!k || liveKeys.has(k) || seen.has(k)) continue;
-    seen.add(k);
-    pending.push({ name, number: iss.number, ladder: ladder.get(k) || null });
+    const k = findKey(name);
+    const existing = rows.get(k);
+    // Test submissions arrive lowercase and unspaced ("tstsar", "sealson"). So
+    // does a real issue titled "tomtoc", so this can only fire for a name that
+    // appears in no other source — applied unconditionally it dropped a live
+    // brand off the page entirely.
+    if (!existing && !look(name) && !/\s/.test(name) && name === name.toLowerCase() && !/\d/.test(name)) continue;
+    // A CLOSED issue only means something for a brand that is actually live —
+    // the "shipped, issue closed" case. Otherwise it was rejected or was never a
+    // brand, and must not create a row: closed #25 "Capacity filtrer" did.
+    if (iss.state !== 'OPEN' && !(existing && existing.live)) continue;
+    if (existing && existing.issue && iss.state !== 'OPEN') continue;
+    const l = look(name);
+    put(name, {
+      issue: iss.number,
+      website: (existing && existing.website) || (l && l.domain) || null,
+      bags: existing ? existing.bags : 0,
+      live: existing ? existing.live : false,
+    });
+  }
+  for (const [slug, rec] of Object.entries(strategies)) {
+    const name = rec.brand || String(slug).replace(/^name:/, '');
+    if (rows.has(findKey(name)) && rows.get(findKey(name))) continue;
+    put(name, { website: rec.domain ? String(rec.domain).replace(/^www\./, '') : null });
   }
 
-  const blocked = pending.filter((p) => p.ladder && BLOCKING.has(p.ladder.verdict));
-  const inProgress = pending.filter((p) => !blocked.includes(p) && p.ladder && p.ladder.rung);
-  const queued = pending.filter((p) => !blocked.includes(p) && !inProgress.includes(p));
+  // ---- the four categories survive as the sidebar statistics
+  for (const r of rows.values()) {
+    const l = look(r.brand);
+    r.status = r.live ? 'live'
+      : (l && BLOCKING.has(l.verdict)) ? 'blocked'
+      : (l && l.rung) ? 'in-progress'
+      : 'queued';
+  }
 
-  const sort = (a, b) => a.name.localeCompare(b.name);
-  blocked.sort(sort); inProgress.sort(sort); queued.sort(sort);
+  const list = [...rows.values()].sort((a, b) => b.bags - a.bags || a.brand.localeCompare(b.brand));
+  const liveCount = list.filter((r) => r.live).length;
+  const inProgress = list.filter((r) => r.status === 'in-progress').length;
+  const queued = list.filter((r) => r.status === 'queued').length;
+  const blocked = list.filter((r) => r.status === 'blocked').length;
+  const totalBags = list.reduce((n, r) => n + r.bags, 0);
+  const progress = Math.round((liveCount / list.length) * 100);
 
-  // ---- render
-  // The stylesheet has always had `.brand-item.completed .checkbox svg { display: block }`
-  // and nothing ever rendered it, because no completed row existed. Emit the tick.
-  // No stroke attribute on the path: the stylesheet already sets `stroke: white`
-  // on `.checkbox svg`, and a presentation attribute here would override it and
-  // paint the tick black on a black box.
-  const TICK = '<svg viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.5 12L13 4.5" stroke-linecap="round" stroke-linejoin="round"/></svg>';
-  const item = (cls, label, note) =>
-    `                    <div class="brand-item ${cls}">\n` +
-    `                        <div class="checkbox">${cls === 'completed' ? TICK : ''}</div>\n` +
-    `                        <div class="brand-name">${esc(label)}${note ? ` <span class="brand-note">${esc(note)}</span>` : ''}</div>\n` +
-    `                    </div>`;
+  const body = list.map((r) => `                    <tr>
+                      <td data-sort="${r.issue == null ? 999999 : r.issue}">${r.issue == null ? '<span class="muted">—</span>' : `<a href="https://github.com/foundmonster/cool-bags/issues/${r.issue}" target="_blank" rel="noopener noreferrer">#${r.issue}</a>`}</td>
+                      <td data-sort="${esc(r.brand.toLowerCase())}">${esc(r.brand)}</td>
+                      <td data-sort="${esc(r.website || 'zzz')}">${r.website ? `<a href="https://${esc(r.website)}" target="_blank" rel="noopener noreferrer">${esc(r.website)}</a>` : '<span class="muted">—</span>'}</td>
+                      <td class="num" data-sort="${r.bags}">${r.bags || '<span class="muted">0</span>'}</td>
+                      <td data-sort="${r.live ? 1 : 0}">${r.live ? 'Yes' : '<span class="no">No</span>'}</td>
+                    </tr>`).join('\n');
 
-  const section = (title, rows) =>
-    `            <div class="section">\n` +
-    `                <h2 class="section-title">${esc(title)}</h2>\n` +
-    `                <div class="brands-list">\n${rows.join('\n')}\n                </div>\n` +
-    `            </div>`;
+  const sections = `            <div class="table-controls">
+              <input type="search" id="brand-filter" placeholder="Filter brands…" autocomplete="off">
+              <button class="chip" id="only-live" aria-pressed="false">On the site only</button>
+              <button class="chip" id="only-missing" aria-pressed="false">Not on the site</button>
+            </div>
 
-  const sections = [
-    section(`Live (${live.length})`, live.map((l) => item('completed', l.name, `${l.n} ${l.n === 1 ? 'bag' : 'bags'}`))),
-    section(`In Progress (${inProgress.length})`, inProgress.map((p) =>
-      item('in-progress', p.name, `rung ${p.ladder.rung}${p.ladder.products ? `, ${p.ladder.products} products` : ''} · #${p.number}`))),
-    section(`Queued (${queued.length})`, queued.map((p) => item('pending', p.name,
-      p.ladder && p.ladder.verdict === 'no-url' ? `no site recorded · #${p.number}` : `#${p.number}`))),
-    // The date is the point of this section. A blocked verdict with no date is
-    // what let a November 2025 failure still be believed in August 2026.
-    section(`Blocked (${blocked.length})`, blocked.map((p) =>
-      item('blocked', p.name, `${p.ladder.reason || p.ladder.verdict}${p.ladder.at ? ` · checked ${p.ladder.at.slice(0, 10)}` : ''} · #${p.number}`))),
-  ].join('\n');
+            <table class="brands" id="brands-table">
+              <colgroup>
+                <col style="width: 88px">
+                <col style="width: 26%">
+                <col>
+                <col style="width: 92px">
+                <col style="width: 116px">
+              </colgroup>
+              <thead>
+                <tr>
+                  <th data-type="num">Issue<span class="arrow"></span></th>
+                  <th data-type="str">Brand<span class="arrow"></span></th>
+                  <th data-type="str">Website<span class="arrow"></span></th>
+                  <th data-type="num" class="num">Bags<span class="arrow"></span></th>
+                  <th data-type="num">On the site<span class="arrow"></span></th>
+                </tr>
+              </thead>
+              <tbody>
+${body}
+              </tbody>
+            </table>
+            <div class="rowcount" id="rowcount"></div>
 
-  const totalTracked = live.length + inProgress.length + queued.length + blocked.length;
-  const progress = Math.round((live.length / totalTracked) * 100);
+            <script>
+              (function () {
+                const table = document.getElementById('brands-table');
+                const tbody = table.tBodies[0];
+                const all = [...tbody.rows];
+                const heads = [...table.tHead.rows[0].cells];
+
+                // Sort reads data-sort, never the rendered text: "#103" and an em
+                // dash would sort as strings, and Yes/No would sort alphabetically
+                // rather than by state.
+                heads.forEach((th, i) => th.addEventListener('click', () => {
+                  const dir = th.getAttribute('aria-sort') === 'ascending' ? -1 : 1;
+                  heads.forEach(h => h.removeAttribute('aria-sort'));
+                  th.setAttribute('aria-sort', dir === 1 ? 'ascending' : 'descending');
+                  const numeric = th.dataset.type === 'num';
+                  const val = r => { const v = r.cells[i].dataset.sort; return numeric ? Number(v) : String(v); };
+                  all.sort((a, b) => { const x = val(a), y = val(b); return (x > y ? 1 : x < y ? -1 : 0) * dir; });
+                  render();
+                }));
+
+                const q = document.getElementById('brand-filter');
+                const onlyLive = document.getElementById('only-live');
+                const onlyMissing = document.getElementById('only-missing');
+                [onlyLive, onlyMissing].forEach(b => b.addEventListener('click', () => {
+                  const on = b.getAttribute('aria-pressed') === 'true';
+                  [onlyLive, onlyMissing].forEach(o => o.setAttribute('aria-pressed', 'false'));
+                  b.setAttribute('aria-pressed', on ? 'false' : 'true');
+                  render();
+                }));
+                q.addEventListener('input', render);
+
+                function render() {
+                  const term = q.value.trim().toLowerCase();
+                  const live = onlyLive.getAttribute('aria-pressed') === 'true';
+                  const missing = onlyMissing.getAttribute('aria-pressed') === 'true';
+                  let shown = 0;
+                  tbody.replaceChildren();
+                  for (const r of all) {
+                    const isLive = r.cells[4].dataset.sort === '1';
+                    if (live && !isLive) continue;
+                    if (missing && isLive) continue;
+                    if (term && !r.cells[1].textContent.toLowerCase().includes(term)
+                             && !r.cells[2].textContent.toLowerCase().includes(term)) continue;
+                    tbody.appendChild(r); shown++;
+                  }
+                  document.getElementById('rowcount').textContent = shown + ' of ' + all.length + ' brands';
+                }
+                render();
+              })();
+            <\/script>`;
+
   const stat = (label, value, extra = '') =>
     `                        <li${extra}>\n                            <span class="stat-label">${label}</span>\n` +
     `                            <span class="stat-value">${value}</span>\n                        </li>`;
   const stats = `<ul class="stats-list">\n` + [
-    stat('Live Brands', live.length),
-    stat('In Progress', inProgress.length),
-    stat('Queued', queued.length),
-    stat('Blocked', blocked.length),
-    stat('Total Brands', totalTracked),
+    stat('Live Brands', liveCount),
+    stat('In Progress', inProgress),
+    stat('Queued', queued),
+    stat('Blocked', blocked),
+    stat('Total Brands', list.length),
     stat('Progress', `${progress}%`, ` class="progress-item" data-progress="${progress}%"`),
   ].join('\n') + `\n                    </ul>`;
 
-  const bagCount = bags.length;
-  const version = `Generated ${new Date().toISOString().slice(0, 10)} from ${bagCount} records`;
+  const version = `Generated ${new Date().toISOString().slice(0, 10)} from ${bags.length} records`;
 
   const html = fs.readFileSync(TEMPLATE, 'utf8')
     .replace('{{SECTIONS}}', sections)
     .replace('{{STATS}}', stats)
     .replace('{{VERSION}}', version);
 
-  return { html, live, inProgress, queued, blocked, totalTracked, progress };
+  return { html, list, liveCount, inProgress, queued, blocked, totalBags, progress };
 }
 
 function main() {
@@ -211,7 +339,7 @@ function main() {
   const check = argv.includes('--check');
   const r = build({ offline: argv.includes('--offline') });
 
-  console.log(`live ${r.live.length} | in progress ${r.inProgress.length} | queued ${r.queued.length} | blocked ${r.blocked.length} | ${r.progress}% of ${r.totalTracked}`);
+  console.log(`${r.list.length} brands | live ${r.liveCount} | in progress ${r.inProgress} | queued ${r.queued} | blocked ${r.blocked} | ${r.totalBags} bags | ${r.progress}%`);
 
   if (check) {
     const current = fs.existsSync(OUT) ? fs.readFileSync(OUT, 'utf8') : '';

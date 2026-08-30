@@ -337,6 +337,37 @@
            a bag count for live brands, a rung for in-progress, and for blocked
            the measured reason AND the date it was checked. A blocked claim with
            no date is what let a 2025 failure still be believed in 2026. */
+        /* ---- Brand table -------------------------------------------------
+           Fixed layout, not auto. With auto the browser measures column widths
+           from the rows currently in the DOM, so filtering the table drops the
+           widest cells and every column jumps sideways. Fixed widths make the
+           columns independent of which rows are shown. */
+        .table-controls { display: flex; gap: 10px; align-items: center; margin-bottom: 14px; flex-wrap: wrap; }
+        .table-controls input[type="search"] { font: inherit; font-size: 13px; padding: 7px 10px;
+            border: 1px solid #e5e5e7; border-radius: 6px; width: 220px; }
+        .table-controls input[type="search"]:focus { outline: none; border-color: #1d1d1f; }
+        .chip { font-size: 12px; color: #86868b; border: 1px solid #e5e5e7; border-radius: 999px;
+            padding: 5px 11px; cursor: pointer; background: #fff; font-family: inherit; }
+        .chip[aria-pressed="true"] { background: #1d1d1f; color: #fff; border-color: #1d1d1f; }
+        table.brands { border-collapse: collapse; width: 100%; font-size: 13px; table-layout: fixed; }
+        table.brands thead th { text-align: left; font-weight: 400; color: #86868b; font-size: 11px;
+            text-transform: uppercase; letter-spacing: .5px; padding: 0 12px 8px 0;
+            border-bottom: 1px solid #e5e5e7; cursor: pointer; user-select: none; white-space: nowrap; }
+        table.brands thead th:hover { color: #1d1d1f; }
+        table.brands th .arrow { opacity: .3; margin-left: 4px; }
+        table.brands th[aria-sort] .arrow { opacity: 1; }
+        table.brands th:not([aria-sort]) .arrow::after { content: "\2195"; }
+        table.brands th[aria-sort="ascending"] .arrow::after { content: "\2191"; }
+        table.brands th[aria-sort="descending"] .arrow::after { content: "\2193"; }
+        table.brands td { padding: 9px 12px 9px 0; border-bottom: 1px solid #f2f2f4; color: #1d1d1f;
+            overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        table.brands td.num, table.brands th.num { text-align: right; padding-right: 24px; }
+        table.brands tbody tr:hover { background: #fafafa; }
+        table.brands a { color: #1d1d1f; }
+        .muted { color: #c7c7cc; }
+        .no { color: #86868b; }
+        .rowcount { color: #86868b; font-size: 12px; margin-top: 14px; }
+
         .brand-note {
             color: #86868b;
             font-size: 11px;
@@ -574,23 +605,23 @@
                         </li>
                         <li>
                             <span class="stat-label">In Progress</span>
-                            <span class="stat-value">32</span>
+                            <span class="stat-value">35</span>
                         </li>
                         <li>
                             <span class="stat-label">Queued</span>
-                            <span class="stat-value">62</span>
+                            <span class="stat-value">54</span>
                         </li>
                         <li>
                             <span class="stat-label">Blocked</span>
-                            <span class="stat-value">10</span>
+                            <span class="stat-value">11</span>
                         </li>
                         <li>
                             <span class="stat-label">Total Brands</span>
-                            <span class="stat-value">151</span>
+                            <span class="stat-value">147</span>
                         </li>
-                        <li class="progress-item" data-progress="31%">
+                        <li class="progress-item" data-progress="32%">
                             <span class="stat-label">Progress</span>
-                            <span class="stat-value">31%</span>
+                            <span class="stat-value">32%</span>
                         </li>
                     </ul>
                 </div>
@@ -611,630 +642,1113 @@
             
             
             
-            <div class="section">
-                <h2 class="section-title">Live (47)</h2>
-                <div class="brands-list">
-                    <div class="brand-item completed">
-                        <div class="checkbox"><svg viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.5 12L13 4.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-                        <div class="brand-name">Tom Bihn <span class="brand-note">73 bags</span></div>
-                    </div>
-                    <div class="brand-item completed">
-                        <div class="checkbox"><svg viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.5 12L13 4.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-                        <div class="brand-name">ILE <span class="brand-note">53 bags</span></div>
-                    </div>
-                    <div class="brand-item completed">
-                        <div class="checkbox"><svg viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.5 12L13 4.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-                        <div class="brand-name">Bellroy <span class="brand-note">50 bags</span></div>
-                    </div>
-                    <div class="brand-item completed">
-                        <div class="checkbox"><svg viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.5 12L13 4.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-                        <div class="brand-name">Alpaka <span class="brand-note">45 bags</span></div>
-                    </div>
-                    <div class="brand-item completed">
-                        <div class="checkbox"><svg viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.5 12L13 4.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-                        <div class="brand-name">Nomatic <span class="brand-note">34 bags</span></div>
-                    </div>
-                    <div class="brand-item completed">
-                        <div class="checkbox"><svg viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.5 12L13 4.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-                        <div class="brand-name">Troubadour <span class="brand-note">29 bags</span></div>
-                    </div>
-                    <div class="brand-item completed">
-                        <div class="checkbox"><svg viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.5 12L13 4.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-                        <div class="brand-name">DSPTCH <span class="brand-note">25 bags</span></div>
-                    </div>
-                    <div class="brand-item completed">
-                        <div class="checkbox"><svg viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.5 12L13 4.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-                        <div class="brand-name">Chrome Industries <span class="brand-note">24 bags</span></div>
-                    </div>
-                    <div class="brand-item completed">
-                        <div class="checkbox"><svg viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.5 12L13 4.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-                        <div class="brand-name">Matador <span class="brand-note">23 bags</span></div>
-                    </div>
-                    <div class="brand-item completed">
-                        <div class="checkbox"><svg viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.5 12L13 4.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-                        <div class="brand-name">Baboon To The Moon <span class="brand-note">22 bags</span></div>
-                    </div>
-                    <div class="brand-item completed">
-                        <div class="checkbox"><svg viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.5 12L13 4.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-                        <div class="brand-name">Bailey Works <span class="brand-note">21 bags</span></div>
-                    </div>
-                    <div class="brand-item completed">
-                        <div class="checkbox"><svg viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.5 12L13 4.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-                        <div class="brand-name">Kelty <span class="brand-note">21 bags</span></div>
-                    </div>
-                    <div class="brand-item completed">
-                        <div class="checkbox"><svg viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.5 12L13 4.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-                        <div class="brand-name">Rains <span class="brand-note">21 bags</span></div>
-                    </div>
-                    <div class="brand-item completed">
-                        <div class="checkbox"><svg viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.5 12L13 4.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-                        <div class="brand-name">Mountainsmith <span class="brand-note">20 bags</span></div>
-                    </div>
-                    <div class="brand-item completed">
-                        <div class="checkbox"><svg viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.5 12L13 4.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-                        <div class="brand-name">Tomtoc <span class="brand-note">17 bags</span></div>
-                    </div>
-                    <div class="brand-item completed">
-                        <div class="checkbox"><svg viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.5 12L13 4.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-                        <div class="brand-name">Urth <span class="brand-note">16 bags</span></div>
-                    </div>
-                    <div class="brand-item completed">
-                        <div class="checkbox"><svg viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.5 12L13 4.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-                        <div class="brand-name">Aer <span class="brand-note">15 bags</span></div>
-                    </div>
-                    <div class="brand-item completed">
-                        <div class="checkbox"><svg viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.5 12L13 4.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-                        <div class="brand-name">Mission Workshop <span class="brand-note">15 bags</span></div>
-                    </div>
-                    <div class="brand-item completed">
-                        <div class="checkbox"><svg viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.5 12L13 4.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-                        <div class="brand-name">Cotopaxi <span class="brand-note">11 bags</span></div>
-                    </div>
-                    <div class="brand-item completed">
-                        <div class="checkbox"><svg viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.5 12L13 4.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-                        <div class="brand-name">Triple Aught Design <span class="brand-note">11 bags</span></div>
-                    </div>
-                    <div class="brand-item completed">
-                        <div class="checkbox"><svg viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.5 12L13 4.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-                        <div class="brand-name">EVERGOODS <span class="brand-note">10 bags</span></div>
-                    </div>
-                    <div class="brand-item completed">
-                        <div class="checkbox"><svg viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.5 12L13 4.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-                        <div class="brand-name">Gossamer Gear <span class="brand-note">10 bags</span></div>
-                    </div>
-                    <div class="brand-item completed">
-                        <div class="checkbox"><svg viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.5 12L13 4.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-                        <div class="brand-name">Halfday <span class="brand-note">9 bags</span></div>
-                    </div>
-                    <div class="brand-item completed">
-                        <div class="checkbox"><svg viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.5 12L13 4.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-                        <div class="brand-name">Pakt <span class="brand-note">8 bags</span></div>
-                    </div>
-                    <div class="brand-item completed">
-                        <div class="checkbox"><svg viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.5 12L13 4.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-                        <div class="brand-name">Meret <span class="brand-note">6 bags</span></div>
-                    </div>
-                    <div class="brand-item completed">
-                        <div class="checkbox"><svg viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.5 12L13 4.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-                        <div class="brand-name">Millican <span class="brand-note">6 bags</span></div>
-                    </div>
-                    <div class="brand-item completed">
-                        <div class="checkbox"><svg viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.5 12L13 4.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-                        <div class="brand-name">Black Ember <span class="brand-note">5 bags</span></div>
-                    </div>
-                    <div class="brand-item completed">
-                        <div class="checkbox"><svg viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.5 12L13 4.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-                        <div class="brand-name">Goruck <span class="brand-note">5 bags</span></div>
-                    </div>
-                    <div class="brand-item completed">
-                        <div class="checkbox"><svg viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.5 12L13 4.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-                        <div class="brand-name">Minaal <span class="brand-note">5 bags</span></div>
-                    </div>
-                    <div class="brand-item completed">
-                        <div class="checkbox"><svg viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.5 12L13 4.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-                        <div class="brand-name">Wexley <span class="brand-note">5 bags</span></div>
-                    </div>
-                    <div class="brand-item completed">
-                        <div class="checkbox"><svg viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.5 12L13 4.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-                        <div class="brand-name">66°North <span class="brand-note">4 bags</span></div>
-                    </div>
-                    <div class="brand-item completed">
-                        <div class="checkbox"><svg viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.5 12L13 4.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-                        <div class="brand-name">Boundary Supply <span class="brand-note">4 bags</span></div>
-                    </div>
-                    <div class="brand-item completed">
-                        <div class="checkbox"><svg viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.5 12L13 4.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-                        <div class="brand-name">Cancha <span class="brand-note">4 bags</span></div>
-                    </div>
-                    <div class="brand-item completed">
-                        <div class="checkbox"><svg viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.5 12L13 4.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-                        <div class="brand-name">Defy <span class="brand-note">4 bags</span></div>
-                    </div>
-                    <div class="brand-item completed">
-                        <div class="checkbox"><svg viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.5 12L13 4.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-                        <div class="brand-name">Fresh Service <span class="brand-note">4 bags</span></div>
-                    </div>
-                    <div class="brand-item completed">
-                        <div class="checkbox"><svg viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.5 12L13 4.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-                        <div class="brand-name">Gravel <span class="brand-note">4 bags</span></div>
-                    </div>
-                    <div class="brand-item completed">
-                        <div class="checkbox"><svg viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.5 12L13 4.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-                        <div class="brand-name">Moment <span class="brand-note">4 bags</span></div>
-                    </div>
-                    <div class="brand-item completed">
-                        <div class="checkbox"><svg viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.5 12L13 4.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-                        <div class="brand-name">Segment <span class="brand-note">4 bags</span></div>
-                    </div>
-                    <div class="brand-item completed">
-                        <div class="checkbox"><svg viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.5 12L13 4.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-                        <div class="brand-name">Black Mile <span class="brand-note">3 bags</span></div>
-                    </div>
-                    <div class="brand-item completed">
-                        <div class="checkbox"><svg viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.5 12L13 4.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-                        <div class="brand-name">Jansport <span class="brand-note">3 bags</span></div>
-                    </div>
-                    <div class="brand-item completed">
-                        <div class="checkbox"><svg viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.5 12L13 4.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-                        <div class="brand-name">Puebco <span class="brand-note">3 bags</span></div>
-                    </div>
-                    <div class="brand-item completed">
-                        <div class="checkbox"><svg viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.5 12L13 4.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-                        <div class="brand-name">Tortuga <span class="brand-note">3 bags</span></div>
-                    </div>
-                    <div class="brand-item completed">
-                        <div class="checkbox"><svg viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.5 12L13 4.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-                        <div class="brand-name">Monos <span class="brand-note">2 bags</span></div>
-                    </div>
-                    <div class="brand-item completed">
-                        <div class="checkbox"><svg viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.5 12L13 4.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-                        <div class="brand-name">Nanuk <span class="brand-note">2 bags</span></div>
-                    </div>
-                    <div class="brand-item completed">
-                        <div class="checkbox"><svg viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.5 12L13 4.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-                        <div class="brand-name">Able Carry <span class="brand-note">1 bag</span></div>
-                    </div>
-                    <div class="brand-item completed">
-                        <div class="checkbox"><svg viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.5 12L13 4.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-                        <div class="brand-name">Hyperlite Mountain Gear <span class="brand-note">1 bag</span></div>
-                    </div>
-                    <div class="brand-item completed">
-                        <div class="checkbox"><svg viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.5 12L13 4.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-                        <div class="brand-name">WANDRD <span class="brand-note">1 bag</span></div>
-                    </div>
-                </div>
+            <div class="table-controls">
+              <input type="search" id="brand-filter" placeholder="Filter brands…" autocomplete="off">
+              <button class="chip" id="only-live" aria-pressed="false">On the site only</button>
+              <button class="chip" id="only-missing" aria-pressed="false">Not on the site</button>
             </div>
-            <div class="section">
-                <h2 class="section-title">In Progress (32)</h2>
-                <div class="brands-list">
-                    <div class="brand-item in-progress">
-                        <div class="checkbox"></div>
-                        <div class="brand-name">Almond Oak <span class="brand-note">rung A · #147</span></div>
-                    </div>
-                    <div class="brand-item in-progress">
-                        <div class="checkbox"></div>
-                        <div class="brand-name">Alpha One Niner <span class="brand-note">rung B, 36 products · #148</span></div>
-                    </div>
-                    <div class="brand-item in-progress">
-                        <div class="checkbox"></div>
-                        <div class="brand-name">Attitude Supply <span class="brand-note">rung B, 28 products · #151</span></div>
-                    </div>
-                    <div class="brand-item in-progress">
-                        <div class="checkbox"></div>
-                        <div class="brand-name">Breakwater Supply <span class="brand-note">rung A · #127</span></div>
-                    </div>
-                    <div class="brand-item in-progress">
-                        <div class="checkbox"></div>
-                        <div class="brand-name">Brevite <span class="brand-note">rung B, 29 products · #154</span></div>
-                    </div>
-                    <div class="brand-item in-progress">
-                        <div class="checkbox"></div>
-                        <div class="brand-name">Cabin Zero <span class="brand-note">rung B, 59 products · #107</span></div>
-                    </div>
-                    <div class="brand-item in-progress">
-                        <div class="checkbox"></div>
-                        <div class="brand-name">CTactical <span class="brand-note">rung B, 124 products · #103</span></div>
-                    </div>
-                    <div class="brand-item in-progress">
-                        <div class="checkbox"></div>
-                        <div class="brand-name">Decathlon <span class="brand-note">rung B, 250 products · #111</span></div>
-                    </div>
-                    <div class="brand-item in-progress">
-                        <div class="checkbox"></div>
-                        <div class="brand-name">Eastpak <span class="brand-note">rung B, 212 products · #158</span></div>
-                    </div>
-                    <div class="brand-item in-progress">
-                        <div class="checkbox"></div>
-                        <div class="brand-name">Fyro <span class="brand-note">rung B, 12 products · #105</span></div>
-                    </div>
-                    <div class="brand-item in-progress">
-                        <div class="checkbox"></div>
-                        <div class="brand-name">Graphene-X <span class="brand-note">rung A, 1 products · #126</span></div>
-                    </div>
-                    <div class="brand-item in-progress">
-                        <div class="checkbox"></div>
-                        <div class="brand-name">Heimplanet <span class="brand-note">rung B, 185 products · #144</span></div>
-                    </div>
-                    <div class="brand-item in-progress">
-                        <div class="checkbox"></div>
-                        <div class="brand-name">Knkg <span class="brand-note">rung B, 99 products · #130</span></div>
-                    </div>
-                    <div class="brand-item in-progress">
-                        <div class="checkbox"></div>
-                        <div class="brand-name">Linus Tech Tips <span class="brand-note">rung B, 129 products · #168</span></div>
-                    </div>
-                    <div class="brand-item in-progress">
-                        <div class="checkbox"></div>
-                        <div class="brand-name">Magpul <span class="brand-note">rung A · #171</span></div>
-                    </div>
-                    <div class="brand-item in-progress">
-                        <div class="checkbox"></div>
-                        <div class="brand-name">Mountain Hardwear <span class="brand-note">rung A · #117</span></div>
-                    </div>
-                    <div class="brand-item in-progress">
-                        <div class="checkbox"></div>
-                        <div class="brand-name">OrbitGear <span class="brand-note">rung B, 16 products · #123</span></div>
-                    </div>
-                    <div class="brand-item in-progress">
-                        <div class="checkbox"></div>
-                        <div class="brand-name">Outallday <span class="brand-note">rung B, 7 products · #131</span></div>
-                    </div>
-                    <div class="brand-item in-progress">
-                        <div class="checkbox"></div>
-                        <div class="brand-name">peakdesign! <span class="brand-note">rung A, 247 products · #224</span></div>
-                    </div>
-                    <div class="brand-item in-progress">
-                        <div class="checkbox"></div>
-                        <div class="brand-name">Rofmia <span class="brand-note">rung B, 38 products · #186</span></div>
-                    </div>
-                    <div class="brand-item in-progress">
-                        <div class="checkbox"></div>
-                        <div class="brand-name">Saint Javelin <span class="brand-note">rung B, 250 products · #188</span></div>
-                    </div>
-                    <div class="brand-item in-progress">
-                        <div class="checkbox"></div>
-                        <div class="brand-name">Samaya <span class="brand-note">rung B, 74 products · #190</span></div>
-                    </div>
-                    <div class="brand-item in-progress">
-                        <div class="checkbox"></div>
-                        <div class="brand-name">Savotta <span class="brand-note">rung B, 171 products · #191</span></div>
-                    </div>
-                    <div class="brand-item in-progress">
-                        <div class="checkbox"></div>
-                        <div class="brand-name">Six Moon Design <span class="brand-note">rung B, 124 products · #192</span></div>
-                    </div>
-                    <div class="brand-item in-progress">
-                        <div class="checkbox"></div>
-                        <div class="brand-name">Stubble &amp; Co <span class="brand-note">rung B, 40 products · #136</span></div>
-                    </div>
-                    <div class="brand-item in-progress">
-                        <div class="checkbox"></div>
-                        <div class="brand-name">SwissGear <span class="brand-note">rung B, 250 products · #194</span></div>
-                    </div>
-                    <div class="brand-item in-progress">
-                        <div class="checkbox"></div>
-                        <div class="brand-name">The Atelier YUL <span class="brand-note">rung B, 48 products · #195</span></div>
-                    </div>
-                    <div class="brand-item in-progress">
-                        <div class="checkbox"></div>
-                        <div class="brand-name">The Brown Buffalo <span class="brand-note">rung B, 50 products · #196</span></div>
-                    </div>
-                    <div class="brand-item in-progress">
-                        <div class="checkbox"></div>
-                        <div class="brand-name">Timbuk2 <span class="brand-note">rung B, 161 products · #140</span></div>
-                    </div>
-                    <div class="brand-item in-progress">
-                        <div class="checkbox"></div>
-                        <div class="brand-name">Trakke <span class="brand-note">rung B, 32 products · #198</span></div>
-                    </div>
-                    <div class="brand-item in-progress">
-                        <div class="checkbox"></div>
-                        <div class="brand-name">Vertx <span class="brand-note">rung B, 211 products · #202</span></div>
-                    </div>
-                    <div class="brand-item in-progress">
-                        <div class="checkbox"></div>
-                        <div class="brand-name">Zpacks <span class="brand-note">rung B, 250 products · #208</span></div>
-                    </div>
-                </div>
-            </div>
-            <div class="section">
-                <h2 class="section-title">Queued (62)</h2>
-                <div class="brands-list">
-                    <div class="brand-item pending">
-                        <div class="checkbox"></div>
-                        <div class="brand-name">1733 <span class="brand-note">no site recorded · #145</span></div>
-                    </div>
-                    <div class="brand-item pending">
-                        <div class="checkbox"></div>
-                        <div class="brand-name">5.11 <span class="brand-note">#146</span></div>
-                    </div>
-                    <div class="brand-item pending">
-                        <div class="checkbox"></div>
-                        <div class="brand-name">Add list view <span class="brand-note">#1</span></div>
-                    </div>
-                    <div class="brand-item pending">
-                        <div class="checkbox"></div>
-                        <div class="brand-name">Arc'teryx <span class="brand-note">#149</span></div>
-                    </div>
-                    <div class="brand-item pending">
-                        <div class="checkbox"></div>
-                        <div class="brand-name">BAGJACK <span class="brand-note">#101</span></div>
-                    </div>
-                    <div class="brand-item pending">
-                        <div class="checkbox"></div>
-                        <div class="brand-name">Beckel Canvas <span class="brand-note">#226</span></div>
-                    </div>
-                    <div class="brand-item pending">
-                        <div class="checkbox"></div>
-                        <div class="brand-name">Blank Canvas Accessories <span class="brand-note">#152</span></div>
-                    </div>
-                    <div class="brand-item pending">
-                        <div class="checkbox"></div>
-                        <div class="brand-name">Bounce Design Labs <span class="brand-note">no site recorded · #153</span></div>
-                    </div>
-                    <div class="brand-item pending">
-                        <div class="checkbox"></div>
-                        <div class="brand-name">CAYL <span class="brand-note">no site recorded · #108</span></div>
-                    </div>
-                    <div class="brand-item pending">
-                        <div class="checkbox"></div>
-                        <div class="brand-name">Chanel <span class="brand-note">#109</span></div>
-                    </div>
-                    <div class="brand-item pending">
-                        <div class="checkbox"></div>
-                        <div class="brand-name">Clever Supply Co. <span class="brand-note">no site recorded · #110</span></div>
-                    </div>
-                    <div class="brand-item pending">
-                        <div class="checkbox"></div>
-                        <div class="brand-name">Day Owl <span class="brand-note">#104</span></div>
-                    </div>
-                    <div class="brand-item pending">
-                        <div class="checkbox"></div>
-                        <div class="brand-name">Decathlon Forclaz <span class="brand-note">no site recorded · #156</span></div>
-                    </div>
-                    <div class="brand-item pending">
-                        <div class="checkbox"></div>
-                        <div class="brand-name">Demobaza <span class="brand-note">#157</span></div>
-                    </div>
-                    <div class="brand-item pending">
-                        <div class="checkbox"></div>
-                        <div class="brand-name">Deuter <span class="brand-note">#135</span></div>
-                    </div>
-                    <div class="brand-item pending">
-                        <div class="checkbox"></div>
-                        <div class="brand-name">Expedition Units <span class="brand-note">#160</span></div>
-                    </div>
-                    <div class="brand-item pending">
-                        <div class="checkbox"></div>
-                        <div class="brand-name">filter by bag size <span class="brand-note">#15</span></div>
-                    </div>
-                    <div class="brand-item pending">
-                        <div class="checkbox"></div>
-                        <div class="brand-name">Fjallraven <span class="brand-note">#134</span></div>
-                    </div>
-                    <div class="brand-item pending">
-                        <div class="checkbox"></div>
-                        <div class="brand-name">Freitag <span class="brand-note">#128</span></div>
-                    </div>
-                    <div class="brand-item pending">
-                        <div class="checkbox"></div>
-                        <div class="brand-name">Greenroom <span class="brand-note">#213</span></div>
-                    </div>
-                    <div class="brand-item pending">
-                        <div class="checkbox"></div>
-                        <div class="brand-name">Greenroom136 <span class="brand-note">#112</span></div>
-                    </div>
-                    <div class="brand-item pending">
-                        <div class="checkbox"></div>
-                        <div class="brand-name">Gregory <span class="brand-note">#138</span></div>
-                    </div>
-                    <div class="brand-item pending">
-                        <div class="checkbox"></div>
-                        <div class="brand-name">GWA <span class="brand-note">#106</span></div>
-                    </div>
-                    <div class="brand-item pending">
-                        <div class="checkbox"></div>
-                        <div class="brand-name">Haerfest <span class="brand-note">no site recorded · #161</span></div>
-                    </div>
-                    <div class="brand-item pending">
-                        <div class="checkbox"></div>
-                        <div class="brand-name">HANCHOR <span class="brand-note">#162</span></div>
-                    </div>
-                    <div class="brand-item pending">
-                        <div class="checkbox"></div>
-                        <div class="brand-name">Imbaru Design <span class="brand-note">no site recorded · #129</span></div>
-                    </div>
-                    <div class="brand-item pending">
-                        <div class="checkbox"></div>
-                        <div class="brand-name">J. Stark <span class="brand-note">#113</span></div>
-                    </div>
-                    <div class="brand-item pending">
-                        <div class="checkbox"></div>
-                        <div class="brand-name">Killspencer <span class="brand-note">#163</span></div>
-                    </div>
-                    <div class="brand-item pending">
-                        <div class="checkbox"></div>
-                        <div class="brand-name">Klattermusen <span class="brand-note">#114</span></div>
-                    </div>
-                    <div class="brand-item pending">
-                        <div class="checkbox"></div>
-                        <div class="brand-name">KMA <span class="brand-note">no site recorded · #115</span></div>
-                    </div>
-                    <div class="brand-item pending">
-                        <div class="checkbox"></div>
-                        <div class="brand-name">Kuhl <span class="brand-note">#164</span></div>
-                    </div>
-                    <div class="brand-item pending">
-                        <div class="checkbox"></div>
-                        <div class="brand-name">L.L.Bean <span class="brand-note">#165</span></div>
-                    </div>
-                    <div class="brand-item pending">
-                        <div class="checkbox"></div>
-                        <div class="brand-name">Life Behind Bars <span class="brand-note">no site recorded · #166</span></div>
-                    </div>
-                    <div class="brand-item pending">
-                        <div class="checkbox"></div>
-                        <div class="brand-name">Limitless <span class="brand-note">#167</span></div>
-                    </div>
-                    <div class="brand-item pending">
-                        <div class="checkbox"></div>
-                        <div class="brand-name">Liteway <span class="brand-note">#169</span></div>
-                    </div>
-                    <div class="brand-item pending">
-                        <div class="checkbox"></div>
-                        <div class="brand-name">MAKR <span class="brand-note">#172</span></div>
-                    </div>
-                    <div class="brand-item pending">
-                        <div class="checkbox"></div>
-                        <div class="brand-name">material filter list needs cleanup <span class="brand-note">#19</span></div>
-                    </div>
-                    <div class="brand-item pending">
-                        <div class="checkbox"></div>
-                        <div class="brand-name">Metric <span class="brand-note">no site recorded · #174</span></div>
-                    </div>
-                    <div class="brand-item pending">
-                        <div class="checkbox"></div>
-                        <div class="brand-name">MTN Ops Brand Integration <span class="brand-note">#118</span></div>
-                    </div>
-                    <div class="brand-item pending">
-                        <div class="checkbox"></div>
-                        <div class="brand-name">Nitecore Brand Integration <span class="brand-note">#119</span></div>
-                    </div>
-                    <div class="brand-item pending">
-                        <div class="checkbox"></div>
-                        <div class="brand-name">Nomin Brand Integration <span class="brand-note">#120</span></div>
-                    </div>
-                    <div class="brand-item pending">
-                        <div class="checkbox"></div>
-                        <div class="brand-name">Off-White Brand Integration <span class="brand-note">#121</span></div>
-                    </div>
-                    <div class="brand-item pending">
-                        <div class="checkbox"></div>
-                        <div class="brand-name">Opposethis Brand Integration <span class="brand-note">#122</span></div>
-                    </div>
-                    <div class="brand-item pending">
-                        <div class="checkbox"></div>
-                        <div class="brand-name">Osprey <span class="brand-note">#133</span></div>
-                    </div>
-                    <div class="brand-item pending">
-                        <div class="checkbox"></div>
-                        <div class="brand-name">Outlier <span class="brand-note">#124</span></div>
-                    </div>
-                    <div class="brand-item pending">
-                        <div class="checkbox"></div>
-                        <div class="brand-name">Patagonia <span class="brand-note">#142</span></div>
-                    </div>
-                    <div class="brand-item pending">
-                        <div class="checkbox"></div>
-                        <div class="brand-name">Quechua NH <span class="brand-note">#175</span></div>
-                    </div>
-                    <div class="brand-item pending">
-                        <div class="checkbox"></div>
-                        <div class="brand-name">REI Co-op <span class="brand-note">#183</span></div>
-                    </div>
-                    <div class="brand-item pending">
-                        <div class="checkbox"></div>
-                        <div class="brand-name">Remote Equipment <span class="brand-note">#184</span></div>
-                    </div>
-                    <div class="brand-item pending">
-                        <div class="checkbox"></div>
-                        <div class="brand-name">Rework <span class="brand-note">#185</span></div>
-                    </div>
-                    <div class="brand-item pending">
-                        <div class="checkbox"></div>
-                        <div class="brand-name">Saikan <span class="brand-note">#187</span></div>
-                    </div>
-                    <div class="brand-item pending">
-                        <div class="checkbox"></div>
-                        <div class="brand-name">Sample Dan Matsuda <span class="brand-note">no site recorded · #189</span></div>
-                    </div>
-                    <div class="brand-item pending">
-                        <div class="checkbox"></div>
-                        <div class="brand-name">Search bar <span class="brand-note">#49</span></div>
-                    </div>
-                    <div class="brand-item pending">
-                        <div class="checkbox"></div>
-                        <div class="brand-name">Solgaard <span class="brand-note">#193</span></div>
-                    </div>
-                    <div class="brand-item pending">
-                        <div class="checkbox"></div>
-                        <div class="brand-name">The North Face <span class="brand-note">#210</span></div>
-                    </div>
-                    <div class="brand-item pending">
-                        <div class="checkbox"></div>
-                        <div class="brand-name">Thule <span class="brand-note">#143</span></div>
-                    </div>
-                    <div class="brand-item pending">
-                        <div class="checkbox"></div>
-                        <div class="brand-name">Topo Designs <span class="brand-note">#197</span></div>
-                    </div>
-                    <div class="brand-item pending">
-                        <div class="checkbox"></div>
-                        <div class="brand-name">ULA Equipment <span class="brand-note">#201</span></div>
-                    </div>
-                    <div class="brand-item pending">
-                        <div class="checkbox"></div>
-                        <div class="brand-name">Waterfield <span class="brand-note">#137</span></div>
-                    </div>
-                    <div class="brand-item pending">
-                        <div class="checkbox"></div>
-                        <div class="brand-name">Waterproof Filter, Laptop Size filter <span class="brand-note">#31</span></div>
-                    </div>
-                    <div class="brand-item pending">
-                        <div class="checkbox"></div>
-                        <div class="brand-name">Western Rise <span class="brand-note">#205</span></div>
-                    </div>
-                    <div class="brand-item pending">
-                        <div class="checkbox"></div>
-                        <div class="brand-name">YETI <span class="brand-note">#141</span></div>
-                    </div>
-                </div>
-            </div>
-            <div class="section">
-                <h2 class="section-title">Blocked (10)</h2>
-                <div class="brands-list">
-                    <div class="brand-item blocked">
-                        <div class="checkbox"></div>
-                        <div class="brand-name">Arktype <span class="brand-note">host-unreachable · #150</span></div>
-                    </div>
-                    <div class="brand-item blocked">
-                        <div class="checkbox"></div>
-                        <div class="brand-name">Berghaus <span class="brand-note">brand-level-opt-out · checked 2026-08-16 · #139</span></div>
-                    </div>
-                    <div class="brand-item blocked">
-                        <div class="checkbox"></div>
-                        <div class="brand-name">DB (Douchebags) <span class="brand-note">disallow · checked 2026-08-15 · #155</span></div>
-                    </div>
-                    <div class="brand-item blocked">
-                        <div class="checkbox"></div>
-                        <div class="brand-name">Everyman <span class="brand-note">host-unreachable · #159</span></div>
-                    </div>
-                    <div class="brand-item blocked">
-                        <div class="checkbox"></div>
-                        <div class="brand-name">London Bridge Trading <span class="brand-note">host-unreachable · #170</span></div>
-                    </div>
-                    <div class="brand-item blocked">
-                        <div class="checkbox"></div>
-                        <div class="brand-name">Mixed <span class="brand-note">host-unreachable · #116</span></div>
-                    </div>
-                    <div class="brand-item blocked">
-                        <div class="checkbox"></div>
-                        <div class="brand-name">Salkan <span class="brand-note">host-unreachable · #212</span></div>
-                    </div>
-                    <div class="brand-item blocked">
-                        <div class="checkbox"></div>
-                        <div class="brand-name">Voyager Bag Works <span class="brand-note">named-ua-disallow · checked 2026-08-15 · #203</span></div>
-                    </div>
-                    <div class="brand-item blocked">
-                        <div class="checkbox"></div>
-                        <div class="brand-name">Wotancraft <span class="brand-note">host-unreachable · #206</span></div>
-                    </div>
-                    <div class="brand-item blocked">
-                        <div class="checkbox"></div>
-                        <div class="brand-name">YOMP <span class="brand-note">host-unreachable · #207</span></div>
-                    </div>
-                </div>
-            </div>
+
+            <table class="brands" id="brands-table">
+              <colgroup>
+                <col style="width: 88px">
+                <col style="width: 26%">
+                <col>
+                <col style="width: 92px">
+                <col style="width: 116px">
+              </colgroup>
+              <thead>
+                <tr>
+                  <th data-type="num">Issue<span class="arrow"></span></th>
+                  <th data-type="str">Brand<span class="arrow"></span></th>
+                  <th data-type="str">Website<span class="arrow"></span></th>
+                  <th data-type="num" class="num">Bags<span class="arrow"></span></th>
+                  <th data-type="num">On the site<span class="arrow"></span></th>
+                </tr>
+              </thead>
+              <tbody>
+                    <tr>
+                      <td data-sort="94"><a href="https://github.com/foundmonster/cool-bags/issues/94" target="_blank" rel="noopener noreferrer">#94</a></td>
+                      <td data-sort="tom bihn">Tom Bihn</td>
+                      <td data-sort="tombihn.com"><a href="https://tombihn.com" target="_blank" rel="noopener noreferrer">tombihn.com</a></td>
+                      <td class="num" data-sort="73">73</td>
+                      <td data-sort="1">Yes</td>
+                    </tr>
+                    <tr>
+                      <td data-sort="78"><a href="https://github.com/foundmonster/cool-bags/issues/78" target="_blank" rel="noopener noreferrer">#78</a></td>
+                      <td data-sort="ile">ILE</td>
+                      <td data-sort="ilequipment.com"><a href="https://ilequipment.com" target="_blank" rel="noopener noreferrer">ilequipment.com</a></td>
+                      <td class="num" data-sort="53">53</td>
+                      <td data-sort="1">Yes</td>
+                    </tr>
+                    <tr>
+                      <td data-sort="125"><a href="https://github.com/foundmonster/cool-bags/issues/125" target="_blank" rel="noopener noreferrer">#125</a></td>
+                      <td data-sort="bellroy">Bellroy</td>
+                      <td data-sort="bellroy.com"><a href="https://bellroy.com" target="_blank" rel="noopener noreferrer">bellroy.com</a></td>
+                      <td class="num" data-sort="50">50</td>
+                      <td data-sort="1">Yes</td>
+                    </tr>
+                    <tr>
+                      <td data-sort="61"><a href="https://github.com/foundmonster/cool-bags/issues/61" target="_blank" rel="noopener noreferrer">#61</a></td>
+                      <td data-sort="alpaka">Alpaka</td>
+                      <td data-sort="alpakagear.com"><a href="https://alpakagear.com" target="_blank" rel="noopener noreferrer">alpakagear.com</a></td>
+                      <td class="num" data-sort="45">45</td>
+                      <td data-sort="1">Yes</td>
+                    </tr>
+                    <tr>
+                      <td data-sort="89"><a href="https://github.com/foundmonster/cool-bags/issues/89" target="_blank" rel="noopener noreferrer">#89</a></td>
+                      <td data-sort="nomatic">Nomatic</td>
+                      <td data-sort="nomatic.com"><a href="https://nomatic.com" target="_blank" rel="noopener noreferrer">nomatic.com</a></td>
+                      <td class="num" data-sort="34">34</td>
+                      <td data-sort="1">Yes</td>
+                    </tr>
+                    <tr>
+                      <td data-sort="200"><a href="https://github.com/foundmonster/cool-bags/issues/200" target="_blank" rel="noopener noreferrer">#200</a></td>
+                      <td data-sort="troubadour">Troubadour</td>
+                      <td data-sort="troubadourgoods.com"><a href="https://troubadourgoods.com" target="_blank" rel="noopener noreferrer">troubadourgoods.com</a></td>
+                      <td class="num" data-sort="29">29</td>
+                      <td data-sort="1">Yes</td>
+                    </tr>
+                    <tr>
+                      <td data-sort="70"><a href="https://github.com/foundmonster/cool-bags/issues/70" target="_blank" rel="noopener noreferrer">#70</a></td>
+                      <td data-sort="dsptch">DSPTCH</td>
+                      <td data-sort="dsptch.com"><a href="https://dsptch.com" target="_blank" rel="noopener noreferrer">dsptch.com</a></td>
+                      <td class="num" data-sort="25">25</td>
+                      <td data-sort="1">Yes</td>
+                    </tr>
+                    <tr>
+                      <td data-sort="67"><a href="https://github.com/foundmonster/cool-bags/issues/67" target="_blank" rel="noopener noreferrer">#67</a></td>
+                      <td data-sort="chrome industries">Chrome Industries</td>
+                      <td data-sort="chromeindustries.com"><a href="https://chromeindustries.com" target="_blank" rel="noopener noreferrer">chromeindustries.com</a></td>
+                      <td class="num" data-sort="24">24</td>
+                      <td data-sort="1">Yes</td>
+                    </tr>
+                    <tr>
+                      <td data-sort="173"><a href="https://github.com/foundmonster/cool-bags/issues/173" target="_blank" rel="noopener noreferrer">#173</a></td>
+                      <td data-sort="matador">Matador</td>
+                      <td data-sort="matadorequipment.com"><a href="https://matadorequipment.com" target="_blank" rel="noopener noreferrer">matadorequipment.com</a></td>
+                      <td class="num" data-sort="23">23</td>
+                      <td data-sort="1">Yes</td>
+                    </tr>
+                    <tr>
+                      <td data-sort="62"><a href="https://github.com/foundmonster/cool-bags/issues/62" target="_blank" rel="noopener noreferrer">#62</a></td>
+                      <td data-sort="baboon to the moon">Baboon To The Moon</td>
+                      <td data-sort="baboontothemoon.com"><a href="https://baboontothemoon.com" target="_blank" rel="noopener noreferrer">baboontothemoon.com</a></td>
+                      <td class="num" data-sort="22">22</td>
+                      <td data-sort="1">Yes</td>
+                    </tr>
+                    <tr>
+                      <td data-sort="102"><a href="https://github.com/foundmonster/cool-bags/issues/102" target="_blank" rel="noopener noreferrer">#102</a></td>
+                      <td data-sort="bailey works">Bailey Works</td>
+                      <td data-sort="baileyworks.com"><a href="https://baileyworks.com" target="_blank" rel="noopener noreferrer">baileyworks.com</a></td>
+                      <td class="num" data-sort="21">21</td>
+                      <td data-sort="1">Yes</td>
+                    </tr>
+                    <tr>
+                      <td data-sort="80"><a href="https://github.com/foundmonster/cool-bags/issues/80" target="_blank" rel="noopener noreferrer">#80</a></td>
+                      <td data-sort="kelty">Kelty</td>
+                      <td data-sort="kelty.com"><a href="https://kelty.com" target="_blank" rel="noopener noreferrer">kelty.com</a></td>
+                      <td class="num" data-sort="21">21</td>
+                      <td data-sort="1">Yes</td>
+                    </tr>
+                    <tr>
+                      <td data-sort="92"><a href="https://github.com/foundmonster/cool-bags/issues/92" target="_blank" rel="noopener noreferrer">#92</a></td>
+                      <td data-sort="rains">Rains</td>
+                      <td data-sort="us.rains.com"><a href="https://us.rains.com" target="_blank" rel="noopener noreferrer">us.rains.com</a></td>
+                      <td class="num" data-sort="21">21</td>
+                      <td data-sort="1">Yes</td>
+                    </tr>
+                    <tr>
+                      <td data-sort="87"><a href="https://github.com/foundmonster/cool-bags/issues/87" target="_blank" rel="noopener noreferrer">#87</a></td>
+                      <td data-sort="mountainsmith">Mountainsmith</td>
+                      <td data-sort="mountainsmith.com"><a href="https://mountainsmith.com" target="_blank" rel="noopener noreferrer">mountainsmith.com</a></td>
+                      <td class="num" data-sort="20">20</td>
+                      <td data-sort="1">Yes</td>
+                    </tr>
+                    <tr>
+                      <td data-sort="95"><a href="https://github.com/foundmonster/cool-bags/issues/95" target="_blank" rel="noopener noreferrer">#95</a></td>
+                      <td data-sort="tomtoc">Tomtoc</td>
+                      <td data-sort="tomtoc.com"><a href="https://tomtoc.com" target="_blank" rel="noopener noreferrer">tomtoc.com</a></td>
+                      <td class="num" data-sort="17">17</td>
+                      <td data-sort="1">Yes</td>
+                    </tr>
+                    <tr>
+                      <td data-sort="97"><a href="https://github.com/foundmonster/cool-bags/issues/97" target="_blank" rel="noopener noreferrer">#97</a></td>
+                      <td data-sort="urth">Urth</td>
+                      <td data-sort="urth.co"><a href="https://urth.co" target="_blank" rel="noopener noreferrer">urth.co</a></td>
+                      <td class="num" data-sort="16">16</td>
+                      <td data-sort="1">Yes</td>
+                    </tr>
+                    <tr>
+                      <td data-sort="60"><a href="https://github.com/foundmonster/cool-bags/issues/60" target="_blank" rel="noopener noreferrer">#60</a></td>
+                      <td data-sort="aer">Aer</td>
+                      <td data-sort="aersf.com"><a href="https://aersf.com" target="_blank" rel="noopener noreferrer">aersf.com</a></td>
+                      <td class="num" data-sort="15">15</td>
+                      <td data-sort="1">Yes</td>
+                    </tr>
+                    <tr>
+                      <td data-sort="84"><a href="https://github.com/foundmonster/cool-bags/issues/84" target="_blank" rel="noopener noreferrer">#84</a></td>
+                      <td data-sort="mission workshop">Mission Workshop</td>
+                      <td data-sort="missionworkshop.com"><a href="https://missionworkshop.com" target="_blank" rel="noopener noreferrer">missionworkshop.com</a></td>
+                      <td class="num" data-sort="15">15</td>
+                      <td data-sort="1">Yes</td>
+                    </tr>
+                    <tr>
+                      <td data-sort="68"><a href="https://github.com/foundmonster/cool-bags/issues/68" target="_blank" rel="noopener noreferrer">#68</a></td>
+                      <td data-sort="cotopaxi">Cotopaxi</td>
+                      <td data-sort="cotopaxi.com"><a href="https://cotopaxi.com" target="_blank" rel="noopener noreferrer">cotopaxi.com</a></td>
+                      <td class="num" data-sort="11">11</td>
+                      <td data-sort="1">Yes</td>
+                    </tr>
+                    <tr>
+                      <td data-sort="199"><a href="https://github.com/foundmonster/cool-bags/issues/199" target="_blank" rel="noopener noreferrer">#199</a></td>
+                      <td data-sort="triple aught design">Triple Aught Design</td>
+                      <td data-sort="tripleaughtdesign.com"><a href="https://tripleaughtdesign.com" target="_blank" rel="noopener noreferrer">tripleaughtdesign.com</a></td>
+                      <td class="num" data-sort="11">11</td>
+                      <td data-sort="1">Yes</td>
+                    </tr>
+                    <tr>
+                      <td data-sort="71"><a href="https://github.com/foundmonster/cool-bags/issues/71" target="_blank" rel="noopener noreferrer">#71</a></td>
+                      <td data-sort="evergoods">EVERGOODS</td>
+                      <td data-sort="evergoods.us"><a href="https://evergoods.us" target="_blank" rel="noopener noreferrer">evergoods.us</a></td>
+                      <td class="num" data-sort="10">10</td>
+                      <td data-sort="1">Yes</td>
+                    </tr>
+                    <tr>
+                      <td data-sort="74"><a href="https://github.com/foundmonster/cool-bags/issues/74" target="_blank" rel="noopener noreferrer">#74</a></td>
+                      <td data-sort="gossamer gear">Gossamer Gear</td>
+                      <td data-sort="gossamergear.com"><a href="https://gossamergear.com" target="_blank" rel="noopener noreferrer">gossamergear.com</a></td>
+                      <td class="num" data-sort="10">10</td>
+                      <td data-sort="1">Yes</td>
+                    </tr>
+                    <tr>
+                      <td data-sort="76"><a href="https://github.com/foundmonster/cool-bags/issues/76" target="_blank" rel="noopener noreferrer">#76</a></td>
+                      <td data-sort="halfday">Halfday</td>
+                      <td data-sort="halfdaytravel.com"><a href="https://halfdaytravel.com" target="_blank" rel="noopener noreferrer">halfdaytravel.com</a></td>
+                      <td class="num" data-sort="9">9</td>
+                      <td data-sort="1">Yes</td>
+                    </tr>
+                    <tr>
+                      <td data-sort="90"><a href="https://github.com/foundmonster/cool-bags/issues/90" target="_blank" rel="noopener noreferrer">#90</a></td>
+                      <td data-sort="pakt">Pakt</td>
+                      <td data-sort="paktbags.com"><a href="https://paktbags.com" target="_blank" rel="noopener noreferrer">paktbags.com</a></td>
+                      <td class="num" data-sort="8">8</td>
+                      <td data-sort="1">Yes</td>
+                    </tr>
+                    <tr>
+                      <td data-sort="81"><a href="https://github.com/foundmonster/cool-bags/issues/81" target="_blank" rel="noopener noreferrer">#81</a></td>
+                      <td data-sort="meret">Meret</td>
+                      <td data-sort="meretusa.com"><a href="https://meretusa.com" target="_blank" rel="noopener noreferrer">meretusa.com</a></td>
+                      <td class="num" data-sort="6">6</td>
+                      <td data-sort="1">Yes</td>
+                    </tr>
+                    <tr>
+                      <td data-sort="82"><a href="https://github.com/foundmonster/cool-bags/issues/82" target="_blank" rel="noopener noreferrer">#82</a></td>
+                      <td data-sort="millican">Millican</td>
+                      <td data-sort="homeofmillican.com"><a href="https://homeofmillican.com" target="_blank" rel="noopener noreferrer">homeofmillican.com</a></td>
+                      <td class="num" data-sort="6">6</td>
+                      <td data-sort="1">Yes</td>
+                    </tr>
+                    <tr>
+                      <td data-sort="63"><a href="https://github.com/foundmonster/cool-bags/issues/63" target="_blank" rel="noopener noreferrer">#63</a></td>
+                      <td data-sort="black ember">Black Ember</td>
+                      <td data-sort="blackember.com"><a href="https://blackember.com" target="_blank" rel="noopener noreferrer">blackember.com</a></td>
+                      <td class="num" data-sort="5">5</td>
+                      <td data-sort="1">Yes</td>
+                    </tr>
+                    <tr>
+                      <td data-sort="73"><a href="https://github.com/foundmonster/cool-bags/issues/73" target="_blank" rel="noopener noreferrer">#73</a></td>
+                      <td data-sort="goruck">Goruck</td>
+                      <td data-sort="goruck.com"><a href="https://goruck.com" target="_blank" rel="noopener noreferrer">goruck.com</a></td>
+                      <td class="num" data-sort="5">5</td>
+                      <td data-sort="1">Yes</td>
+                    </tr>
+                    <tr>
+                      <td data-sort="83"><a href="https://github.com/foundmonster/cool-bags/issues/83" target="_blank" rel="noopener noreferrer">#83</a></td>
+                      <td data-sort="minaal">Minaal</td>
+                      <td data-sort="minaal.com"><a href="https://minaal.com" target="_blank" rel="noopener noreferrer">minaal.com</a></td>
+                      <td class="num" data-sort="5">5</td>
+                      <td data-sort="1">Yes</td>
+                    </tr>
+                    <tr>
+                      <td data-sort="99"><a href="https://github.com/foundmonster/cool-bags/issues/99" target="_blank" rel="noopener noreferrer">#99</a></td>
+                      <td data-sort="wexley">Wexley</td>
+                      <td data-sort="wexley.jp"><a href="https://wexley.jp" target="_blank" rel="noopener noreferrer">wexley.jp</a></td>
+                      <td class="num" data-sort="5">5</td>
+                      <td data-sort="1">Yes</td>
+                    </tr>
+                    <tr>
+                      <td data-sort="57"><a href="https://github.com/foundmonster/cool-bags/issues/57" target="_blank" rel="noopener noreferrer">#57</a></td>
+                      <td data-sort="66°north">66°North</td>
+                      <td data-sort="66north.com"><a href="https://66north.com" target="_blank" rel="noopener noreferrer">66north.com</a></td>
+                      <td class="num" data-sort="4">4</td>
+                      <td data-sort="1">Yes</td>
+                    </tr>
+                    <tr>
+                      <td data-sort="65"><a href="https://github.com/foundmonster/cool-bags/issues/65" target="_blank" rel="noopener noreferrer">#65</a></td>
+                      <td data-sort="boundary supply">Boundary Supply</td>
+                      <td data-sort="boundarysupply.com"><a href="https://boundarysupply.com" target="_blank" rel="noopener noreferrer">boundarysupply.com</a></td>
+                      <td class="num" data-sort="4">4</td>
+                      <td data-sort="1">Yes</td>
+                    </tr>
+                    <tr>
+                      <td data-sort="66"><a href="https://github.com/foundmonster/cool-bags/issues/66" target="_blank" rel="noopener noreferrer">#66</a></td>
+                      <td data-sort="cancha">Cancha</td>
+                      <td data-sort="carrycancha.com"><a href="https://carrycancha.com" target="_blank" rel="noopener noreferrer">carrycancha.com</a></td>
+                      <td class="num" data-sort="4">4</td>
+                      <td data-sort="1">Yes</td>
+                    </tr>
+                    <tr>
+                      <td data-sort="69"><a href="https://github.com/foundmonster/cool-bags/issues/69" target="_blank" rel="noopener noreferrer">#69</a></td>
+                      <td data-sort="defy">Defy</td>
+                      <td data-sort="defybags.com"><a href="https://defybags.com" target="_blank" rel="noopener noreferrer">defybags.com</a></td>
+                      <td class="num" data-sort="4">4</td>
+                      <td data-sort="1">Yes</td>
+                    </tr>
+                    <tr>
+                      <td data-sort="72"><a href="https://github.com/foundmonster/cool-bags/issues/72" target="_blank" rel="noopener noreferrer">#72</a></td>
+                      <td data-sort="fresh service">Fresh Service</td>
+                      <td data-sort="eng.freshservice.jp"><a href="https://eng.freshservice.jp" target="_blank" rel="noopener noreferrer">eng.freshservice.jp</a></td>
+                      <td class="num" data-sort="4">4</td>
+                      <td data-sort="1">Yes</td>
+                    </tr>
+                    <tr>
+                      <td data-sort="75"><a href="https://github.com/foundmonster/cool-bags/issues/75" target="_blank" rel="noopener noreferrer">#75</a></td>
+                      <td data-sort="gravel">Gravel</td>
+                      <td data-sort="graveltravel.com"><a href="https://graveltravel.com" target="_blank" rel="noopener noreferrer">graveltravel.com</a></td>
+                      <td class="num" data-sort="4">4</td>
+                      <td data-sort="1">Yes</td>
+                    </tr>
+                    <tr>
+                      <td data-sort="85"><a href="https://github.com/foundmonster/cool-bags/issues/85" target="_blank" rel="noopener noreferrer">#85</a></td>
+                      <td data-sort="moment">Moment</td>
+                      <td data-sort="shopmoment.com"><a href="https://shopmoment.com" target="_blank" rel="noopener noreferrer">shopmoment.com</a></td>
+                      <td class="num" data-sort="4">4</td>
+                      <td data-sort="1">Yes</td>
+                    </tr>
+                    <tr>
+                      <td data-sort="93"><a href="https://github.com/foundmonster/cool-bags/issues/93" target="_blank" rel="noopener noreferrer">#93</a></td>
+                      <td data-sort="segment">Segment</td>
+                      <td data-sort="segment.supply"><a href="https://segment.supply" target="_blank" rel="noopener noreferrer">segment.supply</a></td>
+                      <td class="num" data-sort="4">4</td>
+                      <td data-sort="1">Yes</td>
+                    </tr>
+                    <tr>
+                      <td data-sort="64"><a href="https://github.com/foundmonster/cool-bags/issues/64" target="_blank" rel="noopener noreferrer">#64</a></td>
+                      <td data-sort="black mile">Black Mile</td>
+                      <td data-sort="blackmile.co"><a href="https://blackmile.co" target="_blank" rel="noopener noreferrer">blackmile.co</a></td>
+                      <td class="num" data-sort="3">3</td>
+                      <td data-sort="1">Yes</td>
+                    </tr>
+                    <tr>
+                      <td data-sort="79"><a href="https://github.com/foundmonster/cool-bags/issues/79" target="_blank" rel="noopener noreferrer">#79</a></td>
+                      <td data-sort="jansport">Jansport</td>
+                      <td data-sort="jansport.com"><a href="https://jansport.com" target="_blank" rel="noopener noreferrer">jansport.com</a></td>
+                      <td class="num" data-sort="3">3</td>
+                      <td data-sort="1">Yes</td>
+                    </tr>
+                    <tr>
+                      <td data-sort="91"><a href="https://github.com/foundmonster/cool-bags/issues/91" target="_blank" rel="noopener noreferrer">#91</a></td>
+                      <td data-sort="puebco">Puebco</td>
+                      <td data-sort="puebco.us"><a href="https://puebco.us" target="_blank" rel="noopener noreferrer">puebco.us</a></td>
+                      <td class="num" data-sort="3">3</td>
+                      <td data-sort="1">Yes</td>
+                    </tr>
+                    <tr>
+                      <td data-sort="96"><a href="https://github.com/foundmonster/cool-bags/issues/96" target="_blank" rel="noopener noreferrer">#96</a></td>
+                      <td data-sort="tortuga">Tortuga</td>
+                      <td data-sort="tortugabackpacks.com"><a href="https://tortugabackpacks.com" target="_blank" rel="noopener noreferrer">tortugabackpacks.com</a></td>
+                      <td class="num" data-sort="3">3</td>
+                      <td data-sort="1">Yes</td>
+                    </tr>
+                    <tr>
+                      <td data-sort="86"><a href="https://github.com/foundmonster/cool-bags/issues/86" target="_blank" rel="noopener noreferrer">#86</a></td>
+                      <td data-sort="monos">Monos</td>
+                      <td data-sort="monos.com"><a href="https://monos.com" target="_blank" rel="noopener noreferrer">monos.com</a></td>
+                      <td class="num" data-sort="2">2</td>
+                      <td data-sort="1">Yes</td>
+                    </tr>
+                    <tr>
+                      <td data-sort="88"><a href="https://github.com/foundmonster/cool-bags/issues/88" target="_blank" rel="noopener noreferrer">#88</a></td>
+                      <td data-sort="nanuk">Nanuk</td>
+                      <td data-sort="nanuk.com"><a href="https://nanuk.com" target="_blank" rel="noopener noreferrer">nanuk.com</a></td>
+                      <td class="num" data-sort="2">2</td>
+                      <td data-sort="1">Yes</td>
+                    </tr>
+                    <tr>
+                      <td data-sort="58"><a href="https://github.com/foundmonster/cool-bags/issues/58" target="_blank" rel="noopener noreferrer">#58</a></td>
+                      <td data-sort="able carry">Able Carry</td>
+                      <td data-sort="ablecarry.com"><a href="https://ablecarry.com" target="_blank" rel="noopener noreferrer">ablecarry.com</a></td>
+                      <td class="num" data-sort="1">1</td>
+                      <td data-sort="1">Yes</td>
+                    </tr>
+                    <tr>
+                      <td data-sort="77"><a href="https://github.com/foundmonster/cool-bags/issues/77" target="_blank" rel="noopener noreferrer">#77</a></td>
+                      <td data-sort="hyperlite mountain gear">Hyperlite Mountain Gear</td>
+                      <td data-sort="hyperlitemountaingear.com"><a href="https://hyperlitemountaingear.com" target="_blank" rel="noopener noreferrer">hyperlitemountaingear.com</a></td>
+                      <td class="num" data-sort="1">1</td>
+                      <td data-sort="1">Yes</td>
+                    </tr>
+                    <tr>
+                      <td data-sort="204"><a href="https://github.com/foundmonster/cool-bags/issues/204" target="_blank" rel="noopener noreferrer">#204</a></td>
+                      <td data-sort="wandrd">WANDRD</td>
+                      <td data-sort="wandrd.com"><a href="https://wandrd.com" target="_blank" rel="noopener noreferrer">wandrd.com</a></td>
+                      <td class="num" data-sort="1">1</td>
+                      <td data-sort="1">Yes</td>
+                    </tr>
+                    <tr>
+                      <td data-sort="145"><a href="https://github.com/foundmonster/cool-bags/issues/145" target="_blank" rel="noopener noreferrer">#145</a></td>
+                      <td data-sort="1733">1733</td>
+                      <td data-sort="zzz"><span class="muted">—</span></td>
+                      <td class="num" data-sort="0"><span class="muted">0</span></td>
+                      <td data-sort="0"><span class="no">No</span></td>
+                    </tr>
+                    <tr>
+                      <td data-sort="146"><a href="https://github.com/foundmonster/cool-bags/issues/146" target="_blank" rel="noopener noreferrer">#146</a></td>
+                      <td data-sort="5.11">5.11</td>
+                      <td data-sort="511tactical.com"><a href="https://511tactical.com" target="_blank" rel="noopener noreferrer">511tactical.com</a></td>
+                      <td class="num" data-sort="0"><span class="muted">0</span></td>
+                      <td data-sort="0"><span class="no">No</span></td>
+                    </tr>
+                    <tr>
+                      <td data-sort="147"><a href="https://github.com/foundmonster/cool-bags/issues/147" target="_blank" rel="noopener noreferrer">#147</a></td>
+                      <td data-sort="almond oak">Almond Oak</td>
+                      <td data-sort="almondoak.com"><a href="https://almondoak.com" target="_blank" rel="noopener noreferrer">almondoak.com</a></td>
+                      <td class="num" data-sort="0"><span class="muted">0</span></td>
+                      <td data-sort="0"><span class="no">No</span></td>
+                    </tr>
+                    <tr>
+                      <td data-sort="148"><a href="https://github.com/foundmonster/cool-bags/issues/148" target="_blank" rel="noopener noreferrer">#148</a></td>
+                      <td data-sort="alpha one niner">Alpha One Niner</td>
+                      <td data-sort="alphaoneniner.com"><a href="https://alphaoneniner.com" target="_blank" rel="noopener noreferrer">alphaoneniner.com</a></td>
+                      <td class="num" data-sort="0"><span class="muted">0</span></td>
+                      <td data-sort="0"><span class="no">No</span></td>
+                    </tr>
+                    <tr>
+                      <td data-sort="149"><a href="https://github.com/foundmonster/cool-bags/issues/149" target="_blank" rel="noopener noreferrer">#149</a></td>
+                      <td data-sort="arc'teryx">Arc'teryx</td>
+                      <td data-sort="arcteryx.com"><a href="https://arcteryx.com" target="_blank" rel="noopener noreferrer">arcteryx.com</a></td>
+                      <td class="num" data-sort="0"><span class="muted">0</span></td>
+                      <td data-sort="0"><span class="no">No</span></td>
+                    </tr>
+                    <tr>
+                      <td data-sort="150"><a href="https://github.com/foundmonster/cool-bags/issues/150" target="_blank" rel="noopener noreferrer">#150</a></td>
+                      <td data-sort="arktype">Arktype</td>
+                      <td data-sort="arktype.co"><a href="https://arktype.co" target="_blank" rel="noopener noreferrer">arktype.co</a></td>
+                      <td class="num" data-sort="0"><span class="muted">0</span></td>
+                      <td data-sort="0"><span class="no">No</span></td>
+                    </tr>
+                    <tr>
+                      <td data-sort="151"><a href="https://github.com/foundmonster/cool-bags/issues/151" target="_blank" rel="noopener noreferrer">#151</a></td>
+                      <td data-sort="attitude supply">Attitude Supply</td>
+                      <td data-sort="attitudesupply.com"><a href="https://attitudesupply.com" target="_blank" rel="noopener noreferrer">attitudesupply.com</a></td>
+                      <td class="num" data-sort="0"><span class="muted">0</span></td>
+                      <td data-sort="0"><span class="no">No</span></td>
+                    </tr>
+                    <tr>
+                      <td data-sort="101"><a href="https://github.com/foundmonster/cool-bags/issues/101" target="_blank" rel="noopener noreferrer">#101</a></td>
+                      <td data-sort="bagjack">BAGJACK</td>
+                      <td data-sort="bagjack.com"><a href="https://bagjack.com" target="_blank" rel="noopener noreferrer">bagjack.com</a></td>
+                      <td class="num" data-sort="0"><span class="muted">0</span></td>
+                      <td data-sort="0"><span class="no">No</span></td>
+                    </tr>
+                    <tr>
+                      <td data-sort="226"><a href="https://github.com/foundmonster/cool-bags/issues/226" target="_blank" rel="noopener noreferrer">#226</a></td>
+                      <td data-sort="beckel canvas">Beckel Canvas</td>
+                      <td data-sort="beckelcanvas.com"><a href="https://beckelcanvas.com" target="_blank" rel="noopener noreferrer">beckelcanvas.com</a></td>
+                      <td class="num" data-sort="0"><span class="muted">0</span></td>
+                      <td data-sort="0"><span class="no">No</span></td>
+                    </tr>
+                    <tr>
+                      <td data-sort="139"><a href="https://github.com/foundmonster/cool-bags/issues/139" target="_blank" rel="noopener noreferrer">#139</a></td>
+                      <td data-sort="berghaus">Berghaus</td>
+                      <td data-sort="berghaus.com"><a href="https://berghaus.com" target="_blank" rel="noopener noreferrer">berghaus.com</a></td>
+                      <td class="num" data-sort="0"><span class="muted">0</span></td>
+                      <td data-sort="0"><span class="no">No</span></td>
+                    </tr>
+                    <tr>
+                      <td data-sort="152"><a href="https://github.com/foundmonster/cool-bags/issues/152" target="_blank" rel="noopener noreferrer">#152</a></td>
+                      <td data-sort="blank canvas accessories">Blank Canvas Accessories</td>
+                      <td data-sort="blankcanvasaccessories.com"><a href="https://blankcanvasaccessories.com" target="_blank" rel="noopener noreferrer">blankcanvasaccessories.com</a></td>
+                      <td class="num" data-sort="0"><span class="muted">0</span></td>
+                      <td data-sort="0"><span class="no">No</span></td>
+                    </tr>
+                    <tr>
+                      <td data-sort="153"><a href="https://github.com/foundmonster/cool-bags/issues/153" target="_blank" rel="noopener noreferrer">#153</a></td>
+                      <td data-sort="bounce design labs">Bounce Design Labs</td>
+                      <td data-sort="zzz"><span class="muted">—</span></td>
+                      <td class="num" data-sort="0"><span class="muted">0</span></td>
+                      <td data-sort="0"><span class="no">No</span></td>
+                    </tr>
+                    <tr>
+                      <td data-sort="127"><a href="https://github.com/foundmonster/cool-bags/issues/127" target="_blank" rel="noopener noreferrer">#127</a></td>
+                      <td data-sort="breakwater supply">Breakwater Supply</td>
+                      <td data-sort="breakwatersupply.com"><a href="https://breakwatersupply.com" target="_blank" rel="noopener noreferrer">breakwatersupply.com</a></td>
+                      <td class="num" data-sort="0"><span class="muted">0</span></td>
+                      <td data-sort="0"><span class="no">No</span></td>
+                    </tr>
+                    <tr>
+                      <td data-sort="154"><a href="https://github.com/foundmonster/cool-bags/issues/154" target="_blank" rel="noopener noreferrer">#154</a></td>
+                      <td data-sort="brevite">Brevite</td>
+                      <td data-sort="brevite.co"><a href="https://brevite.co" target="_blank" rel="noopener noreferrer">brevite.co</a></td>
+                      <td class="num" data-sort="0"><span class="muted">0</span></td>
+                      <td data-sort="0"><span class="no">No</span></td>
+                    </tr>
+                    <tr>
+                      <td data-sort="107"><a href="https://github.com/foundmonster/cool-bags/issues/107" target="_blank" rel="noopener noreferrer">#107</a></td>
+                      <td data-sort="cabin zero">Cabin Zero</td>
+                      <td data-sort="cabinzero.com"><a href="https://cabinzero.com" target="_blank" rel="noopener noreferrer">cabinzero.com</a></td>
+                      <td class="num" data-sort="0"><span class="muted">0</span></td>
+                      <td data-sort="0"><span class="no">No</span></td>
+                    </tr>
+                    <tr>
+                      <td data-sort="108"><a href="https://github.com/foundmonster/cool-bags/issues/108" target="_blank" rel="noopener noreferrer">#108</a></td>
+                      <td data-sort="cayl">CAYL</td>
+                      <td data-sort="cayl.com"><a href="https://cayl.com" target="_blank" rel="noopener noreferrer">cayl.com</a></td>
+                      <td class="num" data-sort="0"><span class="muted">0</span></td>
+                      <td data-sort="0"><span class="no">No</span></td>
+                    </tr>
+                    <tr>
+                      <td data-sort="109"><a href="https://github.com/foundmonster/cool-bags/issues/109" target="_blank" rel="noopener noreferrer">#109</a></td>
+                      <td data-sort="chanel">Chanel</td>
+                      <td data-sort="chanel.com"><a href="https://chanel.com" target="_blank" rel="noopener noreferrer">chanel.com</a></td>
+                      <td class="num" data-sort="0"><span class="muted">0</span></td>
+                      <td data-sort="0"><span class="no">No</span></td>
+                    </tr>
+                    <tr>
+                      <td data-sort="110"><a href="https://github.com/foundmonster/cool-bags/issues/110" target="_blank" rel="noopener noreferrer">#110</a></td>
+                      <td data-sort="clever supply co.">Clever Supply Co.</td>
+                      <td data-sort="cleversupply.com"><a href="https://cleversupply.com" target="_blank" rel="noopener noreferrer">cleversupply.com</a></td>
+                      <td class="num" data-sort="0"><span class="muted">0</span></td>
+                      <td data-sort="0"><span class="no">No</span></td>
+                    </tr>
+                    <tr>
+                      <td data-sort="103"><a href="https://github.com/foundmonster/cool-bags/issues/103" target="_blank" rel="noopener noreferrer">#103</a></td>
+                      <td data-sort="ctactical">CTactical</td>
+                      <td data-sort="ctactical.vn"><a href="https://ctactical.vn" target="_blank" rel="noopener noreferrer">ctactical.vn</a></td>
+                      <td class="num" data-sort="0"><span class="muted">0</span></td>
+                      <td data-sort="0"><span class="no">No</span></td>
+                    </tr>
+                    <tr>
+                      <td data-sort="104"><a href="https://github.com/foundmonster/cool-bags/issues/104" target="_blank" rel="noopener noreferrer">#104</a></td>
+                      <td data-sort="day owl">Day Owl</td>
+                      <td data-sort="dayowl.com"><a href="https://dayowl.com" target="_blank" rel="noopener noreferrer">dayowl.com</a></td>
+                      <td class="num" data-sort="0"><span class="muted">0</span></td>
+                      <td data-sort="0"><span class="no">No</span></td>
+                    </tr>
+                    <tr>
+                      <td data-sort="155"><a href="https://github.com/foundmonster/cool-bags/issues/155" target="_blank" rel="noopener noreferrer">#155</a></td>
+                      <td data-sort="db (douchebags)">DB (Douchebags)</td>
+                      <td data-sort="douchebags.com"><a href="https://douchebags.com" target="_blank" rel="noopener noreferrer">douchebags.com</a></td>
+                      <td class="num" data-sort="0"><span class="muted">0</span></td>
+                      <td data-sort="0"><span class="no">No</span></td>
+                    </tr>
+                    <tr>
+                      <td data-sort="111"><a href="https://github.com/foundmonster/cool-bags/issues/111" target="_blank" rel="noopener noreferrer">#111</a></td>
+                      <td data-sort="decathlon">Decathlon</td>
+                      <td data-sort="decathlon.com"><a href="https://decathlon.com" target="_blank" rel="noopener noreferrer">decathlon.com</a></td>
+                      <td class="num" data-sort="0"><span class="muted">0</span></td>
+                      <td data-sort="0"><span class="no">No</span></td>
+                    </tr>
+                    <tr>
+                      <td data-sort="156"><a href="https://github.com/foundmonster/cool-bags/issues/156" target="_blank" rel="noopener noreferrer">#156</a></td>
+                      <td data-sort="decathlon forclaz">Decathlon Forclaz</td>
+                      <td data-sort="zzz"><span class="muted">—</span></td>
+                      <td class="num" data-sort="0"><span class="muted">0</span></td>
+                      <td data-sort="0"><span class="no">No</span></td>
+                    </tr>
+                    <tr>
+                      <td data-sort="157"><a href="https://github.com/foundmonster/cool-bags/issues/157" target="_blank" rel="noopener noreferrer">#157</a></td>
+                      <td data-sort="demobaza">Demobaza</td>
+                      <td data-sort="demobaza.com"><a href="https://demobaza.com" target="_blank" rel="noopener noreferrer">demobaza.com</a></td>
+                      <td class="num" data-sort="0"><span class="muted">0</span></td>
+                      <td data-sort="0"><span class="no">No</span></td>
+                    </tr>
+                    <tr>
+                      <td data-sort="135"><a href="https://github.com/foundmonster/cool-bags/issues/135" target="_blank" rel="noopener noreferrer">#135</a></td>
+                      <td data-sort="deuter">Deuter</td>
+                      <td data-sort="deuter.com"><a href="https://deuter.com" target="_blank" rel="noopener noreferrer">deuter.com</a></td>
+                      <td class="num" data-sort="0"><span class="muted">0</span></td>
+                      <td data-sort="0"><span class="no">No</span></td>
+                    </tr>
+                    <tr>
+                      <td data-sort="158"><a href="https://github.com/foundmonster/cool-bags/issues/158" target="_blank" rel="noopener noreferrer">#158</a></td>
+                      <td data-sort="eastpak">Eastpak</td>
+                      <td data-sort="us.eastpak.com"><a href="https://us.eastpak.com" target="_blank" rel="noopener noreferrer">us.eastpak.com</a></td>
+                      <td class="num" data-sort="0"><span class="muted">0</span></td>
+                      <td data-sort="0"><span class="no">No</span></td>
+                    </tr>
+                    <tr>
+                      <td data-sort="159"><a href="https://github.com/foundmonster/cool-bags/issues/159" target="_blank" rel="noopener noreferrer">#159</a></td>
+                      <td data-sort="everyman">Everyman</td>
+                      <td data-sort="everyman.com"><a href="https://everyman.com" target="_blank" rel="noopener noreferrer">everyman.com</a></td>
+                      <td class="num" data-sort="0"><span class="muted">0</span></td>
+                      <td data-sort="0"><span class="no">No</span></td>
+                    </tr>
+                    <tr>
+                      <td data-sort="160"><a href="https://github.com/foundmonster/cool-bags/issues/160" target="_blank" rel="noopener noreferrer">#160</a></td>
+                      <td data-sort="expedition units">Expedition Units</td>
+                      <td data-sort="zzz"><span class="muted">—</span></td>
+                      <td class="num" data-sort="0"><span class="muted">0</span></td>
+                      <td data-sort="0"><span class="no">No</span></td>
+                    </tr>
+                    <tr>
+                      <td data-sort="134"><a href="https://github.com/foundmonster/cool-bags/issues/134" target="_blank" rel="noopener noreferrer">#134</a></td>
+                      <td data-sort="fjallraven">Fjallraven</td>
+                      <td data-sort="fjallraven.com"><a href="https://fjallraven.com" target="_blank" rel="noopener noreferrer">fjallraven.com</a></td>
+                      <td class="num" data-sort="0"><span class="muted">0</span></td>
+                      <td data-sort="0"><span class="no">No</span></td>
+                    </tr>
+                    <tr>
+                      <td data-sort="128"><a href="https://github.com/foundmonster/cool-bags/issues/128" target="_blank" rel="noopener noreferrer">#128</a></td>
+                      <td data-sort="freitag">Freitag</td>
+                      <td data-sort="freitag.ch"><a href="https://freitag.ch" target="_blank" rel="noopener noreferrer">freitag.ch</a></td>
+                      <td class="num" data-sort="0"><span class="muted">0</span></td>
+                      <td data-sort="0"><span class="no">No</span></td>
+                    </tr>
+                    <tr>
+                      <td data-sort="105"><a href="https://github.com/foundmonster/cool-bags/issues/105" target="_blank" rel="noopener noreferrer">#105</a></td>
+                      <td data-sort="fyro">Fyro</td>
+                      <td data-sort="fyro.co"><a href="https://fyro.co" target="_blank" rel="noopener noreferrer">fyro.co</a></td>
+                      <td class="num" data-sort="0"><span class="muted">0</span></td>
+                      <td data-sort="0"><span class="no">No</span></td>
+                    </tr>
+                    <tr>
+                      <td data-sort="126"><a href="https://github.com/foundmonster/cool-bags/issues/126" target="_blank" rel="noopener noreferrer">#126</a></td>
+                      <td data-sort="graphene-x">Graphene-X</td>
+                      <td data-sort="graphene-x.com"><a href="https://graphene-x.com" target="_blank" rel="noopener noreferrer">graphene-x.com</a></td>
+                      <td class="num" data-sort="0"><span class="muted">0</span></td>
+                      <td data-sort="0"><span class="no">No</span></td>
+                    </tr>
+                    <tr>
+                      <td data-sort="213"><a href="https://github.com/foundmonster/cool-bags/issues/213" target="_blank" rel="noopener noreferrer">#213</a></td>
+                      <td data-sort="greenroom">Greenroom</td>
+                      <td data-sort="zzz"><span class="muted">—</span></td>
+                      <td class="num" data-sort="0"><span class="muted">0</span></td>
+                      <td data-sort="0"><span class="no">No</span></td>
+                    </tr>
+                    <tr>
+                      <td data-sort="112"><a href="https://github.com/foundmonster/cool-bags/issues/112" target="_blank" rel="noopener noreferrer">#112</a></td>
+                      <td data-sort="greenroom136">Greenroom136</td>
+                      <td data-sort="greenroom136.com"><a href="https://greenroom136.com" target="_blank" rel="noopener noreferrer">greenroom136.com</a></td>
+                      <td class="num" data-sort="0"><span class="muted">0</span></td>
+                      <td data-sort="0"><span class="no">No</span></td>
+                    </tr>
+                    <tr>
+                      <td data-sort="138"><a href="https://github.com/foundmonster/cool-bags/issues/138" target="_blank" rel="noopener noreferrer">#138</a></td>
+                      <td data-sort="gregory">Gregory</td>
+                      <td data-sort="gregorypacks.com"><a href="https://gregorypacks.com" target="_blank" rel="noopener noreferrer">gregorypacks.com</a></td>
+                      <td class="num" data-sort="0"><span class="muted">0</span></td>
+                      <td data-sort="0"><span class="no">No</span></td>
+                    </tr>
+                    <tr>
+                      <td data-sort="106"><a href="https://github.com/foundmonster/cool-bags/issues/106" target="_blank" rel="noopener noreferrer">#106</a></td>
+                      <td data-sort="gwa">GWA</td>
+                      <td data-sort="gwa.co"><a href="https://gwa.co" target="_blank" rel="noopener noreferrer">gwa.co</a></td>
+                      <td class="num" data-sort="0"><span class="muted">0</span></td>
+                      <td data-sort="0"><span class="no">No</span></td>
+                    </tr>
+                    <tr>
+                      <td data-sort="161"><a href="https://github.com/foundmonster/cool-bags/issues/161" target="_blank" rel="noopener noreferrer">#161</a></td>
+                      <td data-sort="haerfest">Haerfest</td>
+                      <td data-sort="zzz"><span class="muted">—</span></td>
+                      <td class="num" data-sort="0"><span class="muted">0</span></td>
+                      <td data-sort="0"><span class="no">No</span></td>
+                    </tr>
+                    <tr>
+                      <td data-sort="162"><a href="https://github.com/foundmonster/cool-bags/issues/162" target="_blank" rel="noopener noreferrer">#162</a></td>
+                      <td data-sort="hanchor">HANCHOR</td>
+                      <td data-sort="hanchor.com"><a href="https://hanchor.com" target="_blank" rel="noopener noreferrer">hanchor.com</a></td>
+                      <td class="num" data-sort="0"><span class="muted">0</span></td>
+                      <td data-sort="0"><span class="no">No</span></td>
+                    </tr>
+                    <tr>
+                      <td data-sort="144"><a href="https://github.com/foundmonster/cool-bags/issues/144" target="_blank" rel="noopener noreferrer">#144</a></td>
+                      <td data-sort="heimplanet">Heimplanet</td>
+                      <td data-sort="heimplanet.com"><a href="https://heimplanet.com" target="_blank" rel="noopener noreferrer">heimplanet.com</a></td>
+                      <td class="num" data-sort="0"><span class="muted">0</span></td>
+                      <td data-sort="0"><span class="no">No</span></td>
+                    </tr>
+                    <tr>
+                      <td data-sort="129"><a href="https://github.com/foundmonster/cool-bags/issues/129" target="_blank" rel="noopener noreferrer">#129</a></td>
+                      <td data-sort="imbaru design">Imbaru Design</td>
+                      <td data-sort="zzz"><span class="muted">—</span></td>
+                      <td class="num" data-sort="0"><span class="muted">0</span></td>
+                      <td data-sort="0"><span class="no">No</span></td>
+                    </tr>
+                    <tr>
+                      <td data-sort="113"><a href="https://github.com/foundmonster/cool-bags/issues/113" target="_blank" rel="noopener noreferrer">#113</a></td>
+                      <td data-sort="j. stark">J. Stark</td>
+                      <td data-sort="jstark.co"><a href="https://jstark.co" target="_blank" rel="noopener noreferrer">jstark.co</a></td>
+                      <td class="num" data-sort="0"><span class="muted">0</span></td>
+                      <td data-sort="0"><span class="no">No</span></td>
+                    </tr>
+                    <tr>
+                      <td data-sort="163"><a href="https://github.com/foundmonster/cool-bags/issues/163" target="_blank" rel="noopener noreferrer">#163</a></td>
+                      <td data-sort="killspencer">Killspencer</td>
+                      <td data-sort="zzz"><span class="muted">—</span></td>
+                      <td class="num" data-sort="0"><span class="muted">0</span></td>
+                      <td data-sort="0"><span class="no">No</span></td>
+                    </tr>
+                    <tr>
+                      <td data-sort="114"><a href="https://github.com/foundmonster/cool-bags/issues/114" target="_blank" rel="noopener noreferrer">#114</a></td>
+                      <td data-sort="klattermusen">Klattermusen</td>
+                      <td data-sort="klattermusen.com"><a href="https://klattermusen.com" target="_blank" rel="noopener noreferrer">klattermusen.com</a></td>
+                      <td class="num" data-sort="0"><span class="muted">0</span></td>
+                      <td data-sort="0"><span class="no">No</span></td>
+                    </tr>
+                    <tr>
+                      <td data-sort="115"><a href="https://github.com/foundmonster/cool-bags/issues/115" target="_blank" rel="noopener noreferrer">#115</a></td>
+                      <td data-sort="kma">KMA</td>
+                      <td data-sort="zzz"><span class="muted">—</span></td>
+                      <td class="num" data-sort="0"><span class="muted">0</span></td>
+                      <td data-sort="0"><span class="no">No</span></td>
+                    </tr>
+                    <tr>
+                      <td data-sort="130"><a href="https://github.com/foundmonster/cool-bags/issues/130" target="_blank" rel="noopener noreferrer">#130</a></td>
+                      <td data-sort="knkg">Knkg</td>
+                      <td data-sort="knkg.com"><a href="https://knkg.com" target="_blank" rel="noopener noreferrer">knkg.com</a></td>
+                      <td class="num" data-sort="0"><span class="muted">0</span></td>
+                      <td data-sort="0"><span class="no">No</span></td>
+                    </tr>
+                    <tr>
+                      <td data-sort="164"><a href="https://github.com/foundmonster/cool-bags/issues/164" target="_blank" rel="noopener noreferrer">#164</a></td>
+                      <td data-sort="kuhl">Kuhl</td>
+                      <td data-sort="kuhl.com"><a href="https://kuhl.com" target="_blank" rel="noopener noreferrer">kuhl.com</a></td>
+                      <td class="num" data-sort="0"><span class="muted">0</span></td>
+                      <td data-sort="0"><span class="no">No</span></td>
+                    </tr>
+                    <tr>
+                      <td data-sort="165"><a href="https://github.com/foundmonster/cool-bags/issues/165" target="_blank" rel="noopener noreferrer">#165</a></td>
+                      <td data-sort="l.l.bean">L.L.Bean</td>
+                      <td data-sort="llbean.com"><a href="https://llbean.com" target="_blank" rel="noopener noreferrer">llbean.com</a></td>
+                      <td class="num" data-sort="0"><span class="muted">0</span></td>
+                      <td data-sort="0"><span class="no">No</span></td>
+                    </tr>
+                    <tr>
+                      <td data-sort="166"><a href="https://github.com/foundmonster/cool-bags/issues/166" target="_blank" rel="noopener noreferrer">#166</a></td>
+                      <td data-sort="life behind bars">Life Behind Bars</td>
+                      <td data-sort="zzz"><span class="muted">—</span></td>
+                      <td class="num" data-sort="0"><span class="muted">0</span></td>
+                      <td data-sort="0"><span class="no">No</span></td>
+                    </tr>
+                    <tr>
+                      <td data-sort="167"><a href="https://github.com/foundmonster/cool-bags/issues/167" target="_blank" rel="noopener noreferrer">#167</a></td>
+                      <td data-sort="limitless">Limitless</td>
+                      <td data-sort="zzz"><span class="muted">—</span></td>
+                      <td class="num" data-sort="0"><span class="muted">0</span></td>
+                      <td data-sort="0"><span class="no">No</span></td>
+                    </tr>
+                    <tr>
+                      <td data-sort="168"><a href="https://github.com/foundmonster/cool-bags/issues/168" target="_blank" rel="noopener noreferrer">#168</a></td>
+                      <td data-sort="linus tech tips">Linus Tech Tips</td>
+                      <td data-sort="lttstore.com"><a href="https://lttstore.com" target="_blank" rel="noopener noreferrer">lttstore.com</a></td>
+                      <td class="num" data-sort="0"><span class="muted">0</span></td>
+                      <td data-sort="0"><span class="no">No</span></td>
+                    </tr>
+                    <tr>
+                      <td data-sort="169"><a href="https://github.com/foundmonster/cool-bags/issues/169" target="_blank" rel="noopener noreferrer">#169</a></td>
+                      <td data-sort="liteway">Liteway</td>
+                      <td data-sort="liteway.com"><a href="https://liteway.com" target="_blank" rel="noopener noreferrer">liteway.com</a></td>
+                      <td class="num" data-sort="0"><span class="muted">0</span></td>
+                      <td data-sort="0"><span class="no">No</span></td>
+                    </tr>
+                    <tr>
+                      <td data-sort="170"><a href="https://github.com/foundmonster/cool-bags/issues/170" target="_blank" rel="noopener noreferrer">#170</a></td>
+                      <td data-sort="london bridge trading">London Bridge Trading</td>
+                      <td data-sort="londonbridgetrading.com"><a href="https://londonbridgetrading.com" target="_blank" rel="noopener noreferrer">londonbridgetrading.com</a></td>
+                      <td class="num" data-sort="0"><span class="muted">0</span></td>
+                      <td data-sort="0"><span class="no">No</span></td>
+                    </tr>
+                    <tr>
+                      <td data-sort="171"><a href="https://github.com/foundmonster/cool-bags/issues/171" target="_blank" rel="noopener noreferrer">#171</a></td>
+                      <td data-sort="magpul">Magpul</td>
+                      <td data-sort="magpul.com"><a href="https://magpul.com" target="_blank" rel="noopener noreferrer">magpul.com</a></td>
+                      <td class="num" data-sort="0"><span class="muted">0</span></td>
+                      <td data-sort="0"><span class="no">No</span></td>
+                    </tr>
+                    <tr>
+                      <td data-sort="172"><a href="https://github.com/foundmonster/cool-bags/issues/172" target="_blank" rel="noopener noreferrer">#172</a></td>
+                      <td data-sort="makr">MAKR</td>
+                      <td data-sort="makr.com"><a href="https://makr.com" target="_blank" rel="noopener noreferrer">makr.com</a></td>
+                      <td class="num" data-sort="0"><span class="muted">0</span></td>
+                      <td data-sort="0"><span class="no">No</span></td>
+                    </tr>
+                    <tr>
+                      <td data-sort="174"><a href="https://github.com/foundmonster/cool-bags/issues/174" target="_blank" rel="noopener noreferrer">#174</a></td>
+                      <td data-sort="metric">Metric</td>
+                      <td data-sort="zzz"><span class="muted">—</span></td>
+                      <td class="num" data-sort="0"><span class="muted">0</span></td>
+                      <td data-sort="0"><span class="no">No</span></td>
+                    </tr>
+                    <tr>
+                      <td data-sort="116"><a href="https://github.com/foundmonster/cool-bags/issues/116" target="_blank" rel="noopener noreferrer">#116</a></td>
+                      <td data-sort="mixed">Mixed</td>
+                      <td data-sort="mixed.supply"><a href="https://mixed.supply" target="_blank" rel="noopener noreferrer">mixed.supply</a></td>
+                      <td class="num" data-sort="0"><span class="muted">0</span></td>
+                      <td data-sort="0"><span class="no">No</span></td>
+                    </tr>
+                    <tr>
+                      <td data-sort="117"><a href="https://github.com/foundmonster/cool-bags/issues/117" target="_blank" rel="noopener noreferrer">#117</a></td>
+                      <td data-sort="mountain hardwear">Mountain Hardwear</td>
+                      <td data-sort="mountainhardwear.com"><a href="https://mountainhardwear.com" target="_blank" rel="noopener noreferrer">mountainhardwear.com</a></td>
+                      <td class="num" data-sort="0"><span class="muted">0</span></td>
+                      <td data-sort="0"><span class="no">No</span></td>
+                    </tr>
+                    <tr>
+                      <td data-sort="118"><a href="https://github.com/foundmonster/cool-bags/issues/118" target="_blank" rel="noopener noreferrer">#118</a></td>
+                      <td data-sort="mtn ops">MTN Ops</td>
+                      <td data-sort="mtnops.com"><a href="https://mtnops.com" target="_blank" rel="noopener noreferrer">mtnops.com</a></td>
+                      <td class="num" data-sort="0"><span class="muted">0</span></td>
+                      <td data-sort="0"><span class="no">No</span></td>
+                    </tr>
+                    <tr>
+                      <td data-sort="119"><a href="https://github.com/foundmonster/cool-bags/issues/119" target="_blank" rel="noopener noreferrer">#119</a></td>
+                      <td data-sort="nitecore">Nitecore</td>
+                      <td data-sort="nitecore.com"><a href="https://nitecore.com" target="_blank" rel="noopener noreferrer">nitecore.com</a></td>
+                      <td class="num" data-sort="0"><span class="muted">0</span></td>
+                      <td data-sort="0"><span class="no">No</span></td>
+                    </tr>
+                    <tr>
+                      <td data-sort="120"><a href="https://github.com/foundmonster/cool-bags/issues/120" target="_blank" rel="noopener noreferrer">#120</a></td>
+                      <td data-sort="nomin">Nomin</td>
+                      <td data-sort="nomin.co"><a href="https://nomin.co" target="_blank" rel="noopener noreferrer">nomin.co</a></td>
+                      <td class="num" data-sort="0"><span class="muted">0</span></td>
+                      <td data-sort="0"><span class="no">No</span></td>
+                    </tr>
+                    <tr>
+                      <td data-sort="121"><a href="https://github.com/foundmonster/cool-bags/issues/121" target="_blank" rel="noopener noreferrer">#121</a></td>
+                      <td data-sort="off-white">Off-White</td>
+                      <td data-sort="off---white.com"><a href="https://off---white.com" target="_blank" rel="noopener noreferrer">off---white.com</a></td>
+                      <td class="num" data-sort="0"><span class="muted">0</span></td>
+                      <td data-sort="0"><span class="no">No</span></td>
+                    </tr>
+                    <tr>
+                      <td data-sort="999999"><span class="muted">—</span></td>
+                      <td data-sort="offwhite.com (not the fashion label)">offwhite.com (not the fashion label)</td>
+                      <td data-sort="offwhite.com"><a href="https://offwhite.com" target="_blank" rel="noopener noreferrer">offwhite.com</a></td>
+                      <td class="num" data-sort="0"><span class="muted">0</span></td>
+                      <td data-sort="0"><span class="no">No</span></td>
+                    </tr>
+                    <tr>
+                      <td data-sort="122"><a href="https://github.com/foundmonster/cool-bags/issues/122" target="_blank" rel="noopener noreferrer">#122</a></td>
+                      <td data-sort="opposethis">Opposethis</td>
+                      <td data-sort="opposethis.com"><a href="https://opposethis.com" target="_blank" rel="noopener noreferrer">opposethis.com</a></td>
+                      <td class="num" data-sort="0"><span class="muted">0</span></td>
+                      <td data-sort="0"><span class="no">No</span></td>
+                    </tr>
+                    <tr>
+                      <td data-sort="123"><a href="https://github.com/foundmonster/cool-bags/issues/123" target="_blank" rel="noopener noreferrer">#123</a></td>
+                      <td data-sort="orbitgear">OrbitGear</td>
+                      <td data-sort="orbitgear.net"><a href="https://orbitgear.net" target="_blank" rel="noopener noreferrer">orbitgear.net</a></td>
+                      <td class="num" data-sort="0"><span class="muted">0</span></td>
+                      <td data-sort="0"><span class="no">No</span></td>
+                    </tr>
+                    <tr>
+                      <td data-sort="133"><a href="https://github.com/foundmonster/cool-bags/issues/133" target="_blank" rel="noopener noreferrer">#133</a></td>
+                      <td data-sort="osprey">Osprey</td>
+                      <td data-sort="osprey.com"><a href="https://osprey.com" target="_blank" rel="noopener noreferrer">osprey.com</a></td>
+                      <td class="num" data-sort="0"><span class="muted">0</span></td>
+                      <td data-sort="0"><span class="no">No</span></td>
+                    </tr>
+                    <tr>
+                      <td data-sort="131"><a href="https://github.com/foundmonster/cool-bags/issues/131" target="_blank" rel="noopener noreferrer">#131</a></td>
+                      <td data-sort="outallday">Outallday</td>
+                      <td data-sort="outallday.com"><a href="https://outallday.com" target="_blank" rel="noopener noreferrer">outallday.com</a></td>
+                      <td class="num" data-sort="0"><span class="muted">0</span></td>
+                      <td data-sort="0"><span class="no">No</span></td>
+                    </tr>
+                    <tr>
+                      <td data-sort="124"><a href="https://github.com/foundmonster/cool-bags/issues/124" target="_blank" rel="noopener noreferrer">#124</a></td>
+                      <td data-sort="outlier">Outlier</td>
+                      <td data-sort="outlier.nyc"><a href="https://outlier.nyc" target="_blank" rel="noopener noreferrer">outlier.nyc</a></td>
+                      <td class="num" data-sort="0"><span class="muted">0</span></td>
+                      <td data-sort="0"><span class="no">No</span></td>
+                    </tr>
+                    <tr>
+                      <td data-sort="142"><a href="https://github.com/foundmonster/cool-bags/issues/142" target="_blank" rel="noopener noreferrer">#142</a></td>
+                      <td data-sort="patagonia">Patagonia</td>
+                      <td data-sort="patagonia.com"><a href="https://patagonia.com" target="_blank" rel="noopener noreferrer">patagonia.com</a></td>
+                      <td class="num" data-sort="0"><span class="muted">0</span></td>
+                      <td data-sort="0"><span class="no">No</span></td>
+                    </tr>
+                    <tr>
+                      <td data-sort="224"><a href="https://github.com/foundmonster/cool-bags/issues/224" target="_blank" rel="noopener noreferrer">#224</a></td>
+                      <td data-sort="peakdesign!">peakdesign!</td>
+                      <td data-sort="peakdesign.com"><a href="https://peakdesign.com" target="_blank" rel="noopener noreferrer">peakdesign.com</a></td>
+                      <td class="num" data-sort="0"><span class="muted">0</span></td>
+                      <td data-sort="0"><span class="no">No</span></td>
+                    </tr>
+                    <tr>
+                      <td data-sort="175"><a href="https://github.com/foundmonster/cool-bags/issues/175" target="_blank" rel="noopener noreferrer">#175</a></td>
+                      <td data-sort="quechua nh">Quechua NH</td>
+                      <td data-sort="decathlon.com"><a href="https://decathlon.com" target="_blank" rel="noopener noreferrer">decathlon.com</a></td>
+                      <td class="num" data-sort="0"><span class="muted">0</span></td>
+                      <td data-sort="0"><span class="no">No</span></td>
+                    </tr>
+                    <tr>
+                      <td data-sort="183"><a href="https://github.com/foundmonster/cool-bags/issues/183" target="_blank" rel="noopener noreferrer">#183</a></td>
+                      <td data-sort="rei co-op">REI Co-op</td>
+                      <td data-sort="rei.com"><a href="https://rei.com" target="_blank" rel="noopener noreferrer">rei.com</a></td>
+                      <td class="num" data-sort="0"><span class="muted">0</span></td>
+                      <td data-sort="0"><span class="no">No</span></td>
+                    </tr>
+                    <tr>
+                      <td data-sort="184"><a href="https://github.com/foundmonster/cool-bags/issues/184" target="_blank" rel="noopener noreferrer">#184</a></td>
+                      <td data-sort="remote equipment">Remote Equipment</td>
+                      <td data-sort="remote-equipment.com"><a href="https://remote-equipment.com" target="_blank" rel="noopener noreferrer">remote-equipment.com</a></td>
+                      <td class="num" data-sort="0"><span class="muted">0</span></td>
+                      <td data-sort="0"><span class="no">No</span></td>
+                    </tr>
+                    <tr>
+                      <td data-sort="185"><a href="https://github.com/foundmonster/cool-bags/issues/185" target="_blank" rel="noopener noreferrer">#185</a></td>
+                      <td data-sort="rework">Rework</td>
+                      <td data-sort="rework.co"><a href="https://rework.co" target="_blank" rel="noopener noreferrer">rework.co</a></td>
+                      <td class="num" data-sort="0"><span class="muted">0</span></td>
+                      <td data-sort="0"><span class="no">No</span></td>
+                    </tr>
+                    <tr>
+                      <td data-sort="186"><a href="https://github.com/foundmonster/cool-bags/issues/186" target="_blank" rel="noopener noreferrer">#186</a></td>
+                      <td data-sort="rofmia">Rofmia</td>
+                      <td data-sort="rofmia.com"><a href="https://rofmia.com" target="_blank" rel="noopener noreferrer">rofmia.com</a></td>
+                      <td class="num" data-sort="0"><span class="muted">0</span></td>
+                      <td data-sort="0"><span class="no">No</span></td>
+                    </tr>
+                    <tr>
+                      <td data-sort="187"><a href="https://github.com/foundmonster/cool-bags/issues/187" target="_blank" rel="noopener noreferrer">#187</a></td>
+                      <td data-sort="saikan">Saikan</td>
+                      <td data-sort="saikan.co"><a href="https://saikan.co" target="_blank" rel="noopener noreferrer">saikan.co</a></td>
+                      <td class="num" data-sort="0"><span class="muted">0</span></td>
+                      <td data-sort="0"><span class="no">No</span></td>
+                    </tr>
+                    <tr>
+                      <td data-sort="188"><a href="https://github.com/foundmonster/cool-bags/issues/188" target="_blank" rel="noopener noreferrer">#188</a></td>
+                      <td data-sort="saint javelin">Saint Javelin</td>
+                      <td data-sort="saintjavelin.com"><a href="https://saintjavelin.com" target="_blank" rel="noopener noreferrer">saintjavelin.com</a></td>
+                      <td class="num" data-sort="0"><span class="muted">0</span></td>
+                      <td data-sort="0"><span class="no">No</span></td>
+                    </tr>
+                    <tr>
+                      <td data-sort="212"><a href="https://github.com/foundmonster/cool-bags/issues/212" target="_blank" rel="noopener noreferrer">#212</a></td>
+                      <td data-sort="salkan">Salkan</td>
+                      <td data-sort="salkan.co"><a href="https://salkan.co" target="_blank" rel="noopener noreferrer">salkan.co</a></td>
+                      <td class="num" data-sort="0"><span class="muted">0</span></td>
+                      <td data-sort="0"><span class="no">No</span></td>
+                    </tr>
+                    <tr>
+                      <td data-sort="190"><a href="https://github.com/foundmonster/cool-bags/issues/190" target="_blank" rel="noopener noreferrer">#190</a></td>
+                      <td data-sort="samaya">Samaya</td>
+                      <td data-sort="samaya-equipment.com"><a href="https://samaya-equipment.com" target="_blank" rel="noopener noreferrer">samaya-equipment.com</a></td>
+                      <td class="num" data-sort="0"><span class="muted">0</span></td>
+                      <td data-sort="0"><span class="no">No</span></td>
+                    </tr>
+                    <tr>
+                      <td data-sort="999999"><span class="muted">—</span></td>
+                      <td data-sort="sample dan matsuda">Sample Dan Matsuda</td>
+                      <td data-sort="zzz"><span class="muted">—</span></td>
+                      <td class="num" data-sort="0"><span class="muted">0</span></td>
+                      <td data-sort="0"><span class="no">No</span></td>
+                    </tr>
+                    <tr>
+                      <td data-sort="191"><a href="https://github.com/foundmonster/cool-bags/issues/191" target="_blank" rel="noopener noreferrer">#191</a></td>
+                      <td data-sort="savotta">Savotta</td>
+                      <td data-sort="savotta.fi"><a href="https://savotta.fi" target="_blank" rel="noopener noreferrer">savotta.fi</a></td>
+                      <td class="num" data-sort="0"><span class="muted">0</span></td>
+                      <td data-sort="0"><span class="no">No</span></td>
+                    </tr>
+                    <tr>
+                      <td data-sort="192"><a href="https://github.com/foundmonster/cool-bags/issues/192" target="_blank" rel="noopener noreferrer">#192</a></td>
+                      <td data-sort="six moon design">Six Moon Design</td>
+                      <td data-sort="sixmoondesigns.com"><a href="https://sixmoondesigns.com" target="_blank" rel="noopener noreferrer">sixmoondesigns.com</a></td>
+                      <td class="num" data-sort="0"><span class="muted">0</span></td>
+                      <td data-sort="0"><span class="no">No</span></td>
+                    </tr>
+                    <tr>
+                      <td data-sort="193"><a href="https://github.com/foundmonster/cool-bags/issues/193" target="_blank" rel="noopener noreferrer">#193</a></td>
+                      <td data-sort="solgaard">Solgaard</td>
+                      <td data-sort="solgaard.co"><a href="https://solgaard.co" target="_blank" rel="noopener noreferrer">solgaard.co</a></td>
+                      <td class="num" data-sort="0"><span class="muted">0</span></td>
+                      <td data-sort="0"><span class="no">No</span></td>
+                    </tr>
+                    <tr>
+                      <td data-sort="136"><a href="https://github.com/foundmonster/cool-bags/issues/136" target="_blank" rel="noopener noreferrer">#136</a></td>
+                      <td data-sort="stubble &amp; co">Stubble &amp; Co</td>
+                      <td data-sort="stubbleandco.com"><a href="https://stubbleandco.com" target="_blank" rel="noopener noreferrer">stubbleandco.com</a></td>
+                      <td class="num" data-sort="0"><span class="muted">0</span></td>
+                      <td data-sort="0"><span class="no">No</span></td>
+                    </tr>
+                    <tr>
+                      <td data-sort="194"><a href="https://github.com/foundmonster/cool-bags/issues/194" target="_blank" rel="noopener noreferrer">#194</a></td>
+                      <td data-sort="swissgear">SwissGear</td>
+                      <td data-sort="swissgear.com"><a href="https://swissgear.com" target="_blank" rel="noopener noreferrer">swissgear.com</a></td>
+                      <td class="num" data-sort="0"><span class="muted">0</span></td>
+                      <td data-sort="0"><span class="no">No</span></td>
+                    </tr>
+                    <tr>
+                      <td data-sort="195"><a href="https://github.com/foundmonster/cool-bags/issues/195" target="_blank" rel="noopener noreferrer">#195</a></td>
+                      <td data-sort="the atelier yul">The Atelier YUL</td>
+                      <td data-sort="theatelieryul.com"><a href="https://theatelieryul.com" target="_blank" rel="noopener noreferrer">theatelieryul.com</a></td>
+                      <td class="num" data-sort="0"><span class="muted">0</span></td>
+                      <td data-sort="0"><span class="no">No</span></td>
+                    </tr>
+                    <tr>
+                      <td data-sort="196"><a href="https://github.com/foundmonster/cool-bags/issues/196" target="_blank" rel="noopener noreferrer">#196</a></td>
+                      <td data-sort="the brown buffalo">The Brown Buffalo</td>
+                      <td data-sort="thebrownbuffalo.com"><a href="https://thebrownbuffalo.com" target="_blank" rel="noopener noreferrer">thebrownbuffalo.com</a></td>
+                      <td class="num" data-sort="0"><span class="muted">0</span></td>
+                      <td data-sort="0"><span class="no">No</span></td>
+                    </tr>
+                    <tr>
+                      <td data-sort="210"><a href="https://github.com/foundmonster/cool-bags/issues/210" target="_blank" rel="noopener noreferrer">#210</a></td>
+                      <td data-sort="the north face">The North Face</td>
+                      <td data-sort="thenorthface.com"><a href="https://thenorthface.com" target="_blank" rel="noopener noreferrer">thenorthface.com</a></td>
+                      <td class="num" data-sort="0"><span class="muted">0</span></td>
+                      <td data-sort="0"><span class="no">No</span></td>
+                    </tr>
+                    <tr>
+                      <td data-sort="143"><a href="https://github.com/foundmonster/cool-bags/issues/143" target="_blank" rel="noopener noreferrer">#143</a></td>
+                      <td data-sort="thule">Thule</td>
+                      <td data-sort="thule.com"><a href="https://thule.com" target="_blank" rel="noopener noreferrer">thule.com</a></td>
+                      <td class="num" data-sort="0"><span class="muted">0</span></td>
+                      <td data-sort="0"><span class="no">No</span></td>
+                    </tr>
+                    <tr>
+                      <td data-sort="140"><a href="https://github.com/foundmonster/cool-bags/issues/140" target="_blank" rel="noopener noreferrer">#140</a></td>
+                      <td data-sort="timbuk2">Timbuk2</td>
+                      <td data-sort="timbuk2.com"><a href="https://timbuk2.com" target="_blank" rel="noopener noreferrer">timbuk2.com</a></td>
+                      <td class="num" data-sort="0"><span class="muted">0</span></td>
+                      <td data-sort="0"><span class="no">No</span></td>
+                    </tr>
+                    <tr>
+                      <td data-sort="197"><a href="https://github.com/foundmonster/cool-bags/issues/197" target="_blank" rel="noopener noreferrer">#197</a></td>
+                      <td data-sort="topo designs">Topo Designs</td>
+                      <td data-sort="topodesigns.com"><a href="https://topodesigns.com" target="_blank" rel="noopener noreferrer">topodesigns.com</a></td>
+                      <td class="num" data-sort="0"><span class="muted">0</span></td>
+                      <td data-sort="0"><span class="no">No</span></td>
+                    </tr>
+                    <tr>
+                      <td data-sort="198"><a href="https://github.com/foundmonster/cool-bags/issues/198" target="_blank" rel="noopener noreferrer">#198</a></td>
+                      <td data-sort="trakke">Trakke</td>
+                      <td data-sort="trakke.co.uk"><a href="https://trakke.co.uk" target="_blank" rel="noopener noreferrer">trakke.co.uk</a></td>
+                      <td class="num" data-sort="0"><span class="muted">0</span></td>
+                      <td data-sort="0"><span class="no">No</span></td>
+                    </tr>
+                    <tr>
+                      <td data-sort="201"><a href="https://github.com/foundmonster/cool-bags/issues/201" target="_blank" rel="noopener noreferrer">#201</a></td>
+                      <td data-sort="ula equipment">ULA Equipment</td>
+                      <td data-sort="ula-equipment.com"><a href="https://ula-equipment.com" target="_blank" rel="noopener noreferrer">ula-equipment.com</a></td>
+                      <td class="num" data-sort="0"><span class="muted">0</span></td>
+                      <td data-sort="0"><span class="no">No</span></td>
+                    </tr>
+                    <tr>
+                      <td data-sort="202"><a href="https://github.com/foundmonster/cool-bags/issues/202" target="_blank" rel="noopener noreferrer">#202</a></td>
+                      <td data-sort="vertx">Vertx</td>
+                      <td data-sort="vertx.com"><a href="https://vertx.com" target="_blank" rel="noopener noreferrer">vertx.com</a></td>
+                      <td class="num" data-sort="0"><span class="muted">0</span></td>
+                      <td data-sort="0"><span class="no">No</span></td>
+                    </tr>
+                    <tr>
+                      <td data-sort="203"><a href="https://github.com/foundmonster/cool-bags/issues/203" target="_blank" rel="noopener noreferrer">#203</a></td>
+                      <td data-sort="voyager bag works">Voyager Bag Works</td>
+                      <td data-sort="voyagerbagworks.com"><a href="https://voyagerbagworks.com" target="_blank" rel="noopener noreferrer">voyagerbagworks.com</a></td>
+                      <td class="num" data-sort="0"><span class="muted">0</span></td>
+                      <td data-sort="0"><span class="no">No</span></td>
+                    </tr>
+                    <tr>
+                      <td data-sort="137"><a href="https://github.com/foundmonster/cool-bags/issues/137" target="_blank" rel="noopener noreferrer">#137</a></td>
+                      <td data-sort="waterfield">Waterfield</td>
+                      <td data-sort="sfbags.com"><a href="https://sfbags.com" target="_blank" rel="noopener noreferrer">sfbags.com</a></td>
+                      <td class="num" data-sort="0"><span class="muted">0</span></td>
+                      <td data-sort="0"><span class="no">No</span></td>
+                    </tr>
+                    <tr>
+                      <td data-sort="205"><a href="https://github.com/foundmonster/cool-bags/issues/205" target="_blank" rel="noopener noreferrer">#205</a></td>
+                      <td data-sort="western rise">Western Rise</td>
+                      <td data-sort="westernrise.com"><a href="https://westernrise.com" target="_blank" rel="noopener noreferrer">westernrise.com</a></td>
+                      <td class="num" data-sort="0"><span class="muted">0</span></td>
+                      <td data-sort="0"><span class="no">No</span></td>
+                    </tr>
+                    <tr>
+                      <td data-sort="206"><a href="https://github.com/foundmonster/cool-bags/issues/206" target="_blank" rel="noopener noreferrer">#206</a></td>
+                      <td data-sort="wotancraft">Wotancraft</td>
+                      <td data-sort="wotancraft.com"><a href="https://wotancraft.com" target="_blank" rel="noopener noreferrer">wotancraft.com</a></td>
+                      <td class="num" data-sort="0"><span class="muted">0</span></td>
+                      <td data-sort="0"><span class="no">No</span></td>
+                    </tr>
+                    <tr>
+                      <td data-sort="141"><a href="https://github.com/foundmonster/cool-bags/issues/141" target="_blank" rel="noopener noreferrer">#141</a></td>
+                      <td data-sort="yeti">YETI</td>
+                      <td data-sort="yeti.com"><a href="https://yeti.com" target="_blank" rel="noopener noreferrer">yeti.com</a></td>
+                      <td class="num" data-sort="0"><span class="muted">0</span></td>
+                      <td data-sort="0"><span class="no">No</span></td>
+                    </tr>
+                    <tr>
+                      <td data-sort="207"><a href="https://github.com/foundmonster/cool-bags/issues/207" target="_blank" rel="noopener noreferrer">#207</a></td>
+                      <td data-sort="yomp">YOMP</td>
+                      <td data-sort="yompgear.com"><a href="https://yompgear.com" target="_blank" rel="noopener noreferrer">yompgear.com</a></td>
+                      <td class="num" data-sort="0"><span class="muted">0</span></td>
+                      <td data-sort="0"><span class="no">No</span></td>
+                    </tr>
+                    <tr>
+                      <td data-sort="208"><a href="https://github.com/foundmonster/cool-bags/issues/208" target="_blank" rel="noopener noreferrer">#208</a></td>
+                      <td data-sort="zpacks">Zpacks</td>
+                      <td data-sort="zpacks.com"><a href="https://zpacks.com" target="_blank" rel="noopener noreferrer">zpacks.com</a></td>
+                      <td class="num" data-sort="0"><span class="muted">0</span></td>
+                      <td data-sort="0"><span class="no">No</span></td>
+                    </tr>
+              </tbody>
+            </table>
+            <div class="rowcount" id="rowcount"></div>
+
+            <script>
+              (function () {
+                const table = document.getElementById('brands-table');
+                const tbody = table.tBodies[0];
+                const all = [...tbody.rows];
+                const heads = [...table.tHead.rows[0].cells];
+
+                // Sort reads data-sort, never the rendered text: "#103" and an em
+                // dash would sort as strings, and Yes/No would sort alphabetically
+                // rather than by state.
+                heads.forEach((th, i) => th.addEventListener('click', () => {
+                  const dir = th.getAttribute('aria-sort') === 'ascending' ? -1 : 1;
+                  heads.forEach(h => h.removeAttribute('aria-sort'));
+                  th.setAttribute('aria-sort', dir === 1 ? 'ascending' : 'descending');
+                  const numeric = th.dataset.type === 'num';
+                  const val = r => { const v = r.cells[i].dataset.sort; return numeric ? Number(v) : String(v); };
+                  all.sort((a, b) => { const x = val(a), y = val(b); return (x > y ? 1 : x < y ? -1 : 0) * dir; });
+                  render();
+                }));
+
+                const q = document.getElementById('brand-filter');
+                const onlyLive = document.getElementById('only-live');
+                const onlyMissing = document.getElementById('only-missing');
+                [onlyLive, onlyMissing].forEach(b => b.addEventListener('click', () => {
+                  const on = b.getAttribute('aria-pressed') === 'true';
+                  [onlyLive, onlyMissing].forEach(o => o.setAttribute('aria-pressed', 'false'));
+                  b.setAttribute('aria-pressed', on ? 'false' : 'true');
+                  render();
+                }));
+                q.addEventListener('input', render);
+
+                function render() {
+                  const term = q.value.trim().toLowerCase();
+                  const live = onlyLive.getAttribute('aria-pressed') === 'true';
+                  const missing = onlyMissing.getAttribute('aria-pressed') === 'true';
+                  let shown = 0;
+                  tbody.replaceChildren();
+                  for (const r of all) {
+                    const isLive = r.cells[4].dataset.sort === '1';
+                    if (live && !isLive) continue;
+                    if (missing && isLive) continue;
+                    if (term && !r.cells[1].textContent.toLowerCase().includes(term)
+                             && !r.cells[2].textContent.toLowerCase().includes(term)) continue;
+                    tbody.appendChild(r); shown++;
+                  }
+                  document.getElementById('rowcount').textContent = shown + ' of ' + all.length + ' brands';
+                }
+                render();
+              })();
+            </script>
         
         
         
