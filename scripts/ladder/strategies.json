@@ -1,7 +1,7 @@
 {
   "version": 1,
   "expiry_days": 90,
-  "updated_at": "2026-08-19T07:22:29.532Z",
+  "updated_at": "2026-08-30T00:46:52.869Z",
   "brands": {
     "511tactical": {
       "brand": "5.11",
@@ -3502,6 +3502,66 @@
         "recorded_at": "2026-08-15T23:44:20.095Z"
       }
     },
+    "mountainsmith": {
+      "brand": "Mountainsmith",
+      "domain": "mountainsmith.com",
+      "issue": null,
+      "platform": "shopify",
+      "signals": [
+        "robots:shopify-collections-sort_by",
+        "robots:shopify-checkouts",
+        "html:cdn.shopify.com",
+        "html:window.Shopify"
+      ],
+      "winner": {
+        "rung": "B",
+        "url": "https://mountainsmith.com/products.json?limit=250",
+        "returned": {
+          "products": 85,
+          "listings_est": 29,
+          "bytes": 437456,
+          "sha256": "7463c240299061540c46613e18bd950a19729cba94a29de6846dcc68a58de5bc",
+          "structure_fingerprint": "9b24b129e79437da5c7cfc19e313726dcb31fcd096f584515547c39f4e5ea357"
+        },
+        "at": "2026-08-30T00:46:45.923Z",
+        "first_seen": "2026-08-30T00:46:45.923Z"
+      },
+      "attempts": {
+        "B": {
+          "ok": true,
+          "code": null,
+          "status": 200,
+          "bytes": 437456,
+          "url": "https://mountainsmith.com/products.json?limit=250",
+          "at": "2026-08-30T00:46:45.923Z"
+        },
+        "A": {
+          "ok": false,
+          "code": "no-structured-product-in-static-html",
+          "status": 200,
+          "bytes": 388051,
+          "url": "https://mountainsmith.com/products/mayhem-evo-30l-backpack-crf",
+          "at": "2026-08-30T00:46:45.923Z"
+        }
+      },
+      "policy": {
+        "verdict": "allow",
+        "reason": null,
+        "rule": null,
+        "blocked_path": null,
+        "robots_sha256": "79bc336c476d020abff66dab894518a6a2685f47fb4b4c4820573b2d2e61f4f1",
+        "crawl_delay": null,
+        "at": "2026-08-30T00:46:45.923Z"
+      },
+      "history": [
+        {
+          "at": "2026-08-30T00:46:45.923Z",
+          "from": null,
+          "to": "B",
+          "note": "first winning rung recorded"
+        }
+      ]
+    },
     "mtnops": {
       "brand": "MTN Ops",
       "domain": "mtnops.com",
@@ -6038,6 +6098,66 @@
         "recorded_at": "2026-08-15T23:44:20.095Z"
       }
     },
+    "tomtoc": {
+      "brand": "Tomtoc",
+      "domain": "www.tomtoc.com",
+      "issue": null,
+      "platform": "shopify",
+      "signals": [
+        "robots:shopify-collections-sort_by",
+        "robots:shopify-checkouts",
+        "html:cdn.shopify.com",
+        "html:window.Shopify"
+      ],
+      "winner": {
+        "rung": "B",
+        "url": "https://www.tomtoc.com/products.json?limit=250",
+        "returned": {
+          "products": 233,
+          "listings_est": 131,
+          "bytes": 4215861,
+          "sha256": "e27e2f3061382a3c45cf19569e06439ab54d01feedd6e1969130f36828beaba2",
+          "structure_fingerprint": "5388f581870e4a55870377d12e34be1c0d5c12699ff462400c1055a89626d24b"
+        },
+        "at": "2026-08-30T00:46:52.862Z",
+        "first_seen": "2026-08-30T00:46:52.862Z"
+      },
+      "attempts": {
+        "B": {
+          "ok": true,
+          "code": null,
+          "status": 200,
+          "bytes": 4215861,
+          "url": "https://www.tomtoc.com/products.json?limit=250",
+          "at": "2026-08-30T00:46:52.862Z"
+        },
+        "A": {
+          "ok": true,
+          "code": null,
+          "status": 200,
+          "bytes": 1354567,
+          "url": "https://www.tomtoc.com/products/fancycase-g05-ns-medium-case",
+          "at": "2026-08-30T00:46:52.862Z"
+        }
+      },
+      "policy": {
+        "verdict": "allow",
+        "reason": null,
+        "rule": null,
+        "blocked_path": null,
+        "robots_sha256": "6840876d12b8f65ba644ae53bee65e3d15dddcbd84e63023cdb49a4b4242f101",
+        "crawl_delay": null,
+        "at": "2026-08-30T00:46:52.862Z"
+      },
+      "history": [
+        {
+          "at": "2026-08-30T00:46:52.862Z",
+          "from": null,
+          "to": "B",
+          "note": "first winning rung recorded"
+        }
+      ]
+    },
     "topodesigns": {
       "brand": "Topo Designs",
       "domain": "topodesigns.com",
@@ -6720,16 +6840,16 @@
       },
       "start_rung": "A",
       "brands": 1,
-      "updated_at": "2026-08-19T07:22:29.523Z"
+      "updated_at": "2026-08-30T00:46:52.862Z"
     },
     "shopify": {
       "wins": {
         "A": 3,
-        "B": 39
+        "B": 41
       },
       "start_rung": "B",
-      "brands": 42,
-      "updated_at": "2026-08-19T07:22:29.523Z"
+      "brands": 44,
+      "updated_at": "2026-08-30T00:46:52.862Z"
     },
     "unknown": {
       "wins": {
@@ -6738,7 +6858,7 @@
       },
       "start_rung": "A",
       "brands": 4,
-      "updated_at": "2026-08-19T07:22:29.523Z"
+      "updated_at": "2026-08-30T00:46:52.862Z"
     }
   }
 }
