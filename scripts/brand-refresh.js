@@ -131,17 +131,47 @@ async function main() {
     let how = p ? 'handle' : null;
     if (!p) { p = byTitle.get(norm(r.name)); how = p ? 'title' : null; }
     if (p) matched.add(p.handle);
-    // BASE price, not the price on the tag today. Shopify puts the sale price in
-    // `price` and the original in `compare_at_price`, so a product on sale reports
-    // half its real price. Mountainsmith's 2024 Sidekick reads 13.95 / compare_at
-    // 27.95 against our stored 28 — copying `price` there would have replaced a
-    // correct record with a sale. CLAUDE.md asks for base price; this is it.
-    const v0 = p && p.variants && p.variants[0] ? p.variants[0] : null;
-    const onSale = v0 && v0.compare_at_price && parseFloat(v0.compare_at_price) > parseFloat(v0.price);
-    const livePrice = v0 ? parseFloat(onSale ? v0.compare_at_price : v0.price) : null;
+    // Two independent traps live in this one number, and both have already
+    // corrupted records in this catalog.
+    //
+    // 1. SALE. Shopify puts the sale price in `price` and the original in
+    //    `compare_at_price`. Mountainsmith's 2024 Sidekick reads 13.95 /
+    //    compare_at 27.95 against our stored 28 — reading `price` would have
+    //    replaced a correct record with a sale.
+    // 2. VARIANT CHOICE. `variants[0]` is whatever the merchant happened to
+    //    order first, and it is routinely NOT the base product:
+    //      - ILE  load-cell-cuboid  variants[0] = "Kit of 3" bundle, $130,
+    //        while the real sizes are 40/48/56 — the values we already store.
+    //      - Chrome Barrage        variants[0] = a premium colourway, +$5 over
+    //        the black we catalogue under the tier rules.
+    //      - Alpaka               prices by material; variants[0] is the cheap
+    //        Axoflux, so every X-Pac record looks wrong.
+    //      - Cotopaxi Allpa 18L   10 of 11 variants are 110; variants[0] is the
+    //        one 130 outlier.
+    //    Reading variants[0] alone would have flagged 17 correct records as
+    //    drifted. So: collect the base price of EVERY variant, and treat the
+    //    record as correct if it matches ANY of them. Report the modal price as
+    //    the headline and carry the full set, because picking one for a
+    //    multi-variant product is a judgement about which product the record
+    //    means — not something this script gets to decide.
+    const variants = (p && Array.isArray(p.variants)) ? p.variants : [];
+    const basesOf = (v) => {
+      const price = parseFloat(v.price);
+      const cmp = v.compare_at_price == null ? null : parseFloat(v.compare_at_price);
+      return { base: cmp && cmp > price ? cmp : price, sale: cmp && cmp > price ? price : null };
+    };
+    const all = variants.map(basesOf);
+    const bases = [...new Set(all.map((x) => x.base))].sort((a, b) => a - b);
+    const counts = new Map();
+    for (const x of all) counts.set(x.base, (counts.get(x.base) || 0) + 1);
+    const modal = bases.length ? [...counts.entries()].sort((a, b) => b[1] - a[1] || a[0] - b[0])[0][0] : null;
+    const onSale = all.some((x) => x.sale != null);
+    const v0 = variants[0] || null;
+    const livePrice = modal;
     rows.push({ id: r.id, name: r.name, our_price: r.price, our_volume: r.volume, handle: h,
       found: !!p, matched_by: how, live_title: p ? p.title : null, live_handle: p ? p.handle : null,
-      live_price: livePrice, live_on_sale: !!onSale, live_sale_price: onSale ? parseFloat(v0.price) : null,
+      live_price: livePrice, live_bases: bases, live_variant_count: variants.length,
+      live_on_sale: !!onSale, live_sale_price: onSale ? Math.min(...all.filter((x) => x.sale != null).map((x) => x.sale)) : null,
       live_grams: v0 ? v0.grams : null });
   }
 
@@ -159,7 +189,8 @@ async function main() {
   // ------------------------------------------------------------- report
   const gone = rows.filter((r) => !r.found);
   const stale = rows.filter((r) => r.found && r.live_handle && r.handle !== r.live_handle);
-  const drift = rows.filter((r) => r.found && r.live_price != null && r.our_price != null && Math.abs(r.live_price - r.our_price) > 0.5);
+  const drift = rows.filter((r) => r.found && r.live_price != null && r.our_price != null
+    && !(r.live_bases || []).some((b) => Math.abs(b - r.our_price) <= 0.5));
 
   console.log(`${brandArg} — ${ours.length} records vs ${products.length} live products at ${origin}\n`);
 
@@ -176,7 +207,11 @@ async function main() {
   if (drift.length) {
     console.log(`PRICE DRIFT — ${drift.length}${usdLikely ? '' : '  (currency-unverified: do NOT copy these without checking)'}`);
     let up = 0;
-    for (const r of drift) { if (r.live_price > r.our_price) up++; console.log(`  #${r.id} ${r.name}: ours ${r.our_price} live ${r.live_price}${r.live_on_sale ? `  (on sale at ${r.live_sale_price}; base shown)` : ''}`); }
+    for (const r of drift) {
+      if (r.live_price > r.our_price) up++;
+      const spread = (r.live_bases || []).length > 1 ? `  [${r.live_variant_count} variants, bases ${r.live_bases.join('/')}]` : '';
+      console.log(`  #${r.id} ${r.name}: ours ${r.our_price} live ${r.live_price}${r.live_on_sale ? `  (on sale at ${r.live_sale_price}; base shown)` : ''}${spread}`);
+    }
     console.log(`  ${up} of ${drift.length} moved UP. A one-directional drift usually means the originals were captured on sale.\n`);
   }
   console.log(`QUEUE — ${[...queue.values()].reduce((n, v) => n + v.length, 0)} unmatched gear listings in ${queue.size} distinct models`);

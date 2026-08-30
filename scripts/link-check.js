@@ -60,7 +60,7 @@ const HOST_CONCURRENCY = 6;
 
 // ---------------------------------------------------------------- verdicts
 
-const BROKEN = new Set(['http-error', 'unreachable', 'redirects-to-homepage', 'canonical-is-homepage']);
+const BROKEN = new Set(['http-error', 'unreachable', 'redirects-to-homepage', 'canonical-is-homepage', 'js-redirect-stub']);
 const SUSPECT = new Set(['title-matches-homepage']);
 const UNKNOWN = new Set(['skipped-opt-out', 'blocked', 'no-link']);
 
@@ -118,6 +118,17 @@ async function checkOne(store, rec, baseline) {
   }
 
   const html = r.body ? r.body.toString() : '';
+
+  // A parked domain answers 200 for every path with a stub whose only content is
+  // a JS redirect. halfdayco.com serves 114 bytes —
+  //   <script>window.onload=function(){window.location.href="/lander"}</script>
+  // — for /products/anything, so status, final URL, canonical and title checks all
+  // pass and six live records scored `ok` while pointing at a dead brand domain.
+  // A body this small with a scripted location assignment is not a product page.
+  if (html.length < 4096 && /window\.location(\.href)?\s*=/.test(html) && !/<title[^>]*>[^<]/i.test(html)) {
+    return { verdict: 'js-redirect-stub', detail: `HTTP 200 but the body is a ${html.length}-byte JS redirect stub, not a product page`, final_url: finalUrl };
+  }
+
   const canon = canonicalOf(html);
   if (canon && isHomepagePath(pathnameOf(canon))) {
     return { verdict: 'canonical-is-homepage', detail: `HTTP 200 but rel=canonical is ${canon}`, canonical: canon, final_url: finalUrl };
