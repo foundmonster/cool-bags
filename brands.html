@@ -333,6 +333,21 @@
             color: #86868b;
         }
 
+        /* Evidence, not decoration. Every row carries why it is where it is —
+           a bag count for live brands, a rung for in-progress, and for blocked
+           the measured reason AND the date it was checked. A blocked claim with
+           no date is what let a 2025 failure still be believed in 2026. */
+        .brand-note {
+            color: #86868b;
+            font-size: 11px;
+            font-weight: 400;
+            margin-left: 6px;
+            white-space: nowrap;
+        }
+        .brand-item.completed .brand-note {
+            color: #1d1d1f;
+        }
+
         .brand-item.in-progress .brand-name {
             color: #1d1d1f;
         }
@@ -418,6 +433,7 @@
 
         .feedback-form-group input[type="text"],
         .feedback-form-group input[type="email"],
+        .feedback-form-group input[type="url"],
         .feedback-form-group textarea {
             width: 100%;
             padding: 10px 12px;
@@ -554,25 +570,25 @@
                     <ul class="stats-list">
                         <li>
                             <span class="stat-label">Live Brands</span>
-                            <span class="stat-value">43</span>
+                            <span class="stat-value">47</span>
                         </li>
                         <li>
                             <span class="stat-label">In Progress</span>
-                            <span class="stat-value">51</span>
+                            <span class="stat-value">32</span>
                         </li>
                         <li>
-                            <span class="stat-label">Blocked/Issues</span>
-                            <span class="stat-value">8</span>
+                            <span class="stat-label">Queued</span>
+                            <span class="stat-value">62</span>
                         </li>
                         <li>
-                            <span class="stat-label">To Be Added</span>
-                            <span class="stat-value">42</span>
+                            <span class="stat-label">Blocked</span>
+                            <span class="stat-value">10</span>
                         </li>
                         <li>
                             <span class="stat-label">Total Brands</span>
-                            <span class="stat-value">139</span>
+                            <span class="stat-value">151</span>
                         </li>
-                        <li class="progress-item">
+                        <li class="progress-item" data-progress="31%">
                             <span class="stat-label">Progress</span>
                             <span class="stat-value">31%</span>
                         </li>
@@ -585,7 +601,7 @@
                 <a href="index.html">← Back to Cool Bags</a>
             </div>
 
-            <div class="version">Last updated Dec.15.25</div>
+            <div class="version">Generated 2026-08-30 from 666 records</div>
         </div>
 
         <!-- Main Content -->
@@ -596,423 +612,626 @@
             
             
             <div class="section">
-                <h2 class="section-title">In Progress (51)</h2>
+                <h2 class="section-title">Live (47)</h2>
                 <div class="brands-list">
-                    <div class="brand-item in-progress">
-                        <div class="checkbox"></div>
-                        <div class="brand-name">Alpha One Niner</div>
+                    <div class="brand-item completed">
+                        <div class="checkbox"><svg viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.5 12L13 4.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+                        <div class="brand-name">Tom Bihn <span class="brand-note">73 bags</span></div>
                     </div>
-                    <div class="brand-item in-progress">
-                        <div class="checkbox"></div>
-                        <div class="brand-name">Arc'teryx</div>
+                    <div class="brand-item completed">
+                        <div class="checkbox"><svg viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.5 12L13 4.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+                        <div class="brand-name">ILE <span class="brand-note">53 bags</span></div>
                     </div>
-                    <div class="brand-item in-progress">
-                        <div class="checkbox"></div>
-                        <div class="brand-name">Arktype</div>
+                    <div class="brand-item completed">
+                        <div class="checkbox"><svg viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.5 12L13 4.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+                        <div class="brand-name">Bellroy <span class="brand-note">50 bags</span></div>
                     </div>
-                    <div class="brand-item in-progress">
-                        <div class="checkbox"></div>
-                        <div class="brand-name">Attitude Supply</div>
+                    <div class="brand-item completed">
+                        <div class="checkbox"><svg viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.5 12L13 4.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+                        <div class="brand-name">Alpaka <span class="brand-note">45 bags</span></div>
                     </div>
-                    <div class="brand-item in-progress">
-                        <div class="checkbox"></div>
-                        <div class="brand-name">Blank Canvas Accessories</div>
+                    <div class="brand-item completed">
+                        <div class="checkbox"><svg viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.5 12L13 4.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+                        <div class="brand-name">Nomatic <span class="brand-note">34 bags</span></div>
                     </div>
-                    <div class="brand-item in-progress">
-                        <div class="checkbox"></div>
-                        <div class="brand-name">Bounce Design Labs</div>
+                    <div class="brand-item completed">
+                        <div class="checkbox"><svg viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.5 12L13 4.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+                        <div class="brand-name">Troubadour <span class="brand-note">29 bags</span></div>
                     </div>
-                    <div class="brand-item in-progress">
-                        <div class="checkbox"></div>
-                        <div class="brand-name">Expedition Units</div>
+                    <div class="brand-item completed">
+                        <div class="checkbox"><svg viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.5 12L13 4.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+                        <div class="brand-name">DSPTCH <span class="brand-note">25 bags</span></div>
                     </div>
-                    <div class="brand-item in-progress">
-                        <div class="checkbox"></div>
-                        <div class="brand-name">Greenroom</div>
+                    <div class="brand-item completed">
+                        <div class="checkbox"><svg viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.5 12L13 4.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+                        <div class="brand-name">Chrome Industries <span class="brand-note">24 bags</span></div>
                     </div>
-                    <div class="brand-item in-progress">
-                        <div class="checkbox"></div>
-                        <div class="brand-name">HANCHOR</div>
+                    <div class="brand-item completed">
+                        <div class="checkbox"><svg viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.5 12L13 4.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+                        <div class="brand-name">Matador <span class="brand-note">23 bags</span></div>
                     </div>
-                    <div class="brand-item in-progress">
-                        <div class="checkbox"></div>
-                        <div class="brand-name">Haerfest</div>
+                    <div class="brand-item completed">
+                        <div class="checkbox"><svg viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.5 12L13 4.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+                        <div class="brand-name">Baboon To The Moon <span class="brand-note">22 bags</span></div>
                     </div>
-                    <div class="brand-item in-progress">
-                        <div class="checkbox"></div>
-                        <div class="brand-name">Killspencer</div>
+                    <div class="brand-item completed">
+                        <div class="checkbox"><svg viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.5 12L13 4.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+                        <div class="brand-name">Bailey Works <span class="brand-note">21 bags</span></div>
                     </div>
-                    <div class="brand-item in-progress">
-                        <div class="checkbox"></div>
-                        <div class="brand-name">Kuhl</div>
+                    <div class="brand-item completed">
+                        <div class="checkbox"><svg viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.5 12L13 4.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+                        <div class="brand-name">Kelty <span class="brand-note">21 bags</span></div>
                     </div>
-                    <div class="brand-item in-progress">
-                        <div class="checkbox"></div>
-                        <div class="brand-name">L.L.Bean</div>
+                    <div class="brand-item completed">
+                        <div class="checkbox"><svg viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.5 12L13 4.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+                        <div class="brand-name">Rains <span class="brand-note">21 bags</span></div>
                     </div>
-                    <div class="brand-item in-progress">
-                        <div class="checkbox"></div>
-                        <div class="brand-name">Life Behind Bars</div>
+                    <div class="brand-item completed">
+                        <div class="checkbox"><svg viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.5 12L13 4.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+                        <div class="brand-name">Mountainsmith <span class="brand-note">20 bags</span></div>
                     </div>
-                    <div class="brand-item in-progress">
-                        <div class="checkbox"></div>
-                        <div class="brand-name">Limitless</div>
+                    <div class="brand-item completed">
+                        <div class="checkbox"><svg viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.5 12L13 4.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+                        <div class="brand-name">Tomtoc <span class="brand-note">17 bags</span></div>
                     </div>
-                    <div class="brand-item in-progress">
-                        <div class="checkbox"></div>
-                        <div class="brand-name">Linus Tech Tips</div>
+                    <div class="brand-item completed">
+                        <div class="checkbox"><svg viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.5 12L13 4.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+                        <div class="brand-name">Urth <span class="brand-note">16 bags</span></div>
                     </div>
-                    <div class="brand-item in-progress">
-                        <div class="checkbox"></div>
-                        <div class="brand-name">MTN Ops</div>
+                    <div class="brand-item completed">
+                        <div class="checkbox"><svg viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.5 12L13 4.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+                        <div class="brand-name">Aer <span class="brand-note">15 bags</span></div>
                     </div>
-                    <div class="brand-item in-progress">
-                        <div class="checkbox"></div>
-                        <div class="brand-name">Matador</div>
+                    <div class="brand-item completed">
+                        <div class="checkbox"><svg viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.5 12L13 4.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+                        <div class="brand-name">Mission Workshop <span class="brand-note">15 bags</span></div>
                     </div>
-                    <div class="brand-item in-progress">
-                        <div class="checkbox"></div>
-                        <div class="brand-name">Mixed</div>
+                    <div class="brand-item completed">
+                        <div class="checkbox"><svg viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.5 12L13 4.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+                        <div class="brand-name">Cotopaxi <span class="brand-note">11 bags</span></div>
                     </div>
-                    <div class="brand-item in-progress">
-                        <div class="checkbox"></div>
-                        <div class="brand-name">Mountain Hardwear</div>
+                    <div class="brand-item completed">
+                        <div class="checkbox"><svg viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.5 12L13 4.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+                        <div class="brand-name">Triple Aught Design <span class="brand-note">11 bags</span></div>
                     </div>
-                    <div class="brand-item in-progress">
-                        <div class="checkbox"></div>
-                        <div class="brand-name">OrbitGear</div>
+                    <div class="brand-item completed">
+                        <div class="checkbox"><svg viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.5 12L13 4.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+                        <div class="brand-name">EVERGOODS <span class="brand-note">10 bags</span></div>
                     </div>
-                    <div class="brand-item in-progress">
-                        <div class="checkbox"></div>
-                        <div class="brand-name">Patagonia</div>
+                    <div class="brand-item completed">
+                        <div class="checkbox"><svg viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.5 12L13 4.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+                        <div class="brand-name">Gossamer Gear <span class="brand-note">10 bags</span></div>
                     </div>
-                    <div class="brand-item in-progress">
-                        <div class="checkbox"></div>
-                        <div class="brand-name">Quechua NH</div>
+                    <div class="brand-item completed">
+                        <div class="checkbox"><svg viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.5 12L13 4.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+                        <div class="brand-name">Halfday <span class="brand-note">9 bags</span></div>
                     </div>
-                    <div class="brand-item in-progress">
-                        <div class="checkbox"></div>
-                        <div class="brand-name">REI Co-op</div>
+                    <div class="brand-item completed">
+                        <div class="checkbox"><svg viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.5 12L13 4.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+                        <div class="brand-name">Pakt <span class="brand-note">8 bags</span></div>
                     </div>
-                    <div class="brand-item in-progress">
-                        <div class="checkbox"></div>
-                        <div class="brand-name">Remote Equipment</div>
+                    <div class="brand-item completed">
+                        <div class="checkbox"><svg viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.5 12L13 4.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+                        <div class="brand-name">Meret <span class="brand-note">6 bags</span></div>
                     </div>
-                    <div class="brand-item in-progress">
-                        <div class="checkbox"></div>
-                        <div class="brand-name">Rework</div>
+                    <div class="brand-item completed">
+                        <div class="checkbox"><svg viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.5 12L13 4.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+                        <div class="brand-name">Millican <span class="brand-note">6 bags</span></div>
                     </div>
-                    <div class="brand-item in-progress">
-                        <div class="checkbox"></div>
-                        <div class="brand-name">Rofmia</div>
+                    <div class="brand-item completed">
+                        <div class="checkbox"><svg viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.5 12L13 4.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+                        <div class="brand-name">Black Ember <span class="brand-note">5 bags</span></div>
                     </div>
-                    <div class="brand-item in-progress">
-                        <div class="checkbox"></div>
-                        <div class="brand-name">Saikan</div>
+                    <div class="brand-item completed">
+                        <div class="checkbox"><svg viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.5 12L13 4.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+                        <div class="brand-name">Goruck <span class="brand-note">5 bags</span></div>
                     </div>
-                    <div class="brand-item in-progress">
-                        <div class="checkbox"></div>
-                        <div class="brand-name">Saint Javelin</div>
+                    <div class="brand-item completed">
+                        <div class="checkbox"><svg viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.5 12L13 4.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+                        <div class="brand-name">Minaal <span class="brand-note">5 bags</span></div>
                     </div>
-                    <div class="brand-item in-progress">
-                        <div class="checkbox"></div>
-                        <div class="brand-name">Salkan</div>
+                    <div class="brand-item completed">
+                        <div class="checkbox"><svg viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.5 12L13 4.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+                        <div class="brand-name">Wexley <span class="brand-note">5 bags</span></div>
                     </div>
-                    <div class="brand-item in-progress">
-                        <div class="checkbox"></div>
-                        <div class="brand-name">Samaya</div>
+                    <div class="brand-item completed">
+                        <div class="checkbox"><svg viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.5 12L13 4.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+                        <div class="brand-name">66°North <span class="brand-note">4 bags</span></div>
                     </div>
-                    <div class="brand-item in-progress">
-                        <div class="checkbox"></div>
-                        <div class="brand-name">Sample Dan Matsuda</div>
+                    <div class="brand-item completed">
+                        <div class="checkbox"><svg viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.5 12L13 4.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+                        <div class="brand-name">Boundary Supply <span class="brand-note">4 bags</span></div>
                     </div>
-                    <div class="brand-item in-progress">
-                        <div class="checkbox"></div>
-                        <div class="brand-name">Savotta</div>
+                    <div class="brand-item completed">
+                        <div class="checkbox"><svg viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.5 12L13 4.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+                        <div class="brand-name">Cancha <span class="brand-note">4 bags</span></div>
                     </div>
-                    <div class="brand-item in-progress">
-                        <div class="checkbox"></div>
-                        <div class="brand-name">Six Moon Design</div>
+                    <div class="brand-item completed">
+                        <div class="checkbox"><svg viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.5 12L13 4.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+                        <div class="brand-name">Defy <span class="brand-note">4 bags</span></div>
                     </div>
-                    <div class="brand-item in-progress">
-                        <div class="checkbox"></div>
-                        <div class="brand-name">Solgaard</div>
+                    <div class="brand-item completed">
+                        <div class="checkbox"><svg viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.5 12L13 4.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+                        <div class="brand-name">Fresh Service <span class="brand-note">4 bags</span></div>
                     </div>
-                    <div class="brand-item in-progress">
-                        <div class="checkbox"></div>
-                        <div class="brand-name">SwissGear</div>
+                    <div class="brand-item completed">
+                        <div class="checkbox"><svg viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.5 12L13 4.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+                        <div class="brand-name">Gravel <span class="brand-note">4 bags</span></div>
                     </div>
-                    <div class="brand-item in-progress">
-                        <div class="checkbox"></div>
-                        <div class="brand-name">The Atelier YUL</div>
+                    <div class="brand-item completed">
+                        <div class="checkbox"><svg viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.5 12L13 4.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+                        <div class="brand-name">Moment <span class="brand-note">4 bags</span></div>
                     </div>
-                    <div class="brand-item in-progress">
-                        <div class="checkbox"></div>
-                        <div class="brand-name">The Brown Buffalo</div>
+                    <div class="brand-item completed">
+                        <div class="checkbox"><svg viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.5 12L13 4.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+                        <div class="brand-name">Segment <span class="brand-note">4 bags</span></div>
                     </div>
-                    <div class="brand-item in-progress">
-                        <div class="checkbox"></div>
-                        <div class="brand-name">The North Face</div>
+                    <div class="brand-item completed">
+                        <div class="checkbox"><svg viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.5 12L13 4.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+                        <div class="brand-name">Black Mile <span class="brand-note">3 bags</span></div>
                     </div>
-                    <div class="brand-item in-progress">
-                        <div class="checkbox"></div>
-                        <div class="brand-name">Topo Designs</div>
+                    <div class="brand-item completed">
+                        <div class="checkbox"><svg viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.5 12L13 4.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+                        <div class="brand-name">Jansport <span class="brand-note">3 bags</span></div>
                     </div>
-                    <div class="brand-item in-progress">
-                        <div class="checkbox"></div>
-                        <div class="brand-name">Trakke</div>
+                    <div class="brand-item completed">
+                        <div class="checkbox"><svg viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.5 12L13 4.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+                        <div class="brand-name">Puebco <span class="brand-note">3 bags</span></div>
                     </div>
-                    <div class="brand-item in-progress">
-                        <div class="checkbox"></div>
-                        <div class="brand-name">Triple Aught Design</div>
+                    <div class="brand-item completed">
+                        <div class="checkbox"><svg viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.5 12L13 4.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+                        <div class="brand-name">Tortuga <span class="brand-note">3 bags</span></div>
                     </div>
-                    <div class="brand-item in-progress">
-                        <div class="checkbox"></div>
-                        <div class="brand-name">Troubadour</div>
+                    <div class="brand-item completed">
+                        <div class="checkbox"><svg viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.5 12L13 4.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+                        <div class="brand-name">Monos <span class="brand-note">2 bags</span></div>
                     </div>
-                    <div class="brand-item in-progress">
-                        <div class="checkbox"></div>
-                        <div class="brand-name">ULA Equipment</div>
+                    <div class="brand-item completed">
+                        <div class="checkbox"><svg viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.5 12L13 4.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+                        <div class="brand-name">Nanuk <span class="brand-note">2 bags</span></div>
                     </div>
-                    <div class="brand-item in-progress">
-                        <div class="checkbox"></div>
-                        <div class="brand-name">Vertx</div>
+                    <div class="brand-item completed">
+                        <div class="checkbox"><svg viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.5 12L13 4.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+                        <div class="brand-name">Able Carry <span class="brand-note">1 bag</span></div>
                     </div>
-                    <div class="brand-item in-progress">
-                        <div class="checkbox"></div>
-                        <div class="brand-name">Voyager Bag Works</div>
+                    <div class="brand-item completed">
+                        <div class="checkbox"><svg viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.5 12L13 4.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+                        <div class="brand-name">Hyperlite Mountain Gear <span class="brand-note">1 bag</span></div>
                     </div>
-                    <div class="brand-item in-progress">
-                        <div class="checkbox"></div>
-                        <div class="brand-name">Wandrd</div>
-                    </div>
-                    <div class="brand-item in-progress">
-                        <div class="checkbox"></div>
-                        <div class="brand-name">Western Rise</div>
-                    </div>
-                    <div class="brand-item in-progress">
-                        <div class="checkbox"></div>
-                        <div class="brand-name">Wotancraft</div>
-                    </div>
-                    <div class="brand-item in-progress">
-                        <div class="checkbox"></div>
-                        <div class="brand-name">YOMP</div>
-                    </div>
-                    <div class="brand-item in-progress">
-                        <div class="checkbox"></div>
-                        <div class="brand-name">Zpacks</div>
+                    <div class="brand-item completed">
+                        <div class="checkbox"><svg viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.5 12L13 4.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+                        <div class="brand-name">WANDRD <span class="brand-note">1 bag</span></div>
                     </div>
                 </div>
             </div>
-
             <div class="section">
-                <h2 class="section-title">Blocked/Issues (8)</h2>
+                <h2 class="section-title">In Progress (32)</h2>
                 <div class="brands-list">
-                    <div class="brand-item blocked">
+                    <div class="brand-item in-progress">
                         <div class="checkbox"></div>
-                        <div class="brand-name">BAGJACK</div>
+                        <div class="brand-name">Almond Oak <span class="brand-note">rung A · #147</span></div>
                     </div>
-                    <div class="brand-item blocked">
+                    <div class="brand-item in-progress">
                         <div class="checkbox"></div>
-                        <div class="brand-name">Bailey Works</div>
+                        <div class="brand-name">Alpha One Niner <span class="brand-note">rung B, 36 products · #148</span></div>
                     </div>
-                    <div class="brand-item blocked">
+                    <div class="brand-item in-progress">
                         <div class="checkbox"></div>
-                        <div class="brand-name">CTactical</div>
+                        <div class="brand-name">Attitude Supply <span class="brand-note">rung B, 28 products · #151</span></div>
                     </div>
-                    <div class="brand-item blocked">
+                    <div class="brand-item in-progress">
                         <div class="checkbox"></div>
-                        <div class="brand-name">Cabin Zero</div>
+                        <div class="brand-name">Breakwater Supply <span class="brand-note">rung A · #127</span></div>
                     </div>
-                    <div class="brand-item blocked">
+                    <div class="brand-item in-progress">
                         <div class="checkbox"></div>
-                        <div class="brand-name">Day Owl</div>
+                        <div class="brand-name">Brevite <span class="brand-note">rung B, 29 products · #154</span></div>
                     </div>
-                    <div class="brand-item blocked">
+                    <div class="brand-item in-progress">
                         <div class="checkbox"></div>
-                        <div class="brand-name">Fyro</div>
+                        <div class="brand-name">Cabin Zero <span class="brand-note">rung B, 59 products · #107</span></div>
                     </div>
-                    <div class="brand-item blocked">
+                    <div class="brand-item in-progress">
                         <div class="checkbox"></div>
-                        <div class="brand-name">GWA</div>
+                        <div class="brand-name">CTactical <span class="brand-note">rung B, 124 products · #103</span></div>
                     </div>
-                    <div class="brand-item blocked">
+                    <div class="brand-item in-progress">
                         <div class="checkbox"></div>
-                        <div class="brand-name">Graphene-X</div>
+                        <div class="brand-name">Decathlon <span class="brand-note">rung B, 250 products · #111</span></div>
+                    </div>
+                    <div class="brand-item in-progress">
+                        <div class="checkbox"></div>
+                        <div class="brand-name">Eastpak <span class="brand-note">rung B, 212 products · #158</span></div>
+                    </div>
+                    <div class="brand-item in-progress">
+                        <div class="checkbox"></div>
+                        <div class="brand-name">Fyro <span class="brand-note">rung B, 12 products · #105</span></div>
+                    </div>
+                    <div class="brand-item in-progress">
+                        <div class="checkbox"></div>
+                        <div class="brand-name">Graphene-X <span class="brand-note">rung A, 1 products · #126</span></div>
+                    </div>
+                    <div class="brand-item in-progress">
+                        <div class="checkbox"></div>
+                        <div class="brand-name">Heimplanet <span class="brand-note">rung B, 185 products · #144</span></div>
+                    </div>
+                    <div class="brand-item in-progress">
+                        <div class="checkbox"></div>
+                        <div class="brand-name">Knkg <span class="brand-note">rung B, 99 products · #130</span></div>
+                    </div>
+                    <div class="brand-item in-progress">
+                        <div class="checkbox"></div>
+                        <div class="brand-name">Linus Tech Tips <span class="brand-note">rung B, 129 products · #168</span></div>
+                    </div>
+                    <div class="brand-item in-progress">
+                        <div class="checkbox"></div>
+                        <div class="brand-name">Magpul <span class="brand-note">rung A · #171</span></div>
+                    </div>
+                    <div class="brand-item in-progress">
+                        <div class="checkbox"></div>
+                        <div class="brand-name">Mountain Hardwear <span class="brand-note">rung A · #117</span></div>
+                    </div>
+                    <div class="brand-item in-progress">
+                        <div class="checkbox"></div>
+                        <div class="brand-name">OrbitGear <span class="brand-note">rung B, 16 products · #123</span></div>
+                    </div>
+                    <div class="brand-item in-progress">
+                        <div class="checkbox"></div>
+                        <div class="brand-name">Outallday <span class="brand-note">rung B, 7 products · #131</span></div>
+                    </div>
+                    <div class="brand-item in-progress">
+                        <div class="checkbox"></div>
+                        <div class="brand-name">peakdesign! <span class="brand-note">rung A, 247 products · #224</span></div>
+                    </div>
+                    <div class="brand-item in-progress">
+                        <div class="checkbox"></div>
+                        <div class="brand-name">Rofmia <span class="brand-note">rung B, 38 products · #186</span></div>
+                    </div>
+                    <div class="brand-item in-progress">
+                        <div class="checkbox"></div>
+                        <div class="brand-name">Saint Javelin <span class="brand-note">rung B, 250 products · #188</span></div>
+                    </div>
+                    <div class="brand-item in-progress">
+                        <div class="checkbox"></div>
+                        <div class="brand-name">Samaya <span class="brand-note">rung B, 74 products · #190</span></div>
+                    </div>
+                    <div class="brand-item in-progress">
+                        <div class="checkbox"></div>
+                        <div class="brand-name">Savotta <span class="brand-note">rung B, 171 products · #191</span></div>
+                    </div>
+                    <div class="brand-item in-progress">
+                        <div class="checkbox"></div>
+                        <div class="brand-name">Six Moon Design <span class="brand-note">rung B, 124 products · #192</span></div>
+                    </div>
+                    <div class="brand-item in-progress">
+                        <div class="checkbox"></div>
+                        <div class="brand-name">Stubble &amp; Co <span class="brand-note">rung B, 40 products · #136</span></div>
+                    </div>
+                    <div class="brand-item in-progress">
+                        <div class="checkbox"></div>
+                        <div class="brand-name">SwissGear <span class="brand-note">rung B, 250 products · #194</span></div>
+                    </div>
+                    <div class="brand-item in-progress">
+                        <div class="checkbox"></div>
+                        <div class="brand-name">The Atelier YUL <span class="brand-note">rung B, 48 products · #195</span></div>
+                    </div>
+                    <div class="brand-item in-progress">
+                        <div class="checkbox"></div>
+                        <div class="brand-name">The Brown Buffalo <span class="brand-note">rung B, 50 products · #196</span></div>
+                    </div>
+                    <div class="brand-item in-progress">
+                        <div class="checkbox"></div>
+                        <div class="brand-name">Timbuk2 <span class="brand-note">rung B, 161 products · #140</span></div>
+                    </div>
+                    <div class="brand-item in-progress">
+                        <div class="checkbox"></div>
+                        <div class="brand-name">Trakke <span class="brand-note">rung B, 32 products · #198</span></div>
+                    </div>
+                    <div class="brand-item in-progress">
+                        <div class="checkbox"></div>
+                        <div class="brand-name">Vertx <span class="brand-note">rung B, 211 products · #202</span></div>
+                    </div>
+                    <div class="brand-item in-progress">
+                        <div class="checkbox"></div>
+                        <div class="brand-name">Zpacks <span class="brand-note">rung B, 250 products · #208</span></div>
                     </div>
                 </div>
             </div>
-
             <div class="section">
-                <h2 class="section-title">To Be Added (42)</h2>
+                <h2 class="section-title">Queued (62)</h2>
                 <div class="brands-list">
                     <div class="brand-item pending">
                         <div class="checkbox"></div>
-                        <div class="brand-name">1733</div>
+                        <div class="brand-name">1733 <span class="brand-note">no site recorded · #145</span></div>
                     </div>
                     <div class="brand-item pending">
                         <div class="checkbox"></div>
-                        <div class="brand-name">5.11</div>
+                        <div class="brand-name">5.11 <span class="brand-note">#146</span></div>
                     </div>
                     <div class="brand-item pending">
                         <div class="checkbox"></div>
-                        <div class="brand-name">Almond Oak</div>
+                        <div class="brand-name">Add list view <span class="brand-note">#1</span></div>
                     </div>
                     <div class="brand-item pending">
                         <div class="checkbox"></div>
-                        <div class="brand-name">Berghaus</div>
+                        <div class="brand-name">Arc'teryx <span class="brand-note">#149</span></div>
                     </div>
                     <div class="brand-item pending">
                         <div class="checkbox"></div>
-                        <div class="brand-name">Breakwater Supply</div>
+                        <div class="brand-name">BAGJACK <span class="brand-note">#101</span></div>
                     </div>
                     <div class="brand-item pending">
                         <div class="checkbox"></div>
-                        <div class="brand-name">Brevite</div>
+                        <div class="brand-name">Beckel Canvas <span class="brand-note">#226</span></div>
                     </div>
                     <div class="brand-item pending">
                         <div class="checkbox"></div>
-                        <div class="brand-name">CAYL</div>
+                        <div class="brand-name">Blank Canvas Accessories <span class="brand-note">#152</span></div>
                     </div>
                     <div class="brand-item pending">
                         <div class="checkbox"></div>
-                        <div class="brand-name">Chanel</div>
+                        <div class="brand-name">Bounce Design Labs <span class="brand-note">no site recorded · #153</span></div>
                     </div>
                     <div class="brand-item pending">
                         <div class="checkbox"></div>
-                        <div class="brand-name">Clever Supply Co.</div>
+                        <div class="brand-name">CAYL <span class="brand-note">no site recorded · #108</span></div>
                     </div>
                     <div class="brand-item pending">
                         <div class="checkbox"></div>
-                        <div class="brand-name">DB (Douchebags)</div>
+                        <div class="brand-name">Chanel <span class="brand-note">#109</span></div>
                     </div>
                     <div class="brand-item pending">
                         <div class="checkbox"></div>
-                        <div class="brand-name">Decathlon Forclaz</div>
+                        <div class="brand-name">Clever Supply Co. <span class="brand-note">no site recorded · #110</span></div>
                     </div>
                     <div class="brand-item pending">
                         <div class="checkbox"></div>
-                        <div class="brand-name">Demobaza</div>
+                        <div class="brand-name">Day Owl <span class="brand-note">#104</span></div>
                     </div>
                     <div class="brand-item pending">
                         <div class="checkbox"></div>
-                        <div class="brand-name">Deuter</div>
+                        <div class="brand-name">Decathlon Forclaz <span class="brand-note">no site recorded · #156</span></div>
                     </div>
                     <div class="brand-item pending">
                         <div class="checkbox"></div>
-                        <div class="brand-name">Eastpak</div>
+                        <div class="brand-name">Demobaza <span class="brand-note">#157</span></div>
                     </div>
                     <div class="brand-item pending">
                         <div class="checkbox"></div>
-                        <div class="brand-name">Everyman</div>
+                        <div class="brand-name">Deuter <span class="brand-note">#135</span></div>
                     </div>
                     <div class="brand-item pending">
                         <div class="checkbox"></div>
-                        <div class="brand-name">Fjallraven</div>
+                        <div class="brand-name">Expedition Units <span class="brand-note">#160</span></div>
                     </div>
                     <div class="brand-item pending">
                         <div class="checkbox"></div>
-                        <div class="brand-name">Freitag</div>
+                        <div class="brand-name">filter by bag size <span class="brand-note">#15</span></div>
                     </div>
                     <div class="brand-item pending">
                         <div class="checkbox"></div>
-                        <div class="brand-name">Gregory</div>
+                        <div class="brand-name">Fjallraven <span class="brand-note">#134</span></div>
                     </div>
                     <div class="brand-item pending">
                         <div class="checkbox"></div>
-                        <div class="brand-name">Heimplanet</div>
+                        <div class="brand-name">Freitag <span class="brand-note">#128</span></div>
                     </div>
                     <div class="brand-item pending">
                         <div class="checkbox"></div>
-                        <div class="brand-name">Imbaru Design</div>
+                        <div class="brand-name">Greenroom <span class="brand-note">#213</span></div>
                     </div>
                     <div class="brand-item pending">
                         <div class="checkbox"></div>
-                        <div class="brand-name">J. Stark</div>
+                        <div class="brand-name">Greenroom136 <span class="brand-note">#112</span></div>
                     </div>
                     <div class="brand-item pending">
                         <div class="checkbox"></div>
-                        <div class="brand-name">KMA</div>
+                        <div class="brand-name">Gregory <span class="brand-note">#138</span></div>
                     </div>
                     <div class="brand-item pending">
                         <div class="checkbox"></div>
-                        <div class="brand-name">Klattermusen</div>
+                        <div class="brand-name">GWA <span class="brand-note">#106</span></div>
                     </div>
                     <div class="brand-item pending">
                         <div class="checkbox"></div>
-                        <div class="brand-name">Knkg</div>
+                        <div class="brand-name">Haerfest <span class="brand-note">no site recorded · #161</span></div>
                     </div>
                     <div class="brand-item pending">
                         <div class="checkbox"></div>
-                        <div class="brand-name">Liteway</div>
+                        <div class="brand-name">HANCHOR <span class="brand-note">#162</span></div>
                     </div>
                     <div class="brand-item pending">
                         <div class="checkbox"></div>
-                        <div class="brand-name">London Bridge Trading</div>
+                        <div class="brand-name">Imbaru Design <span class="brand-note">no site recorded · #129</span></div>
                     </div>
                     <div class="brand-item pending">
                         <div class="checkbox"></div>
-                        <div class="brand-name">MAKR</div>
+                        <div class="brand-name">J. Stark <span class="brand-note">#113</span></div>
                     </div>
                     <div class="brand-item pending">
                         <div class="checkbox"></div>
-                        <div class="brand-name">Magpul</div>
+                        <div class="brand-name">Killspencer <span class="brand-note">#163</span></div>
                     </div>
                     <div class="brand-item pending">
                         <div class="checkbox"></div>
-                        <div class="brand-name">Metric</div>
+                        <div class="brand-name">Klattermusen <span class="brand-note">#114</span></div>
                     </div>
                     <div class="brand-item pending">
                         <div class="checkbox"></div>
-                        <div class="brand-name">Nitecore</div>
+                        <div class="brand-name">KMA <span class="brand-note">no site recorded · #115</span></div>
                     </div>
                     <div class="brand-item pending">
                         <div class="checkbox"></div>
-                        <div class="brand-name">Nomin</div>
+                        <div class="brand-name">Kuhl <span class="brand-note">#164</span></div>
                     </div>
                     <div class="brand-item pending">
                         <div class="checkbox"></div>
-                        <div class="brand-name">Off-White</div>
+                        <div class="brand-name">L.L.Bean <span class="brand-note">#165</span></div>
                     </div>
                     <div class="brand-item pending">
                         <div class="checkbox"></div>
-                        <div class="brand-name">Opposethis</div>
+                        <div class="brand-name">Life Behind Bars <span class="brand-note">no site recorded · #166</span></div>
                     </div>
                     <div class="brand-item pending">
                         <div class="checkbox"></div>
-                        <div class="brand-name">Osprey</div>
+                        <div class="brand-name">Limitless <span class="brand-note">#167</span></div>
                     </div>
                     <div class="brand-item pending">
                         <div class="checkbox"></div>
-                        <div class="brand-name">Outallday</div>
+                        <div class="brand-name">Liteway <span class="brand-note">#169</span></div>
                     </div>
                     <div class="brand-item pending">
                         <div class="checkbox"></div>
-                        <div class="brand-name">Outlier</div>
+                        <div class="brand-name">MAKR <span class="brand-note">#172</span></div>
                     </div>
                     <div class="brand-item pending">
                         <div class="checkbox"></div>
-                        <div class="brand-name">Peak Design</div>
+                        <div class="brand-name">material filter list needs cleanup <span class="brand-note">#19</span></div>
                     </div>
                     <div class="brand-item pending">
                         <div class="checkbox"></div>
-                        <div class="brand-name">Stubble & Co</div>
+                        <div class="brand-name">Metric <span class="brand-note">no site recorded · #174</span></div>
                     </div>
                     <div class="brand-item pending">
                         <div class="checkbox"></div>
-                        <div class="brand-name">Thule</div>
+                        <div class="brand-name">MTN Ops Brand Integration <span class="brand-note">#118</span></div>
                     </div>
                     <div class="brand-item pending">
                         <div class="checkbox"></div>
-                        <div class="brand-name">Timbuk2</div>
+                        <div class="brand-name">Nitecore Brand Integration <span class="brand-note">#119</span></div>
                     </div>
                     <div class="brand-item pending">
                         <div class="checkbox"></div>
-                        <div class="brand-name">Waterfield</div>
+                        <div class="brand-name">Nomin Brand Integration <span class="brand-note">#120</span></div>
                     </div>
                     <div class="brand-item pending">
                         <div class="checkbox"></div>
-                        <div class="brand-name">YETI</div>
+                        <div class="brand-name">Off-White Brand Integration <span class="brand-note">#121</span></div>
+                    </div>
+                    <div class="brand-item pending">
+                        <div class="checkbox"></div>
+                        <div class="brand-name">Opposethis Brand Integration <span class="brand-note">#122</span></div>
+                    </div>
+                    <div class="brand-item pending">
+                        <div class="checkbox"></div>
+                        <div class="brand-name">Osprey <span class="brand-note">#133</span></div>
+                    </div>
+                    <div class="brand-item pending">
+                        <div class="checkbox"></div>
+                        <div class="brand-name">Outlier <span class="brand-note">#124</span></div>
+                    </div>
+                    <div class="brand-item pending">
+                        <div class="checkbox"></div>
+                        <div class="brand-name">Patagonia <span class="brand-note">#142</span></div>
+                    </div>
+                    <div class="brand-item pending">
+                        <div class="checkbox"></div>
+                        <div class="brand-name">Quechua NH <span class="brand-note">#175</span></div>
+                    </div>
+                    <div class="brand-item pending">
+                        <div class="checkbox"></div>
+                        <div class="brand-name">REI Co-op <span class="brand-note">#183</span></div>
+                    </div>
+                    <div class="brand-item pending">
+                        <div class="checkbox"></div>
+                        <div class="brand-name">Remote Equipment <span class="brand-note">#184</span></div>
+                    </div>
+                    <div class="brand-item pending">
+                        <div class="checkbox"></div>
+                        <div class="brand-name">Rework <span class="brand-note">#185</span></div>
+                    </div>
+                    <div class="brand-item pending">
+                        <div class="checkbox"></div>
+                        <div class="brand-name">Saikan <span class="brand-note">#187</span></div>
+                    </div>
+                    <div class="brand-item pending">
+                        <div class="checkbox"></div>
+                        <div class="brand-name">Sample Dan Matsuda <span class="brand-note">no site recorded · #189</span></div>
+                    </div>
+                    <div class="brand-item pending">
+                        <div class="checkbox"></div>
+                        <div class="brand-name">Search bar <span class="brand-note">#49</span></div>
+                    </div>
+                    <div class="brand-item pending">
+                        <div class="checkbox"></div>
+                        <div class="brand-name">Solgaard <span class="brand-note">#193</span></div>
+                    </div>
+                    <div class="brand-item pending">
+                        <div class="checkbox"></div>
+                        <div class="brand-name">The North Face <span class="brand-note">#210</span></div>
+                    </div>
+                    <div class="brand-item pending">
+                        <div class="checkbox"></div>
+                        <div class="brand-name">Thule <span class="brand-note">#143</span></div>
+                    </div>
+                    <div class="brand-item pending">
+                        <div class="checkbox"></div>
+                        <div class="brand-name">Topo Designs <span class="brand-note">#197</span></div>
+                    </div>
+                    <div class="brand-item pending">
+                        <div class="checkbox"></div>
+                        <div class="brand-name">ULA Equipment <span class="brand-note">#201</span></div>
+                    </div>
+                    <div class="brand-item pending">
+                        <div class="checkbox"></div>
+                        <div class="brand-name">Waterfield <span class="brand-note">#137</span></div>
+                    </div>
+                    <div class="brand-item pending">
+                        <div class="checkbox"></div>
+                        <div class="brand-name">Waterproof Filter, Laptop Size filter <span class="brand-note">#31</span></div>
+                    </div>
+                    <div class="brand-item pending">
+                        <div class="checkbox"></div>
+                        <div class="brand-name">Western Rise <span class="brand-note">#205</span></div>
+                    </div>
+                    <div class="brand-item pending">
+                        <div class="checkbox"></div>
+                        <div class="brand-name">YETI <span class="brand-note">#141</span></div>
+                    </div>
+                </div>
+            </div>
+            <div class="section">
+                <h2 class="section-title">Blocked (10)</h2>
+                <div class="brands-list">
+                    <div class="brand-item blocked">
+                        <div class="checkbox"></div>
+                        <div class="brand-name">Arktype <span class="brand-note">host-unreachable · #150</span></div>
+                    </div>
+                    <div class="brand-item blocked">
+                        <div class="checkbox"></div>
+                        <div class="brand-name">Berghaus <span class="brand-note">brand-level-opt-out · checked 2026-08-16 · #139</span></div>
+                    </div>
+                    <div class="brand-item blocked">
+                        <div class="checkbox"></div>
+                        <div class="brand-name">DB (Douchebags) <span class="brand-note">disallow · checked 2026-08-15 · #155</span></div>
+                    </div>
+                    <div class="brand-item blocked">
+                        <div class="checkbox"></div>
+                        <div class="brand-name">Everyman <span class="brand-note">host-unreachable · #159</span></div>
+                    </div>
+                    <div class="brand-item blocked">
+                        <div class="checkbox"></div>
+                        <div class="brand-name">London Bridge Trading <span class="brand-note">host-unreachable · #170</span></div>
+                    </div>
+                    <div class="brand-item blocked">
+                        <div class="checkbox"></div>
+                        <div class="brand-name">Mixed <span class="brand-note">host-unreachable · #116</span></div>
+                    </div>
+                    <div class="brand-item blocked">
+                        <div class="checkbox"></div>
+                        <div class="brand-name">Salkan <span class="brand-note">host-unreachable · #212</span></div>
+                    </div>
+                    <div class="brand-item blocked">
+                        <div class="checkbox"></div>
+                        <div class="brand-name">Voyager Bag Works <span class="brand-note">named-ua-disallow · checked 2026-08-15 · #203</span></div>
+                    </div>
+                    <div class="brand-item blocked">
+                        <div class="checkbox"></div>
+                        <div class="brand-name">Wotancraft <span class="brand-note">host-unreachable · #206</span></div>
+                    </div>
+                    <div class="brand-item blocked">
+                        <div class="checkbox"></div>
+                        <div class="brand-name">YOMP <span class="brand-note">host-unreachable · #207</span></div>
                     </div>
                 </div>
             </div>
@@ -1023,51 +1242,13 @@
     </div>
 
     <script>
-        // Calculate statistics dynamically
-        const inProgressBrands = document.querySelectorAll('.brand-item.in-progress').length;
-        const blockedBrands = document.querySelectorAll('.brand-item.blocked').length;
-        const totalBrands = document.querySelectorAll('.brand-item').length;
-        const toBeAdded = totalBrands - inProgressBrands - blockedBrands;
-
-        // Fetch live brands count from bags.json
-        let liveBrands = 43; // fallback value
-        let progressPercentage = Math.round((liveBrands / (liveBrands + totalBrands)) * 100);
-
-        fetch('bags.json')
-            .then(response => response.json())
-            .then(bags => {
-                // Count unique brands (not individual bags)
-                const uniqueBrands = [...new Set(bags.map(bag => bag.brand))];
-                liveBrands = uniqueBrands.length;
-                const totalBrandsWithLive = liveBrands + totalBrands;
-                progressPercentage = Math.round((liveBrands / totalBrandsWithLive) * 100);
-
-                // Update sidebar statistics with live data
-                document.querySelectorAll('.stat-value')[0].textContent = liveBrands;
-                document.querySelectorAll('.stat-value')[4].textContent = totalBrandsWithLive;
-                document.querySelectorAll('.stat-value')[5].textContent = progressPercentage + '%';
-
-                // Set CSS variable for progress animation
-                const progressItem = document.querySelector('.progress-item');
-                if (progressItem) {
-                    progressItem.style.setProperty('--progress-width', progressPercentage + '%');
-                }
-            })
-            .catch(error => {
-                console.log('Could not fetch live brands count, using fallback');
-                // Use fallback values already set above
-                document.querySelectorAll('.stat-value')[5].textContent = progressPercentage + '%';
-            });
-
-        // Update sidebar statistics (non-live counts)
-        document.querySelectorAll('.stat-value')[1].textContent = inProgressBrands;
-        document.querySelectorAll('.stat-value')[2].textContent = blockedBrands;
-        document.querySelectorAll('.stat-value')[3].textContent = toBeAdded;
-
-        // Update section titles
-        document.querySelectorAll('.section-title')[0].textContent = `In Progress (${inProgressBrands})`;
-        document.querySelectorAll('.section-title')[1].textContent = `Blocked/Issues (${blockedBrands})`;
-        document.querySelectorAll('.section-title')[2].textContent = `To Be Added (${toBeAdded})`;
+        // Statistics are generated at build time by scripts/build-brands-page.js.
+        // The old runtime recalculation is gone on purpose: it derived "To Be Added"
+        // by subtracting in-progress and blocked from the total, which silently
+        // miscounts the moment a fourth section exists — and it overwrote correct
+        // generated numbers with numbers derived from the DOM.
+        const progressItem = document.querySelector('.progress-item');
+        if (progressItem) progressItem.style.setProperty('--progress-width', progressItem.dataset.progress || '0%');
 
         // Brand Request Modal Functions
         function openBrandRequestModal() {
@@ -1114,12 +1295,19 @@
             const successView = document.getElementById('brand-request-success');
             const footer = document.querySelector('#brand-request-modal .feedback-modal-footer');
             const brandName = document.getElementById('brand-name').value.trim();
+            const website = document.getElementById('brand-website').value.trim();
             const reason = document.getElementById('brand-reason').value.trim();
             const email = document.getElementById('brand-email').value.trim();
 
-            // Validation
-            if (!brandName || !reason) {
-                alert('Please fill in all required fields');
+            // Validation. Only the brand name is required — the reason is
+            // explicitly optional on the form, so requiring it here would reject
+            // the submissions the form invites.
+            if (!brandName) {
+                alert('Please enter a brand name');
+                return;
+            }
+            if (website && !/^https?:\/\//i.test(website)) {
+                alert('Please enter a website starting with http:// or https://');
                 return;
             }
 
@@ -1152,6 +1340,7 @@
                         type: 'request',
                         title: `[Brand Request] ${brandName}`,
                         description: reason,
+                        website: website || null,
                         email: email || null,
                         label: 'request',
                         browser: browser,
@@ -1220,8 +1409,14 @@
                     </div>
 
                     <div class="feedback-form-group">
-                        <label for="brand-reason">Why should we add this brand?</label>
-                        <textarea id="brand-reason" placeholder="Tell us what makes this brand special..." required></textarea>
+                        <label for="brand-website">Website</label>
+                        <input type="url" id="brand-website" placeholder="https://example.com">
+                        <div class="feedback-form-note">The most useful thing you can give us — we need the site before we can add anything</div>
+                    </div>
+
+                    <div class="feedback-form-group">
+                        <label for="brand-reason">Why should we add this brand? (optional)</label>
+                        <textarea id="brand-reason" placeholder="Tell us what makes this brand special..."></textarea>
                     </div>
 
                     <div class="feedback-form-group">

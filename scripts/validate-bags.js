@@ -105,6 +105,14 @@ const MATERIAL_MAP = {
   'Ultra': 'Ultra',
   'Embertex PFAS Free': 'Embertex',
   'Vegan Leather': 'Vegan Leather',
+  // Real leather, added 2026-08-30 for Troubadour's calfskin line. Before this
+  // the only leather value was `Vegan Leather`, so a calfskin bag had to be
+  // filed as `Unspecified` — a lie by omission, and one that would recur with
+  // every leather brand. Keep the two distinct: they are different materials
+  // and a shopper filtering for one does not want the other.
+  'Leather': 'Leather',
+  'Full-grain leather': 'Leather',
+  'Calfskin': 'Leather',
   'Cotton': 'Cotton',
   'Cotton canvas': 'Cotton',
   'Mesh': 'Mesh',
