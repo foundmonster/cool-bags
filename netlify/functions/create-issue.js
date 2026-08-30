@@ -200,7 +200,7 @@ exports.handler = async (event) => {
     return errorResponse(400, 'Submission could not be read. Please try again.');
   }
 
-  const { type, title, description, email, label, browser, url } = data;
+  const { type, title, description, website, email, label, browser, url } = data;
 
   // Validate everything we are about to forward to GitHub
   if (typeof title !== 'string' || title.trim() === '') {
@@ -209,7 +209,11 @@ exports.handler = async (event) => {
   if (title.length > MAX_TITLE_LENGTH) {
     return errorResponse(400, `Title must be ${MAX_TITLE_LENGTH} characters or fewer.`);
   }
-  if (typeof description !== 'string' || description.trim() === '') {
+  // A brand request needs only a name. The form asks why as an OPTIONAL field,
+  // so requiring a description here would reject exactly the submissions the
+  // form invites. Every other type still needs one.
+  const descriptionRequired = type !== 'request';
+  if (typeof description !== 'string' || (descriptionRequired && description.trim() === '')) {
     return errorResponse(400, 'A description is required.');
   }
   if (description.length > MAX_DESCRIPTION_LENGTH) {
@@ -218,6 +222,16 @@ exports.handler = async (event) => {
   if (email !== undefined && email !== null && email !== '') {
     if (!isWithinLength(email, MAX_EMAIL_LENGTH) || !isValidEmail(email)) {
       return errorResponse(400, 'Please provide a valid email address.');
+    }
+  }
+  // The website is rendered into a GitHub issue body, so only http(s) is
+  // allowed through — a `javascript:` or `data:` value has no business here.
+  if (website !== undefined && website !== null && website !== '') {
+    if (!isWithinLength(website, MAX_METADATA_LENGTH)) {
+      return errorResponse(400, 'Website URL is too long.');
+    }
+    if (!/^https?:\/\/[^\s<>"']+$/i.test(website.trim())) {
+      return errorResponse(400, 'Please provide a website starting with http:// or https://');
     }
   }
   if (label !== undefined && label !== null && !ALLOWED_LABELS.includes(label)) {
@@ -231,12 +245,18 @@ exports.handler = async (event) => {
 
   try {
     // Build issue body with all info
-    let issueBody = `${description}\n\n---\n\n`;
+    // The website goes first and on its own line: it is the single most useful
+    // field for whoever works the request, because the extraction ladder needs a
+    // URL before it can determine anything at all.
+    let issueBody = '';
+    if (website) issueBody += `**Website:** ${website}\n\n`;
+    issueBody += description && description.trim() ? `${description}\n\n---\n\n` : `---\n\n`;
 
     // Add metadata
     issueBody += `**Submission Details:**\n`;
     issueBody += `- Type: ${type}\n`;
     issueBody += `- Email provided: ${email ? 'yes' : 'no'}\n`;
+    issueBody += `- Reason given: ${description && description.trim() ? 'yes' : 'no'}\n`;
     if (browser) {
       issueBody += `- Browser: ${browser}\n`;
     }
