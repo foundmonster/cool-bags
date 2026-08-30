@@ -161,6 +161,7 @@ function build({ offline = false } = {}) {
 
   // ---- one row per brand, merged across all three sources
   const rows = new Map();
+  const rejected = new Set();
   const findKey = (name) => {
     for (const k of aliasKeys(name)) if (rows.has(k)) return k;
     return key(name);
@@ -191,7 +192,14 @@ function build({ offline = false } = {}) {
     // A CLOSED issue only means something for a brand that is actually live —
     // the "shipped, issue closed" case. Otherwise it was rejected or was never a
     // brand, and must not create a row: closed #25 "Capacity filtrer" did.
-    if (iss.state !== 'OPEN' && !(existing && existing.live)) continue;
+    if (iss.state !== 'OPEN' && !(existing && existing.live)) {
+      // Remember the rejection. A brand can still have a strategies.json entry
+      // from a probe — Linus Tech Tips answers rung B with 129 products — and
+      // without this it reappears from the ladder loop below and keeps counting
+      // toward In Progress after someone deliberately closed it as out of scope.
+      rejected.add(k);
+      continue;
+    }
     if (existing && existing.issue && iss.state !== 'OPEN') continue;
     const l = look(name);
     put(name, {
@@ -203,7 +211,9 @@ function build({ offline = false } = {}) {
   }
   for (const [slug, rec] of Object.entries(strategies)) {
     const name = rec.brand || String(slug).replace(/^name:/, '');
-    if (rows.has(findKey(name)) && rows.get(findKey(name))) continue;
+    const k = findKey(name);
+    if (rows.has(k)) continue;
+    if (rejected.has(k)) continue;   // closed as out of scope; a probe does not resurrect it
     put(name, { website: rec.domain ? String(rec.domain).replace(/^www\./, '') : null });
   }
 
