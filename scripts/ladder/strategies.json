@@ -1,7 +1,7 @@
 {
   "version": 1,
   "expiry_days": 90,
-  "updated_at": "2026-08-30T00:46:52.869Z",
+  "updated_at": "2026-08-31T03:31:55.166Z",
   "brands": {
     "511tactical": {
       "brand": "5.11",
@@ -79,6 +79,66 @@
         ],
         "recorded_at": "2026-08-15T23:44:20.095Z"
       }
+    },
+    "ablecarry": {
+      "brand": "Able Carry",
+      "domain": "ablecarry.com",
+      "issue": null,
+      "platform": "shopify",
+      "signals": [
+        "robots:shopify-collections-sort_by",
+        "robots:shopify-checkouts",
+        "html:cdn.shopify.com",
+        "html:window.Shopify"
+      ],
+      "winner": {
+        "rung": "B",
+        "url": "https://ablecarry.com/products.json?limit=250",
+        "returned": {
+          "products": 91,
+          "listings_est": 10,
+          "bytes": 301081,
+          "sha256": "590c870a4d2299f9f49efb461c05a4373170480cf9bef45c4af6236cea0061b8",
+          "structure_fingerprint": "9b24b129e79437da5c7cfc19e313726dcb31fcd096f584515547c39f4e5ea357"
+        },
+        "at": "2026-08-31T03:31:55.160Z",
+        "first_seen": "2026-08-31T03:31:55.160Z"
+      },
+      "attempts": {
+        "B": {
+          "ok": true,
+          "code": null,
+          "status": 200,
+          "bytes": 301081,
+          "url": "https://ablecarry.com/products.json?limit=250",
+          "at": "2026-08-31T03:31:55.160Z"
+        },
+        "A": {
+          "ok": true,
+          "code": null,
+          "status": 200,
+          "bytes": 642560,
+          "url": "https://ablecarry.com/products/bottle-sling-nodi",
+          "at": "2026-08-31T03:31:55.160Z"
+        }
+      },
+      "policy": {
+        "verdict": "allow",
+        "reason": null,
+        "rule": null,
+        "blocked_path": null,
+        "robots_sha256": "c4bfadb697dfedc8df9fb8280d5e0bcbd5bfb177ef38f264dab70fa13a05f069",
+        "crawl_delay": null,
+        "at": "2026-08-31T03:31:55.160Z"
+      },
+      "history": [
+        {
+          "at": "2026-08-31T03:31:55.160Z",
+          "from": null,
+          "to": "B",
+          "note": "first winning rung recorded"
+        }
+      ]
     },
     "aersf": {
       "brand": "Aer",
@@ -6840,16 +6900,16 @@
       },
       "start_rung": "A",
       "brands": 1,
-      "updated_at": "2026-08-30T00:46:52.862Z"
+      "updated_at": "2026-08-31T03:31:55.160Z"
     },
     "shopify": {
       "wins": {
         "A": 3,
-        "B": 41
+        "B": 42
       },
       "start_rung": "B",
-      "brands": 44,
-      "updated_at": "2026-08-30T00:46:52.862Z"
+      "brands": 45,
+      "updated_at": "2026-08-31T03:31:55.160Z"
     },
     "unknown": {
       "wins": {
@@ -6858,7 +6918,7 @@
       },
       "start_rung": "A",
       "brands": 4,
-      "updated_at": "2026-08-30T00:46:52.862Z"
+      "updated_at": "2026-08-31T03:31:55.160Z"
     }
   }
 }
